@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>선생님 회원가입</h2>
+  <form action="/join/teacher" method="post">
+    <input type="email" name="email" placeholder="이메일" required="required" />
+      <br>
+    <input type="password" name="password" placeholder="비밀번호" required="required" />
+      <br>
+    <input type="text" name="name" placeholder="이름" required="required" />
+      <br>
+    <input type="file" multiple="multiple" name="certificateImageFiles" placeholder="자격증 이미지"/>
+      <br>
+      <a>교육과 관련된 자격증을 첨부하여 주세요.</a>
+      <br>
+      <br>
+    <button>가입하기</button>
+  </form>
+
+<br>
+<br>
+  <a>계정이 있으신가요?</a>
+  <a href="/login/teacher">로그인 화면으로 가기</a>
+
+</body>
+</html>
