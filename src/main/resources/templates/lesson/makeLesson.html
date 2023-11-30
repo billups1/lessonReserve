@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <h2>레슨 등록하기</h2>
+    <form action="/lesson/create" method="post" enctype="application/json">
+        <div>
+            <label for="lessonName">레슨명</label>
+            <input type="text" id="lessonName" name="lessonName" placeholder="레슨명을 입력하세요." style="width:300px">
+        </div>
+        <div>
+            <label for="lessonContent">레슨 설명</label>
+            <input type="text" id="lessonContent" name="lessonContent" placeholder="레슨에 대한 설명을 입력하세요." style="width:300px;height:300px;">
+        </div>
+        <div>
+            <label for="maximumStudentsNumber">최대 수강인원</label>
+            <input type="text" id="maximumStudentsNumber" name="maximumStudentsNumber" placeholder="최대 수강인원을 입력하세요." style="width:50px">
+        </div>
+        <div>
+            <label for="lessonTime">레슨 시간</label>
+            <input type="text" id="lessonTime" name="lessonTime" placeholder="레슨 시간을 입력하세요." style="width:300px">
+        </div>
+
+        <div>
+            <label for="lessonStartDate">레슨 시작일</label>
+            <input type="date" id="lessonStartDate" name="lessonStartDate">
+        </div>
+        <div>
+            <label for="lessonEndDate">레슨 종료일</label>
+            <input type="date" id="lessonEndDate" name="lessonEndDate">
+        </div>
+
+
+        <button>레슨 만들기</button>
+    </form>
+
+</div>
+
+</body>
+</html>

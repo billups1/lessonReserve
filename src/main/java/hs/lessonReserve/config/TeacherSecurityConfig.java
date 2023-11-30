@@ -15,19 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class TeacherSecurityConfig {
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public SecurityFilterChain filterChainForUser(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChainForTeacher(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
-
-        http.authorizeHttpRequests(
-                auth -> auth
-                        .requestMatchers("lesson/create/**", "lesson/modify").hasAnyRole("TEACHER")
-                        .anyRequest().permitAll()
-        );
 
         http.formLogin(login -> login
                 .loginPage("/login/teacher")

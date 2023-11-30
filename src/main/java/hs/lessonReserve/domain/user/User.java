@@ -1,11 +1,13 @@
-package hs.lessonReserve.domain.User;
+package hs.lessonReserve.domain.user;
 
 import hs.lessonReserve.domain.certificate.Certificate;
+import hs.lessonReserve.domain.lessonStudent.LessonStudent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,20 +15,26 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
-public class User {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn
+@SuperBuilder
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false, unique = false)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String name;
     private String role;
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
-    private List<Certificate> certificates;
+    private String profileImageUrl;
+
+
     private LocalDateTime createTime;
 
     @PrePersist

@@ -2,8 +2,8 @@ package hs.lessonReserve.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<hs.lessonReserve.domain.User.User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    hs.lessonReserve.domain.User.User findByEmail(String email);
+    User findByEmail(String email);
 
 }

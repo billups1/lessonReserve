@@ -6,13 +6,16 @@
 </head>
 <body>
 <h2>수강생 회원가입</h2>
-  <form action="/join/User" method="post">
+  <form action="/join/student" method="post" enctype="multipart/form-data">
     <input type="email" name="email" placeholder="이메일" required="required" />
       <br>
     <input type="password" name="password" placeholder="비밀번호" required="required" />
       <br>
     <input type="text" name="name" placeholder="이름" required="required" />
       <br>
+    <a>프로필 사진 첨부</a><br>
+    <input type="file" name="profileImageFiles" placeholder="프로필 이미지"/>
+    <br>
     <button>가입하기</button>
   </form>
 

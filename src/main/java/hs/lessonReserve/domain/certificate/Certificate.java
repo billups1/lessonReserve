@@ -1,22 +1,25 @@
 package hs.lessonReserve.domain.certificate;
 
-import hs.lessonReserve.domain.teacher.Teacher;
+import hs.lessonReserve.domain.user.Teacher;
+import hs.lessonReserve.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 public class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JoinColumn(name = "teacherId")
+    @JoinColumn(name = "userId")
     @ManyToOne
     private Teacher teacher;
 

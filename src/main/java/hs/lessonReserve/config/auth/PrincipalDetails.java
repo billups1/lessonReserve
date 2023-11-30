@@ -1,6 +1,6 @@
 package hs.lessonReserve.config.auth;
 
-import hs.lessonReserve.domain.User.User;
+import hs.lessonReserve.domain.user.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,28 +11,28 @@ import java.util.Collection;
 @Getter
 public class PrincipalDetails implements UserDetails {
 
-    private User User;
+    private User user;
 
     public PrincipalDetails(User User) {
-        this.User = User;
+        this.user = User;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> collector = new ArrayList<>();
-        collector.add(()->User.getRole());
+        collector.add(()->user.getRole());
 
         return collector;
     }
 
     @Override
     public String getPassword() {
-        return User.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return User.getEmail();
+        return user.getEmail();
     }
 
     @Override
