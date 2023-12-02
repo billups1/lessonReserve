@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html lang="en">
+<div th:insert="~{fragment/header::headerFragment}"></div>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -16,4 +20,5 @@
 </form>
 
 </body>
+<div th:insert="~{fragment/footer::footerFragment}"></div>
 </html>

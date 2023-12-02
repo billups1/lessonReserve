@@ -17,39 +17,39 @@ public class AuthController {
 
     private final UserService userService;
 
-    @GetMapping("/join/student")
+    @GetMapping("/student/join")
     public String joinStudentForm(HttpServletRequest request) {
         return "auth/joinStudent";
     }
 
-    @PostMapping("/join/student")
+    @PostMapping("/student/join")
     public String joinStudent(UserJoinDto UserJoinDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         userService.joinStudent(UserJoinDto);
 
-        return "redirect:/login/student";
+        return "redirect:/";
     }
 
-    @GetMapping("/join/teacher")
+    @GetMapping("/teacher/join")
     public String joinTeacherForm() {
 
         return "auth/joinTeacher";
     }
 
-    @PostMapping("/join/teacher")
+    @PostMapping("/teacher/join")
     public String joinTeacher(UserJoinDto UserJoinDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         userService.joinTeacher(UserJoinDto);
 
-        return "redirect:/login/teacher";
+        return "redirect:/";
     }
 
-    @GetMapping("/login/student")
-    public String loginStudentForm() {
-        return "auth/loginStudent";
+    @GetMapping("/login")
+    public String loginForm() {
+        return "auth/login";
     }
 
-    @GetMapping("/login/teacher")
-    public String loginTeacherForm() {
-        return "auth/loginTeacher";
-    }
+//    @GetMapping("/login/teacher")
+//    public String loginTeacherForm() {
+//        return "auth/loginTeacher";
+//    }
 
 }

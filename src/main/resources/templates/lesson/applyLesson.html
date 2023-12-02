@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html lang="en">
+<div th:insert="~{fragment/header::headerFragment}"></div>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -18,13 +20,23 @@
     <label for="lessonContent">레슨소개</label>
     <a th:text="${lesson.content}" id="lessonContent"></a>
 </div>
+<div>
+    <label for="price">가격</label>
+    <a th:text="${lesson.price}" id="price"></a>원
+</div>
+<div>
+    <label for="studentNumber">현재 수강자수</label>
+    <a th:text="${lesson.studentNumber}" id="studentNumber"></a> /
+    <a th:text="${lesson.maximumStudentsNumber}" ></a>
+</div>
+
 <br>
 <br>
 <h3>강사소개</h3>
 <div>
     <label for="teacherName">이름</label>
     <a th:text="${lesson.teacher.name}" id="teacherName"></a>
-    <img th:src="|/image/${lesson.teacher.profileImageUrl}|" width="100" height="100" />
+    <img th:src="|/image/${lesson.teacher.profileImageUrl}|" width="100" height="100"/>
 </div>
 <div>
     <label>강의이력</label>
@@ -37,17 +49,20 @@
         </tr>
 
         <tr th:each="historyLesson : ${lesson.teacher.lessons}">
-            <td><a th:text="${lesson.id}">번호</a></td>
-            <td th:text="${lesson.name}">강의명</td>
-            <td th:text="${lesson.lessonStartDate}">레슨 시작일</td>
-            <td th:text="${lesson.lessonEndDate}">레슨 종료일</td>
+            <td th:text="${historyLesson.id}">번호</td>
+            <td th:text="${historyLesson.name}">강의명</td>
+            <td th:text="${historyLesson.lessonStartDate}">레슨 시작일</td>
+            <td th:text="${historyLesson.lessonEndDate}">레슨 종료일</td>
         </tr>
     </table>
 </div>
 
 <br>
-
-<button th:action="|/lesson/${lesson.id}|" method="post">수강 신청하기</button>
-
+<form th:action="|/lesson/${lesson.id}|" method="post">
+    <button>수강 신청하기</button>
+</form>
 </body>
+<div th:insert="~{fragment/footer::footerFragment}"></div>
+
+
 </html>

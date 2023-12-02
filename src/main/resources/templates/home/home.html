@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html lang="en">
-
+<div th:insert="~{fragment/header::headerFragment}"></div>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,17 +13,19 @@
     <h1>메인페이지</h1>
     <br>
     <h3>메뉴모음</h3>
-    <a href="/login/student">로그인</a>
+    <a href="/login">로그인</a>
     <a> </a>
     <br>
     <br>
 <!--    <a href="/login/teacher">강사 로그인</a>-->
-    <a href="/join/student">수강생 가입하기</a>
+    <a href="/student/join">수강생 가입하기</a>
+    <a href="/student/mypage">강사 마이페이지</a>
     <a> </a>
     <br>
     <br>
-    <a href="/join/teacher">강사 가입하기</a>
-    <a href="/lesson/create">강사 레슨만들기</a>
+    <a href="/teacher/join">강사 가입하기</a>
+    <a href="/teacher/lesson/create">강사 레슨만들기</a>
+    <a href="/teacher/mypage">강사 마이페이지</a>
     <br>
     <br>
     <a href="/logout">로그아웃</a>
@@ -37,6 +40,7 @@
                 <th>강사</th>
                 <th>프로필사진</th>
                 <th>시간</th>
+                <th>가격</th>
                 <th>레슨 시작일</th>
                 <th>레슨 종료일</th>
                 <th>수강신청 마감일</th>
@@ -50,11 +54,18 @@
                 <td th:text="${lesson.teacher.name}">강사</td>
                 <td> <img th:src="|/image/${lesson.teacher.profileImageUrl}|" width="50" height="50"/> </td>
                 <td th:text="${lesson.lessonTime}">시간</td>
+                <td th:text="${lesson.price}">가격</td>
                 <td th:text="${lesson.lessonStartDate}">레슨 시작일</td>
                 <td th:text="${lesson.lessonEndDate}">레슨 종료일</td>
                 <td th:text="${lesson.applyEndDate}">수강신청 마감일</td>
                 <td th:text="${lesson.applyStatus}">신청현황</td>
-                <td> <a th:href="@{|/lesson/${lesson.id}|}">신청하기</a></td>
+                <th:block th:if="${lesson.userApplyStatus}">
+                    <td> <a>신청완료</a></td>
+                </th:block>
+                <th:block th:unless="${lesson.userApplyStatus}">
+                    <td> <a th:href="@{|/lesson/${lesson.id}|}">신청하기</a></td>
+                </th:block>
+
             </tr>
         </table>
         <a>※ 수강신청은 레슨 시작일 3일 전까지 가능합니다.</a>
@@ -63,4 +74,5 @@
 
 
 </body>
+<div th:insert="~{fragment/footer::footerFragment}"></div>
 </html>

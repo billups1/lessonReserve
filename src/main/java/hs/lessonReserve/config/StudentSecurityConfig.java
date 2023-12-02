@@ -25,15 +25,19 @@ public class StudentSecurityConfig {
 
         http.authorizeHttpRequests(
                 auth -> auth
-                        .requestMatchers("/lesson/create/**", "/lesson/modify/**").hasAnyRole("TEACHER")
+                        .requestMatchers("/teacher/**").hasAnyRole("TEACHER")
                         .anyRequest().permitAll()
         );
 
-        http.formLogin(login -> login
-                .loginPage("/login/student")
+        http.formLogin(login ->
+                login
+                .loginPage("/login")
                 .usernameParameter("email")
-                .loginProcessingUrl("/login/student")
+                .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/"));
+
+        http.logout(logout->
+                logout.logoutSuccessUrl("/"));
 
         return http.build();
     }

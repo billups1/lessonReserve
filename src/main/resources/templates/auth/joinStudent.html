@@ -1,12 +1,16 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html lang="en">
+<div th:insert="~{fragment/header::headerFragment}"></div>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h2>수강생 회원가입</h2>
-  <form action="/join/student" method="post" enctype="multipart/form-data">
+  <form action="/student/join" method="post" enctype="multipart/form-data">
     <input type="email" name="email" placeholder="이메일" required="required" />
       <br>
     <input type="password" name="password" placeholder="비밀번호" required="required" />
@@ -20,7 +24,8 @@
   </form>
 
   <a>계정이 있으신가요?</a>
-  <a href="/login/student">로그인 화면으로 가기</a>
+  <a href="/login">로그인 화면으로 가기</a>
 
 </body>
+<div th:insert="~{fragment/footer::footerFragment}"></div>
 </html>

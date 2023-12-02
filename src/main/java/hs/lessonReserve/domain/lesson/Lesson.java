@@ -33,6 +33,7 @@ public class Lesson {
     private String content;
     private int maximumStudentsNumber;
     private String lessonTime;
+    private int price;
 
     private LocalDateTime lessonStartDate;
     private LocalDateTime lessonEndDate;
@@ -41,6 +42,10 @@ public class Lesson {
     private LocalDateTime applyEndDate;
     @Transient
     private String applyStatus;
+    @Transient
+    private int studentNumber;
+    @Transient
+    private boolean userApplyStatus;
 
 
     private LocalDateTime createTime;

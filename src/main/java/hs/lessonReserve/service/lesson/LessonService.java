@@ -7,6 +7,7 @@ import hs.lessonReserve.domain.lessonStudent.LessonStudent;
 import hs.lessonReserve.domain.lessonStudent.LessonStudentRepository;
 import hs.lessonReserve.domain.user.Student;
 import hs.lessonReserve.domain.user.Teacher;
+import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,8 @@ public class LessonService {
                 .content(makeLessonDto.getLessonContent())
                 .lessonTime(makeLessonDto.getLessonTime())
                 .maximumStudentsNumber(makeLessonDto.getMaximumStudentsNumber())
-                .teacher((Teacher) principalDetails.getUser()) //문제 확인
+                .teacher((Teacher) principalDetails.getUser())
+                .price(makeLessonDto.getPrice())
                 .lessonStartDate(lessonStartDate)
                 .lessonEndDate(lessonEndDate)
                 .build();
@@ -46,8 +48,17 @@ public class LessonService {
     @Transactional
     public void applyLesson(long lessonId, PrincipalDetails principalDetails) {
 
-        Lesson lesson = new Lesson();
-        lesson.setId(lessonId);
+        if (principalDetails == null) {
+            throw new CustomException("로그인 후 수강신청해 주세요.");
+        }
+
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
+            throw new CustomException("없는 강의입니다.");
+        });
+
+        if (lesson.getStudents().size() >= lesson.getMaximumStudentsNumber()) {
+            throw new CustomException("수강인원이 모두 찼습니다.");
+        }
 
         LessonStudent lessonStudent = LessonStudent.builder()
                 .lesson(lesson)
@@ -59,15 +70,34 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public List<Lesson> homeLessonList() {
+    public List<Lesson> homeLessonList(PrincipalDetails principalDetails) {
         List<Lesson> lessons = lessonRepository.homeLessonList();
         for (Lesson lesson : lessons) {
             lesson.setApplyEndDate(lesson.getLessonStartDate().minusDays(3));
             lesson.setApplyStatus(lesson.getStudents().size() + " / " + lesson.getMaximumStudentsNumber());
-
+            List<LessonStudent> lessonStudents = lesson.getStudents();
+            if (principalDetails != null) {
+                for (LessonStudent lessonStudent : lessonStudents) {
+                    if (lessonStudent.getStudent().getId() == principalDetails.getUser().getId()) {
+                        lesson.setUserApplyStatus(true);
+                        break;
+                    }
+                }
+            }
         }
         return lessons;
     }
 
 
+    public Lesson applyLessonForm(long lessonId) {
+
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
+            throw new CustomException("없는 강의입니다.");
+        });
+
+        lesson.setStudentNumber(lesson.getStudents().size());
+
+        return lesson;
+
+    }
 }

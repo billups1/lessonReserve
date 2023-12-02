@@ -25,4 +25,11 @@ public class ImageFile {
         return new UrlResource("file:"+fullPath);
     }
 
+    @GetMapping("/imageLogo")
+    public Resource logoImage(@PathVariable String imageFileName) throws MalformedURLException {
+        System.out.println("imageLogo");
+        String fullPath = uploadFolder + imageFileName;
+        return new UrlResource("file:/images/img.png");
+    }
+
 }

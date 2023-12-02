@@ -15,6 +15,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
+@Table(
+        uniqueConstraints =
+                @UniqueConstraint(
+                        name = "lessonstudent_uk",
+                        columnNames = {"lessonId", "studentId"}
+                )
+)
 public class LessonStudent {
 
     @Id

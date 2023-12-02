@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
-    @Query(value = "select * from lesson where lessonStartDate >= DATE_ADD(NOW(), INTERVAL 3 day)", nativeQuery = true)
+    @Query(value = "select * from lesson where lessonStartDate >= DATE_ADD(NOW(), INTERVAL 3 day) order by lessonStartDate", nativeQuery = true)
     List<Lesson> homeLessonList();
 
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<nav th:fragment="headerFragment">
+    <div>
+        <a href="/"><img src="/images/img.png" width="150"></a>
+    </div>
+    <div>
+        <span sec:authorize="isAuthenticated()">
+            <span sec:authorize="hasRole('USER')">
+                <a href="/members/my-page" class="text-decoration-none"> 마이 페이지 | </a>
+            </span>
+            <a href="/logout" class="text-decoration-none"> 로그아웃 | </a>
+        </span>
+    </div>
+    <hr>
+</nav>

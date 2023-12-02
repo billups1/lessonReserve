@@ -21,13 +21,13 @@ public class LessonController {
     private final LessonRepository lessonRepository;
     private final LessonService lessonService;
 
-    @GetMapping("/lesson/create")
+    @GetMapping("/teacher/lesson/create")
     public String makeLessonFrom() {
 
         return "lesson/makeLesson";
     }
 
-    @PostMapping("/lesson/create")
+    @PostMapping("/teacher/lesson/create")
     public String makeLesson(MakeLessonDto makeLessonDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         System.out.println(makeLessonDto.toString());
         lessonService.makeLesson(makeLessonDto, principalDetails);
@@ -38,9 +38,7 @@ public class LessonController {
     @GetMapping("lesson/{lessonId}")
     public String applyLessonForm(@PathVariable long lessonId, Model model) {
 
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
-            throw new CustomException("없는 강의입니다.");
-        });
+        Lesson lesson = lessonService.applyLessonForm(lessonId);
 
         model.addAttribute("lesson", lesson);
 
