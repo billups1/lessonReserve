@@ -1,12 +1,14 @@
 package hs.lessonReserve.domain.lesson;
 
-import hs.lessonReserve.domain.lessonStudent.LessonStudent;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import hs.lessonReserve.domain.apply.Apply;
 import hs.lessonReserve.domain.user.Teacher;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,10 +26,12 @@ public class Lesson {
 
     @ManyToOne
     @JoinColumn(name = "teacherId")
+    @JsonIgnoreProperties({"lessons", "certificates"})
     private Teacher teacher;
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<LessonStudent> students;
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"lesson", "student"})
+    private List<Apply> applies;
 
     private String name;
     private String content;
@@ -55,5 +59,22 @@ public class Lesson {
         this.createTime = LocalDateTime.now();
     }
 
-
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", maximumStudentsNumber=" + maximumStudentsNumber +
+                ", lessonTime='" + lessonTime + '\'' +
+                ", price=" + price +
+                ", lessonStartDate=" + lessonStartDate +
+                ", lessonEndDate=" + lessonEndDate +
+                ", applyEndDate=" + applyEndDate +
+                ", applyStatus='" + applyStatus + '\'' +
+                ", studentNumber=" + studentNumber +
+                ", userApplyStatus=" + userApplyStatus +
+                ", createTime=" + createTime +
+                '}';
+    }
 }

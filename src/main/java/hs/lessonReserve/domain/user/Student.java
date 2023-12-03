@@ -1,6 +1,6 @@
 package hs.lessonReserve.domain.user;
 
-import hs.lessonReserve.domain.lessonStudent.LessonStudent;
+import hs.lessonReserve.domain.apply.Apply;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,6 +18,6 @@ import java.util.List;
 public class Student extends User{
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<LessonStudent> lessons;
+    private List<Apply> lessons;
 
 }

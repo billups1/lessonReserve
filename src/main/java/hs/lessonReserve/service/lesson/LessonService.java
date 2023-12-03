@@ -1,35 +1,46 @@
 package hs.lessonReserve.service.lesson;
 
+import hs.lessonReserve.config.ModelMapperConfig;
 import hs.lessonReserve.config.auth.PrincipalDetails;
+import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.lesson.LessonRepository;
-import hs.lessonReserve.domain.lessonStudent.LessonStudent;
-import hs.lessonReserve.domain.lessonStudent.LessonStudentRepository;
-import hs.lessonReserve.domain.user.Student;
+import hs.lessonReserve.domain.apply.Apply;
+import hs.lessonReserve.domain.apply.ApplyRepository;
 import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
 import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class LessonService {
 
     private final LessonRepository lessonRepository;
-    private final LessonStudentRepository lessonStudentRepository;
+    @Autowired
+    ModelMapper modelMapper;
 
     @Transactional
     public void makeLesson(MakeLessonDto makeLessonDto, PrincipalDetails principalDetails) {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime lessonStartDate = LocalDateTime.parse(makeLessonDto.getLessonStartDate()+" 00:00:00.000", dateTimeFormatter);
-        LocalDateTime lessonEndDate = LocalDateTime.parse(makeLessonDto.getLessonEndDate()+" 23:59:59.000", dateTimeFormatter);
+        LocalDateTime lessonStartDate = LocalDateTime.parse(makeLessonDto.getLessonStartDate() + " 00:00:00.000", dateTimeFormatter);
+        LocalDateTime lessonEndDate = LocalDateTime.parse(makeLessonDto.getLessonEndDate() + " 23:59:59.000", dateTimeFormatter);
 
         Lesson lesson = Lesson.builder()
                 .name(makeLessonDto.getLessonName())
@@ -46,58 +57,88 @@ public class LessonService {
     }
 
     @Transactional
-    public void applyLesson(long lessonId, PrincipalDetails principalDetails) {
-
-        if (principalDetails == null) {
-            throw new CustomException("로그인 후 수강신청해 주세요.");
-        }
-
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
-            throw new CustomException("없는 강의입니다.");
-        });
-
-        if (lesson.getStudents().size() >= lesson.getMaximumStudentsNumber()) {
-            throw new CustomException("수강인원이 모두 찼습니다.");
-        }
-
-        LessonStudent lessonStudent = LessonStudent.builder()
-                .lesson(lesson)
-                .student(principalDetails.getUser())
-                .build();
-
-        lessonStudentRepository.save(lessonStudent);
-
+    public void deleteLesson(long lessonId, PrincipalDetails principalDetails) {
+        long teacherId = principalDetails.getUser().getId();
+        System.out.println(lessonId + "/" + teacherId);
+        lessonRepository.mDeleteLesson(lessonId, teacherId);
     }
 
     @Transactional(readOnly = true)
-    public List<Lesson> homeLessonList(PrincipalDetails principalDetails) {
-        List<Lesson> lessons = lessonRepository.homeLessonList();
+    public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, Pageable pageable) {
+        Page<Lesson> lessons = lessonRepository.mHomeLessonList(pageable);
+        ArrayList<HomeLessonListDto> homeLessonListDtoArrayList = new ArrayList<>();
         for (Lesson lesson : lessons) {
-            lesson.setApplyEndDate(lesson.getLessonStartDate().minusDays(3));
-            lesson.setApplyStatus(lesson.getStudents().size() + " / " + lesson.getMaximumStudentsNumber());
-            List<LessonStudent> lessonStudents = lesson.getStudents();
+            HomeLessonListDto homeLessonListDto = HomeLessonListDto.builder()
+                    .teacher(lesson.getTeacher())
+                    .name(lesson.getName())
+                    .content(lesson.getContent())
+                    .maximumStudentsNumber(lesson.getMaximumStudentsNumber())
+                    .lessonTime(lesson.getLessonTime())
+                    .price(lesson.getPrice())
+                    .lessonStartDate(lesson.getLessonStartDate().toString().substring(0, 10))
+                    .lessonEndDate(lesson.getLessonEndDate().toString().substring(0, 10))
+                    .build();
+            homeLessonListDto.setApplyEndDate(lesson.getLessonStartDate().minusDays(3).toString().substring(0,10));
+            homeLessonListDto.setApplyStatus(lesson.getApplies().size() + " / " + lesson.getMaximumStudentsNumber());
+            List<Apply> applies = lesson.getApplies();
             if (principalDetails != null) {
-                for (LessonStudent lessonStudent : lessonStudents) {
-                    if (lessonStudent.getStudent().getId() == principalDetails.getUser().getId()) {
-                        lesson.setUserApplyStatus(true);
+                for (Apply apply : applies) {
+                    if (apply.getStudent().getId() == principalDetails.getUser().getId() && apply.getApplyStatus() == ApplyStatus.APPLY) {
+                        homeLessonListDto.setUserApplyStatus(true);
                         break;
                     }
                 }
             }
+            homeLessonListDtoArrayList.add(homeLessonListDto);
         }
+
+        PageRequest pageRequest = PageRequest.of(lessons.getPageable().getPageNumber(), lessons.getPageable().getPageSize());
+        int start = (int) pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), homeLessonListDtoArrayList.size());
+        Page<HomeLessonListDto> homeLessonListDtos = new PageImpl<>(homeLessonListDtoArrayList.subList(start, end), pageRequest, homeLessonListDtoArrayList.size());
+        return homeLessonListDtos;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Lesson> studentMyPageList(PrincipalDetails principalDetails) {
+
+        long studentId = principalDetails.getUser().getId();
+        List<Lesson> lessons = lessonRepository.mStudentMyPageList(studentId);
+
+        for (Lesson lesson : lessons) {
+            lesson.setApplyEndDate(lesson.getLessonStartDate().minusDays(3));
+            lesson.setApplyStatus(lesson.getApplies().size() + " / " + lesson.getMaximumStudentsNumber());
+        }
+
         return lessons;
     }
 
+    @Transactional(readOnly = true)
+    public List<Lesson> teacherMyPageList(PrincipalDetails principalDetails) {
 
+        long teacherId = principalDetails.getUser().getId();
+        List<Lesson> lessons = lessonRepository.mTeacherMyPageList(teacherId);
+
+        for (Lesson lesson : lessons) {
+            lesson.setApplyEndDate(lesson.getLessonStartDate().minusDays(3));
+            lesson.setApplyStatus(lesson.getApplies().size() + " / " + lesson.getMaximumStudentsNumber());
+        }
+
+        return lessons;
+
+    }
+
+    @Transactional(readOnly = true)
     public Lesson applyLessonForm(long lessonId) {
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
             throw new CustomException("없는 강의입니다.");
         });
 
-        lesson.setStudentNumber(lesson.getStudents().size());
+        lesson.setStudentNumber(lesson.getApplies().size());
 
         return lesson;
 
     }
+
 }

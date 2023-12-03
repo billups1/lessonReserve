@@ -1,16 +1,12 @@
 package hs.lessonReserve.domain.user;
 
-import hs.lessonReserve.domain.certificate.Certificate;
-import hs.lessonReserve.domain.lessonStudent.LessonStudent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor

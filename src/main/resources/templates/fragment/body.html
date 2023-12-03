@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body>
+
+<div th:fragment="bodyFragment">
+    <th:block layout:fragment="contents"></th:block>
+
+    <hr>
+
+        <a class="nav-link" href="/logout">로그아웃</a>
+
+
+</div>
+
+</body>
+
+</html>

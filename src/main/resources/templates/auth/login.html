@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
 <html lang="en">
-<div th:insert="~{fragment/header::headerFragment}"></div>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h2>수강생 로그인</h2>
+<div layout:fragment="contents">
+    <h2>수강생 로그인</h2>
 
-<form action="/login" method="post">
-  <input type="email" name="email" placeholder="이메일" required="required" />
-  <br>
-  <input type="password" name="password" placeholder="비밀번호" required="required" />
-  <br>
-  <button>로그인</button>
-</form>
+    <form action="/login" method="post">
+        <input type="email" name="email" placeholder="이메일" required="required"/>
+        <br>
+        <input type="password" name="password" placeholder="비밀번호" required="required"/>
+        <br>
+        <button>로그인</button>
+    </form>
+</div>
 
 </body>
 </html>

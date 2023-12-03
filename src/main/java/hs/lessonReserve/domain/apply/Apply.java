@@ -1,5 +1,6 @@
-package hs.lessonReserve.domain.lessonStudent;
+package hs.lessonReserve.domain.apply;
 
+import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.user.User;
 import jakarta.persistence.*;
@@ -15,14 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(
-        uniqueConstraints =
-                @UniqueConstraint(
-                        name = "lessonstudent_uk",
-                        columnNames = {"lessonId", "studentId"}
-                )
-)
-public class LessonStudent {
+public class Apply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +30,8 @@ public class LessonStudent {
     @JoinColumn(name = "studentId")
     private User student;
 
+    @Enumerated(EnumType.STRING)
+    private ApplyStatus applyStatus;
 
 
     private LocalDateTime createTime;

@@ -4,7 +4,9 @@ import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.lesson.LessonRepository;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.service.apply.ApplyService;
 import hs.lessonReserve.service.lesson.LessonService;
+import hs.lessonReserve.util.Script;
 import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class LessonController {
 
-    private final LessonRepository lessonRepository;
     private final LessonService lessonService;
+    private final ApplyService applyService;
 
     @GetMapping("/teacher/lesson/create")
     public String makeLessonFrom() {
@@ -35,7 +37,7 @@ public class LessonController {
         return "redirect:/";
     }
 
-    @GetMapping("lesson/{lessonId}")
+    @GetMapping("/lesson/{lessonId}")
     public String applyLessonForm(@PathVariable long lessonId, Model model) {
 
         Lesson lesson = lessonService.applyLessonForm(lessonId);
@@ -45,13 +47,12 @@ public class LessonController {
         return "lesson/applyLesson";
     }
 
-    @PostMapping("lesson/{lessonId}")
+    @PostMapping("/lesson/{lessonId}")
     public String applyLesson(@PathVariable long lessonId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        lessonService.applyLesson(lessonId, principalDetails);
+        applyService.makeApply(lessonId, principalDetails);
 
         return "redirect:/";
     }
-
 
 }

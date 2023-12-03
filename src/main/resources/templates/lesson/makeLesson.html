@@ -1,57 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
 <html lang="en">
-<div th:insert="~{fragment/header::headerFragment}"></div>
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div layout:fragment="contents">
+    <div>
+        <h2>레슨 등록하기</h2>
+        <form action="/teacher/lesson/create" method="post" enctype="application/json" onsubmit="makeLessonAlert()">
+            <div>
+                <label for="lessonName">레슨명</label>
+                <input type="text" id="lessonName" name="lessonName" placeholder="레슨명을 입력하세요." style="width:300px">
+            </div>
+            <div>
+                <label for="lessonContent">레슨 설명</label>
+                <input type="text" id="lessonContent" name="lessonContent" placeholder="레슨에 대한 설명을 입력하세요."
+                       style="width:300px;height:300px;">
+            </div>
+            <div>
+                <label for="maximumStudentsNumber">최대 수강인원</label>
+                <input type="number" id="maximumStudentsNumber" name="maximumStudentsNumber"
+                       placeholder="최대 수강인원을 입력하세요."
+                       style="width:150px">
+            </div>
+            <div>
+                <label for="lessonTime">레슨 시간</label>
+                <input type="text" id="lessonTime" name="lessonTime" placeholder="레슨 시간을 입력하세요." style="width:300px">
+            </div>
+            <div>
+                <label for="price">가격</label>
+                <input type="number" id="price" name="price" style="width:150px">원
+            </div>
+            <div>
+                <label for="lessonStartDate">레슨 시작일</label>
+                <input type="date" id="lessonStartDate" name="lessonStartDate">
+            </div>
+            <div>
+                <label for="lessonEndDate">레슨 종료일</label>
+                <input type="date" id="lessonEndDate" name="lessonEndDate">
+            </div>
 
-<div>
-    <h2>레슨 등록하기</h2>
-    <form action="teacher/lesson/create" method="post" enctype="application/json" onsubmit="makeLessonAlert()">
-        <div>
-            <label for="lessonName">레슨명</label>
-            <input type="text" id="lessonName" name="lessonName" placeholder="레슨명을 입력하세요." style="width:300px">
-        </div>
-        <div>
-            <label for="lessonContent">레슨 설명</label>
-            <input type="text" id="lessonContent" name="lessonContent" placeholder="레슨에 대한 설명을 입력하세요."
-                   style="width:300px;height:300px;">
-        </div>
-        <div>
-            <label for="maximumStudentsNumber">최대 수강인원</label>
-            <input type="number" id="maximumStudentsNumber" name="maximumStudentsNumber" placeholder="최대 수강인원을 입력하세요."
-                   style="width:150px">
-        </div>
-        <div>
-            <label for="lessonTime">레슨 시간</label>
-            <input type="text" id="lessonTime" name="lessonTime" placeholder="레슨 시간을 입력하세요." style="width:300px">
-        </div>
-        <div>
-            <label for="price">가격</label>
-            <input type="number" id="price" name="price" style="width:150px">원
-        </div>
-        <div>
-            <label for="lessonStartDate">레슨 시작일</label>
-            <input type="date" id="lessonStartDate" name="lessonStartDate">
-        </div>
-        <div>
-            <label for="lessonEndDate">레슨 종료일</label>
-            <input type="date" id="lessonEndDate" name="lessonEndDate">
-        </div>
 
-
-        <button>레슨 만들기</button>
-    </form>
-
+            <button>레슨 만들기</button>
+        </form>
+        <script src="/js/makeLesson.js"></script>
+    </div>
 </div>
 
-<script src="/js/makeLesson.js"></script>
+
 
 </body>
-<div th:insert="~{fragment/footer::footerFragment}"></div>
 </html>

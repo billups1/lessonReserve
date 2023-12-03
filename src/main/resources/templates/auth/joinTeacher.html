@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
 <html lang="en">
-<div th:insert="~{fragment/header::headerFragment}"></div>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 
 <body>
-<h2>강사 회원가입</h2>
-  <form action="/teacher/join" method="post" enctype="multipart/form-data">
-    <input type="email" name="email" placeholder="이메일" required="required" />
-      <br>
-    <input type="password" name="password" placeholder="비밀번호" required="required" />
-      <br>
-    <input type="text" name="name" placeholder="이름" required="required" />
-      <br>
-    <a>프로필 사진 첨부</a><br>
-    <input type="file" name="profileImageFile" placeholder="프로필 이미지"/>
-      <br><br>
-    <a>자격증 사본 첨부: 교육과 관련된 자격증을 첨부하여 주세요.</a><br>
-    <input type="file" multiple="multiple" name="certificateImageFiles" placeholder="자격증 이미지"/>
-      <br>
-      <br>
-      <br>
-    <button>가입하기</button>
-  </form>
+<div layout:fragment="contents">
+    <h2>강사 회원가입</h2>
+    <form action="/teacher/join" method="post" enctype="multipart/form-data">
+        <input type="email" name="email" placeholder="이메일" required="required"/>
+        <br>
+        <input type="password" name="password" placeholder="비밀번호" required="required"/>
+        <br>
+        <input type="text" name="name" placeholder="이름" required="required"/>
+        <br>
+        <a>프로필 사진 첨부</a><br>
+        <input type="file" name="profileImageFile" placeholder="프로필 이미지"/>
+        <br><br>
+        <a>자격증 사본 첨부: 교육과 관련된 자격증을 첨부하여 주세요.</a><br>
+        <input type="file" multiple="multiple" name="certificateImageFiles" placeholder="자격증 이미지"/>
+        <br>
+        <br>
+        <br>
+        <button>가입하기</button>
+    </form>
 
-<br>
-<br>
-  <a>계정이 있으신가요?</a>
-  <a href="/login">로그인 화면으로 가기</a>
+    <br>
+    <br>
+    <a>계정이 있으신가요?</a>
+    <a href="/login">로그인 화면으로 가기</a>
+</div>
 
 </body>
-<div th:insert="~{fragment/footer::footerFragment}"></div>
 </html>
