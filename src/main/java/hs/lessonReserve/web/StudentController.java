@@ -4,15 +4,30 @@ import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.domain.apply.Apply;
 import hs.lessonReserve.domain.apply.ApplyRepository;
 import hs.lessonReserve.domain.lesson.Lesson;
+import hs.lessonReserve.domain.lesson.LessonRepository;
+import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.service.apply.ApplyService;
 import hs.lessonReserve.service.lesson.LessonService;
+import hs.lessonReserve.service.lessonReview.LessonReviewService;
+import hs.lessonReserve.web.dto.LessonReview.LessonReviewDto;
+import hs.lessonReserve.web.dto.ex.CMRespDto;
+import hs.lessonReserve.web.dto.lesson.StudentMyPageLessonListDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
@@ -20,6 +35,7 @@ import java.util.List;
 public class StudentController {
 
     private final ApplyService applyService;
+    private final LessonReviewService lessonReviewService;
 
     @GetMapping("/student/mypage")
     public String studentMyPageForm(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -27,10 +43,31 @@ public class StudentController {
             throw new CustomException("로그인 후 접속 가능합니다.");
         }
 
-        List<Apply> studentMyPageList = applyService.studentMyPageList(principalDetails);
-        model.addAttribute("applies", studentMyPageList);
+        List<StudentMyPageLessonListDto> studentMyPageList = applyService.studentMyPageList(principalDetails);
+        model.addAttribute("dtos", studentMyPageList);
 
         return "student/studentMyPage";
+    }
+
+    @GetMapping("/student/lesson/review/{applyId}")
+    public String studentLessonReviewForm(@PathVariable long applyId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        Apply apply = applyService.findApply(applyId);
+
+        model.addAttribute("apply", apply);
+        return "student/LessonReviewForm";
+    }
+
+    @PostMapping("/student/LessonReview/{applyId}")
+    public String review(@PathVariable long applyId, LessonReviewDto lessonReviewDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) throws URISyntaxException {
+        if (lessonReviewDto.getScore() >5 || lessonReviewDto.getScore() <0.5) {
+            throw new CustomApiException("평점은 0.5부터 5 사이로 입력해 주세요");
+        }
+
+        lessonReviewService.makeReview(applyId, lessonReviewDto, principalDetails);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(new URI("/student/mypage"));
+
+        return "redirect:/student/mypage";
     }
 
 }

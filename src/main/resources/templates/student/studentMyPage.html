@@ -31,25 +31,37 @@
             <th>취소하기</th>
         </tr>
 
-        <tr th:each="apply : ${applies}">
-            <td><a th:text="${apply.lesson.id}">번호</a></td>
-            <td th:text="${apply.lesson.name}">강의명</td>
-            <td th:text="${apply.lesson.teacher.name}">강사</td>
-            <td><img th:src="|/image/${apply.lesson.teacher.profileImageUrl}|" width="50" height="50"/></td>
-            <td th:text="${apply.lesson.lessonTime}">시간</td>
-            <td th:text="${apply.lesson.price}">가격</td>
-            <td th:text="${#temporals.format(apply.lesson.lessonStartDate, 'yyyy-MM-dd')}">레슨 시작일</td>
-            <td th:text="${#temporals.format(apply.lesson.lessonEndDate, 'yyyy-MM-dd')}">레슨 종료일</td>
-            <td th:text="${#temporals.format(apply.lesson.applyEndDate, 'yyyy-MM-dd')}">수강신청 마감일</td>
-            <td th:text="${#temporals.format(apply.createTime, 'yyyy-MM-dd')}">수강신청일</td>
-            <td th:text="${apply.lesson.applyStatus}">수강자수</td>
-            <th:block th:if="${#strings.equals(apply.applyStatus, 'APPLY')}">
+        <tr th:each="dto : ${dtos}">
+            <td><a th:text="${dto.applyId}">번호</a></td>
+            <td th:text="${dto.name}">강의명</td>
+            <td th:text="${dto.teacher.name}">강사</td>
+            <td><img th:src="|/image/${dto.teacher.profileImageUrl}|" width="50" height="50"/></td>
+            <td th:text="${dto.lessonTime}">시간</td>
+            <td th:text="${dto.price}">가격</td>
+            <td th:text="${dto.lessonStartDate}">레슨 시작일</td>
+            <td th:text="${dto.lessonEndDate}">레슨 종료일</td>
+            <td th:text="${dto.applyEndDate}">수강신청 마감일</td>
+            <td th:text="${dto.applyCreateTime}">수강신청일</td>
+            <td th:text="${dto.applyStatus}">수강자수</td>
+            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'APPLY')}">
                 <td>
-                    <button th:onclick="cancelApply([[${apply.lesson.id}]])">취소하기</button>
+                    <button th:onclick="cancelApply([[${dto.lessonId}]])">취소하기</button>
                 </td>
             </th:block>
-            <th:block th:if="${#strings.equals(apply.applyStatus, 'CANCEL')}">
+            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'CANCEL')}">
                 <td><a>취소완료</a></td>
+            </th:block>
+            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'COMPLETED')}">
+                <td>
+                    수강완료<br>
+                    <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/student/lesson/review/{lessonId}(lessonId=${dto.applyId})}'|">수강평 쓰기</button>
+                </td>
+            </th:block>
+            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'REVIEWCOMPLETED')}">
+                <td>
+                    수강평<br>
+                    작성완료
+                </td>
             </th:block>
 
         </tr>

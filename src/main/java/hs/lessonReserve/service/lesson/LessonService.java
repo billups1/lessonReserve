@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 public class LessonService {
 
     private final LessonRepository lessonRepository;
+    private final ApplyRepository applyRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -58,6 +59,11 @@ public class LessonService {
 
     @Transactional
     public void deleteLesson(long lessonId, PrincipalDetails principalDetails) {
+        List<Apply> applies = applyRepository.findAllByLessonId(lessonId);
+        for (Apply apply : applies) {
+            apply.setLesson(null);
+        }
+
         long teacherId = principalDetails.getUser().getId();
         System.out.println(lessonId + "/" + teacherId);
         lessonRepository.mDeleteLesson(lessonId, teacherId);
@@ -69,9 +75,9 @@ public class LessonService {
         ArrayList<HomeLessonListDto> homeLessonListDtoArrayList = new ArrayList<>();
         for (Lesson lesson : lessons) {
             HomeLessonListDto homeLessonListDto = HomeLessonListDto.builder()
+                    .id(lesson.getId())
                     .teacher(lesson.getTeacher())
                     .name(lesson.getName())
-                    .content(lesson.getContent())
                     .maximumStudentsNumber(lesson.getMaximumStudentsNumber())
                     .lessonTime(lesson.getLessonTime())
                     .price(lesson.getPrice())
@@ -97,20 +103,6 @@ public class LessonService {
         int end = Math.min((start + pageRequest.getPageSize()), homeLessonListDtoArrayList.size());
         Page<HomeLessonListDto> homeLessonListDtos = new PageImpl<>(homeLessonListDtoArrayList.subList(start, end), pageRequest, homeLessonListDtoArrayList.size());
         return homeLessonListDtos;
-    }
-
-    @Transactional(readOnly = true)
-    public List<Lesson> studentMyPageList(PrincipalDetails principalDetails) {
-
-        long studentId = principalDetails.getUser().getId();
-        List<Lesson> lessons = lessonRepository.mStudentMyPageList(studentId);
-
-        for (Lesson lesson : lessons) {
-            lesson.setApplyEndDate(lesson.getLessonStartDate().minusDays(3));
-            lesson.setApplyStatus(lesson.getApplies().size() + " / " + lesson.getMaximumStudentsNumber());
-        }
-
-        return lessons;
     }
 
     @Transactional(readOnly = true)
@@ -141,4 +133,9 @@ public class LessonService {
 
     }
 
+    public Lesson findLesson(long lessonId) {
+        return lessonRepository.findById(lessonId).orElseThrow(()->{
+            throw new CustomException("없는 강의입니다.");
+        });
+    }
 }

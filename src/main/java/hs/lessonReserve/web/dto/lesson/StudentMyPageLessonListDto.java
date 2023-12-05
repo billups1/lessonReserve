@@ -1,26 +1,25 @@
 package hs.lessonReserve.web.dto.lesson;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import hs.lessonReserve.domain.apply.Apply;
-import hs.lessonReserve.domain.lesson.Lesson;
+import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.user.Teacher;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @Builder
-public class HomeLessonListDto {
+@NoArgsConstructor
+public class StudentMyPageLessonListDto {
 
-    private long id;
+    private long applyId;
     @JsonIgnoreProperties({"lessons", "certificates"})
     private Teacher teacher;
+
     private String name;
     private int maximumStudentsNumber;
     private String lessonTime;
@@ -29,9 +28,10 @@ public class HomeLessonListDto {
     private String lessonStartDate;
     private String lessonEndDate;
     private String applyEndDate;
+    private String applyCreateTime;
+
     private String applyStatus;
-    private boolean userApplyStatus;
-
-
+    private ApplyStatus userApplyStatus;
+    private long lessonId;
 
 }
