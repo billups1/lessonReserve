@@ -30,6 +30,9 @@ public abstract class User {
     private String role;
     private String profileImageUrl;
 
+    private String provider;
+    private String providerId;
+
 
     private LocalDateTime createTime;
 

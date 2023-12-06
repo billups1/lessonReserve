@@ -1,18 +1,12 @@
 package hs.lessonReserve.web.api;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
-import hs.lessonReserve.constant.ApplyStatus;
-import hs.lessonReserve.domain.apply.Apply;
-import hs.lessonReserve.domain.apply.ApplyRepository;
-import hs.lessonReserve.service.apply.ApplyService;
-import hs.lessonReserve.service.lesson.LessonService;
+import hs.lessonReserve.service.ApplyService;
 import hs.lessonReserve.web.dto.ex.CMRespDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.system.ApplicationTemp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

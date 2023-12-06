@@ -1,4 +1,4 @@
-package hs.lessonReserve.service.lesson;
+package hs.lessonReserve.service;
 
 import hs.lessonReserve.config.ModelMapperConfig;
 import hs.lessonReserve.config.auth.PrincipalDetails;

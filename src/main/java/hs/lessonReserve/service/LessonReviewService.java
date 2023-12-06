@@ -1,4 +1,4 @@
-package hs.lessonReserve.service.lessonReview;
+package hs.lessonReserve.service;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.constant.ApplyStatus;

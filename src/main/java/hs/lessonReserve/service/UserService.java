@@ -1,4 +1,4 @@
-package hs.lessonReserve.service.user;
+package hs.lessonReserve.service;
 
 import hs.lessonReserve.domain.certificate.Certificate;
 import hs.lessonReserve.domain.certificate.CertificateRepository;

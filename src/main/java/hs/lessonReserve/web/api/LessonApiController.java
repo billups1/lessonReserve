@@ -1,23 +1,16 @@
 package hs.lessonReserve.web.api;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
-import hs.lessonReserve.handler.ex.CustomApiException;
-import hs.lessonReserve.service.lesson.LessonService;
-import hs.lessonReserve.service.lessonReview.LessonReviewService;
+import hs.lessonReserve.service.LessonService;
 import hs.lessonReserve.web.dto.ex.CMRespDto;
 import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
-import hs.lessonReserve.web.dto.LessonReview.LessonReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor

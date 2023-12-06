@@ -32,6 +32,24 @@ spring:
       name: test
       password: 1234
 
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 90173a07001d061202a538588b019750
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            scope: profile_nickname, profile_image
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization_uri: https://kauth.kakao.com/oauth/authorize
+            token_uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user_name_attribute: id
+
+
 logging:
   level:
     com.example.log: debug

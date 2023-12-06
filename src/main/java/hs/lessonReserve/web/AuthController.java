@@ -1,7 +1,7 @@
 package hs.lessonReserve.web;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
-import hs.lessonReserve.service.user.UserService;
+import hs.lessonReserve.service.UserService;
 import hs.lessonReserve.web.dto.auth.UserJoinDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

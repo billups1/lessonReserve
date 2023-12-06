@@ -2,13 +2,9 @@ package hs.lessonReserve.web;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.domain.lesson.Lesson;
-import hs.lessonReserve.domain.lesson.LessonRepository;
-import hs.lessonReserve.handler.ex.CustomException;
-import hs.lessonReserve.service.apply.ApplyService;
-import hs.lessonReserve.service.lesson.LessonService;
-import hs.lessonReserve.util.Script;
+import hs.lessonReserve.service.ApplyService;
+import hs.lessonReserve.service.LessonService;
 import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
