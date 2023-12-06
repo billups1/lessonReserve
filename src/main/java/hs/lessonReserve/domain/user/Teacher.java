@@ -1,5 +1,6 @@
 package hs.lessonReserve.domain.user;
 
+import hs.lessonReserve.domain.LessonReview.LessonReview;
 import hs.lessonReserve.domain.certificate.Certificate;
 import hs.lessonReserve.domain.lesson.Lesson;
 import jakarta.persistence.Entity;

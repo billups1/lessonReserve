@@ -1,12 +1,16 @@
 package hs.lessonReserve.service;
 
+import hs.lessonReserve.domain.LessonReview.LessonReview;
+import hs.lessonReserve.domain.LessonReview.LessonReviewRepository;
 import hs.lessonReserve.domain.certificate.Certificate;
 import hs.lessonReserve.domain.certificate.CertificateRepository;
 import hs.lessonReserve.domain.user.Student;
 import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.domain.user.User;
 import hs.lessonReserve.domain.user.UserRepository;
+import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.web.dto.auth.UserJoinDto;
+import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +34,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CertificateRepository certificateRepository;
+    private final LessonReviewRepository lessonReviewRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${file.path}")
@@ -116,4 +121,25 @@ public class UserService {
         userRepository.save(student);
     }
 
+    public TeacherIntroduceDto teacherIntroduceDto(long teacherId) {
+        Teacher teacher = (Teacher) userRepository.findById(teacherId).orElseThrow(() -> {
+            throw new CustomException("없는 선생님입니다.");
+        });
+
+        List<LessonReview> lessonReviews = lessonReviewRepository.mFindByTeacher(teacherId);
+
+        int sum = 0;
+        int count = 0;
+        for (LessonReview lessonReview : lessonReviews) {
+            sum += lessonReview.getScore();
+            count++;
+        }
+        int averageScore = -1;
+        if (count != 0) {
+            averageScore = sum / count;
+        }
+        TeacherIntroduceDto teacherIntroduceDto = new TeacherIntroduceDto(teacher, lessonReviews, averageScore);
+
+        return teacherIntroduceDto;
+    }
 }

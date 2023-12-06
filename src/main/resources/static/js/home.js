@@ -29,8 +29,8 @@ function getHomeLesson(lesson) {
         <tr>
             <td>${lesson.id}</td>
             <td>${lesson.name}</td>
-            <td>${lesson.teacher.name}</td>
-            <td><img src="/image/${lesson.teacher.profileImageUrl}" width="50" height="50"/></td>
+            <td><a href="/teacher/${lesson.teacher.id}">${lesson.teacher.name}</a></td>
+            <td><a href="/teacher/${lesson.teacher.id}"><img src="/image/${lesson.teacher.profileImageUrl}" width="50" height="50"/></a></td>
             <td>${lesson.lessonTime}</td>
             <td>${lesson.price}</td>
             <td>${lesson.lessonStartDate}</td>

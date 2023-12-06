@@ -1,13 +1,20 @@
 package hs.lessonReserve.web;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
+import hs.lessonReserve.domain.LessonReview.LessonReview;
+import hs.lessonReserve.domain.LessonReview.LessonReviewRepository;
 import hs.lessonReserve.domain.lesson.Lesson;
+import hs.lessonReserve.domain.user.Teacher;
+import hs.lessonReserve.service.LessonReviewService;
 import hs.lessonReserve.service.LessonService;
+import hs.lessonReserve.service.UserService;
+import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -16,6 +23,8 @@ import java.util.List;
 public class TeacherController {
 
     private final LessonService lessonService;
+    private final UserService userService;
+    private final LessonReviewService lessonReviewService;
 
     @GetMapping("/teacher/mypage")
     public String teacherMyPageForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
@@ -26,6 +35,15 @@ public class TeacherController {
         model.addAttribute("lessons", teacherMyPageList);
 
         return "teacher/teacherMyPage";
+    }
+
+    @GetMapping("/teacher/{teacherId}")
+    public String teacherIntroduceForm(@PathVariable long teacherId, Model model) {
+        TeacherIntroduceDto teacherIntroduceDto = userService.teacherIntroduceDto(teacherId);
+
+        model.addAttribute("dto", teacherIntroduceDto);
+
+        return "teacher/teacherIntroducePage";
     }
 
 }

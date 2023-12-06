@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="contents">
+    <div style="text-align: center">
+        <h2>강사 소개 페이지</h2>
+
+        <img th:src="|/image/${dto.teacher.profileImageUrl}|" width="200" height="200"/>
+
+        <h2><b>[[${dto.teacher.name}]] 강사님</b></h2>
+        <br>
+
+        <th:block th:if="${dto.averageScore ge 0}">
+
+            <h3>수강평</h3>
+            <table style="margin-left:auto; margin-right:auto;" class="table">
+                <a>평균점수 [[${dto.averageScore}]] 점</a>
+                <tr>
+                    <th>수강생 이름</th>
+                    <th>평점</th>
+                    <th>평가내용</th>
+                </tr>
+                <tr th:each="lessonReview : ${dto.lessonReviews}">
+                    <td>[[${lessonReview.student.name}]] 님</td>
+                    <td>[[${lessonReview.score}]] 점</td>
+                    <td>[[${lessonReview.content}]]</td>
+                </tr>
+            </table>
+
+            </tr>
+
+            <br>
+            <br>
+            <h3>진행강의</h3>
+            <table class="table">
+                <tr>
+                    <th>번호</th>
+                    <th>강의명</th>
+                    <th>시간</th>
+                    <th>레슨 시작일</th>
+                    <th>레슨 종료일</th>
+                </tr>
+
+                <tr th:each="lesson : ${dto.teacher.lessons}">
+                    <td><a th:text="${lesson.id}">번호</a></td>
+                    <td th:text="${lesson.name}">강의명</td>
+                    <td th:text="${lesson.lessonTime}">시간</td>
+                    <td th:text="${#temporals.format(lesson.lessonStartDate, 'yyyy-MM-dd')}">레슨 시작일</td>
+                    <td th:text="${#temporals.format(lesson.lessonEndDate, 'yyyy-MM-dd')}">레슨 종료일</td>
+                </tr>
+            </table>
+
+        </th:block>
+        <th:block th:if="${dto.averageScore lt 0}">
+            <h3>아직 진행한 강의가 없습니다.</h3>
+            <br>
+            <br>
+        </th:block>
+
+    </div>
+    <script src="/js/teacherMyPage.js"></script>
+</div>
+
+</body>
+</html>

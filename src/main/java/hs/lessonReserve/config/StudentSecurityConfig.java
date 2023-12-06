@@ -24,8 +24,7 @@ public class StudentSecurityConfig {
 
         http.authorizeHttpRequests(
                 auth -> auth
-                        .requestMatchers("/teacher/join").permitAll()
-                        .requestMatchers("/teacher/**").hasAnyRole("TEACHER")
+                        .requestMatchers("/teacher/lesson/**", "/teacher/mypage/**", "/api/teacher/lesson/**").hasAnyRole("TEACHER")
                         .anyRequest().permitAll()
         );
 
