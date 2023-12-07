@@ -52,6 +52,7 @@ public class LessonService {
                 .price(makeLessonDto.getPrice())
                 .lessonStartDate(lessonStartDate)
                 .lessonEndDate(lessonEndDate)
+                .roadAddress(makeLessonDto.getRoadAddress())
                 .build();
 
         lessonRepository.save(lesson);

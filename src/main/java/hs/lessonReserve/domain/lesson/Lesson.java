@@ -38,6 +38,8 @@ public class Lesson {
     private int maximumStudentsNumber;
     private String lessonTime;
     private int price;
+    @Embedded
+    private String roadAddress;
 
     private LocalDateTime lessonStartDate;
     private LocalDateTime lessonEndDate;

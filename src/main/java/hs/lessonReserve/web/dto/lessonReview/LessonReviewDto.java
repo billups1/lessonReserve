@@ -1,4 +1,4 @@
-package hs.lessonReserve.web.dto.LessonReview;
+package hs.lessonReserve.web.dto.lessonReview;
 
 import lombok.Data;
 

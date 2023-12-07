@@ -36,7 +36,8 @@
         <br>
         <h3>강사소개</h3>
         <div>
-            <a th:href="@{/teacher/{teacherId}(teacherId=${lesson.teacher.id})}"><h4 th:text="${lesson.teacher.name}" id="teacherName"></h4></a>
+            <a th:href="@{/teacher/{teacherId}(teacherId=${lesson.teacher.id})}"><h4 th:text="${lesson.teacher.name}"
+                                                                                     id="teacherName"></h4></a>
             <a th:href="@{/teacher/{teacherId}(teacherId=${lesson.teacher.id})}"><img
                     th:src="|/image/${lesson.teacher.profileImageUrl}|" width="100" height="100"/></a>
             <br>
@@ -62,11 +63,30 @@
             </table>
         </div>
 
-        <br>
-        <form th:action="|/lesson/${lesson.id}|" method="post">
-            <button>수강 신청하기</button>
-        </form>
+        <div>
+            <h4>강의장소</h4>
+            <div id="roadAddress">
+
+            </div>
+
+            <div id="map" style="width:100%;height:350px;"></div>
+            <p><em>지도를 클릭해주세요!</em></p>
+            <div id="clickLatlng"></div>
+
+            <script type="text/javascript"
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23d27b2f2dfd27bc1cdf7285d87b221d&libraries=services,clusterer,drawing"></script>
+
+            <br>
+            <form th:action="|/lesson/${lesson.id}|" method="post">
+                <button>수강 신청하기</button>
+            </form>
+        </div>
     </div>
+    <script>
+        console.log([[${lesson.roadAddress}]]);
+        marker([[${lesson.roadAddress}]]);
+    </script>
+    <script src="/js/applyLesson.js"></script>
 </div>
 
 </body>

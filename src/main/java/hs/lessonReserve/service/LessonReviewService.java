@@ -9,12 +9,10 @@ import hs.lessonReserve.domain.apply.ApplyRepository;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.user.Student;
 import hs.lessonReserve.handler.ex.CustomException;
-import hs.lessonReserve.web.dto.LessonReview.LessonReviewDto;
+import hs.lessonReserve.web.dto.lessonReview.LessonReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

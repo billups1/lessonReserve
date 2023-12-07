@@ -45,14 +45,23 @@
                 <label for="lessonEndDate">레슨 종료일</label>
                 <input type="date" id="lessonEndDate" name="lessonEndDate">
             </div>
-
-
+            <div>
+                <label for="sample4_postcode">레슨 장소</label>
+                <input type="text" id="sample4_postcode" name="postcode" placeholder="우편번호">
+                <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                <input type="text" id="sample4_roadAddress" name="roadAddress" placeholder="도로명주소">
+                <input type="text" id="sample4_jibunAddress" name="jibunAddress" placeholder="지번주소"><br>
+                <span id="guide" style="color:#999;display:none"></span>
+                <input type="text" id="sample4_detailAddress" name="detailAddress" placeholder="상세주소">
+                <input type="text" id="sample4_extraAddress" name="extraAddress" placeholder="참고항목">
+                <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+            </div>
+            <br>
             <button>레슨 만들기</button>
         </form>
         <script src="/js/makeLesson.js"></script>
     </div>
 </div>
-
 
 
 </body>

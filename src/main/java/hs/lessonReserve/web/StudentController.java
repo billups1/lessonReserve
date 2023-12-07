@@ -6,7 +6,7 @@ import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.service.ApplyService;
 import hs.lessonReserve.service.LessonReviewService;
-import hs.lessonReserve.web.dto.LessonReview.LessonReviewDto;
+import hs.lessonReserve.web.dto.lessonReview.LessonReviewDto;
 import hs.lessonReserve.web.dto.lesson.StudentMyPageLessonListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
