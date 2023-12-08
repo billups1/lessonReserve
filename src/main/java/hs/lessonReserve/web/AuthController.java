@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/student/join")
-    public String joinStudent(UserJoinDto UserJoinDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public String joinStudent(@Validated UserJoinDto UserJoinDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         userService.joinStudent(UserJoinDto);
 
         return "redirect:/";
@@ -36,7 +37,7 @@ public class AuthController {
     }
 
     @PostMapping("/teacher/join")
-    public String joinTeacher(UserJoinDto UserJoinDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public String joinTeacher(@Validated UserJoinDto UserJoinDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         userService.joinTeacher(UserJoinDto);
 
         return "redirect:/";

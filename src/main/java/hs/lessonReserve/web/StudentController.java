@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,7 +51,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/LessonReview/{applyId}")
-    public String review(@PathVariable long applyId, LessonReviewDto lessonReviewDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) throws URISyntaxException {
+    public String review(@PathVariable long applyId, @Validated LessonReviewDto lessonReviewDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) throws URISyntaxException {
         if (lessonReviewDto.getScore() >5 || lessonReviewDto.getScore() <0.5) {
             throw new CustomApiException("평점은 0.5부터 5 사이로 입력해 주세요");
         }

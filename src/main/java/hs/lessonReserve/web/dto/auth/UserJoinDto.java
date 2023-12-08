@@ -1,6 +1,7 @@
 package hs.lessonReserve.web.dto.auth;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -13,13 +14,13 @@ import java.util.List;
 public class UserJoinDto {
 
     @Email
-    @NotNull
+    @NotBlank
     private String email;
-    @NotNull
+    @NotBlank
     @Size(min = 4, max = 20)
     private String password;
     @Size(min = 1, max = 15)
-    @NotNull
+    @NotBlank
     private String name;
     private MultipartFile profileImageFile;
     private List<MultipartFile> certificateImageFiles;

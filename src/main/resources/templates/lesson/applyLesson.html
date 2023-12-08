@@ -64,10 +64,8 @@
         </div>
 
         <div>
-            <h4>강의장소</h4>
-            <div id="roadAddress">
-
-            </div>
+            <h4>레슨장소</h4>
+            <h5>[[${lesson.roadAddress}]]</h5>
 
             <div id="map" style="width:100%;height:350px;"></div>
             <p><em>지도를 클릭해주세요!</em></p>
@@ -83,8 +81,7 @@
         </div>
     </div>
     <script>
-        console.log([[${lesson.roadAddress}]]);
-        marker([[${lesson.roadAddress}]]);
+        var roadAddress = '[[${lesson.roadAddress}]]'
     </script>
     <script src="/js/applyLesson.js"></script>
 </div>

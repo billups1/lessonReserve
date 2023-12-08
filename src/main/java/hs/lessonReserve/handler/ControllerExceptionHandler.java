@@ -2,8 +2,11 @@ package hs.lessonReserve.handler;
 
 import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.handler.ex.CustomValidationException;
 import hs.lessonReserve.util.Script;
+import hs.lessonReserve.web.dto.ex.CMRespDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -18,8 +21,17 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(CustomApiException.class)
-    public @ResponseBody String apiException(CustomApiException e) {
-        return Script.back(e.getMessage());
+    public @ResponseBody ResponseEntity apiException(CustomApiException e) {
+        return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomValidationException.class)
+    public @ResponseBody String validationException(CustomValidationException e) {
+        if (e.getErrorMap() == null) {
+            return Script.back(e.getMessage());
+        } else {
+            return Script.back(e.getErrorMap().toString());
+        }
     }
 
 }

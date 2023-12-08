@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -26,7 +27,7 @@ public class LessonController {
     }
 
     @PostMapping("/teacher/lesson/create")
-    public String makeLesson(MakeLessonDto makeLessonDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public String makeLesson(@Validated MakeLessonDto makeLessonDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         System.out.println(makeLessonDto.toString());
         lessonService.makeLesson(makeLessonDto, principalDetails);
 
