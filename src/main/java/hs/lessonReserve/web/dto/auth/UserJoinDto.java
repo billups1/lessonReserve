@@ -17,7 +17,7 @@ public class UserJoinDto {
     @NotBlank
     private String email;
     @NotBlank
-    @Size(min = 4, max = 20)
+    @Size(min = 3, max = 20)
     private String password;
     @Size(min = 1, max = 15)
     @NotBlank

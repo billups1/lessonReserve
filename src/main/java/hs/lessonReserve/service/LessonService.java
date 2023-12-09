@@ -86,7 +86,7 @@ public class LessonService {
                     .lessonEndDate(lesson.getLessonEndDate().toString().substring(0, 10))
                     .build();
             homeLessonListDto.setApplyEndDate(lesson.getLessonStartDate().minusDays(3).toString().substring(0,10));
-            homeLessonListDto.setApplyStatus(lesson.getApplies().size() + " / " + lesson.getMaximumStudentsNumber());
+            homeLessonListDto.setApplyStatus(lesson.getApplies().stream().filter(list -> ApplyStatus.APPLY.equals(list.getApplyStatus())).collect(Collectors.toList()).size() + " / " + lesson.getMaximumStudentsNumber());
             List<Apply> applies = lesson.getApplies();
             if (principalDetails != null) {
                 for (Apply apply : applies) {

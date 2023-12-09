@@ -14,7 +14,7 @@
     <div style="text-align: center">
         <h2>강사 소개 페이지</h2>
 
-        <img th:src="|/image/${dto.teacher.profileImageUrl}|" width="200" height="200"/>
+        <img th:src="|/image/${dto.teacher.profileImageUrl}|" width="300" height="300"/>
 
         <h2><b>[[${dto.teacher.name}]] 강사님</b></h2>
         <br>
@@ -23,7 +23,7 @@
 
             <h3>수강평</h3>
             <table style="margin-left:auto; margin-right:auto;" class="table">
-                <a>평균점수 [[${dto.averageScore}]] 점</a>
+                <h3><b>평균점수 [[${dto.averageScore}]] 점</b></h3>
                 <tr>
                     <th>수강생 이름</th>
                     <th>평점</th>
