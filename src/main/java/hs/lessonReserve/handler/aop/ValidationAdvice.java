@@ -18,13 +18,10 @@ public class ValidationAdvice {
     @Around("execution(* hs.lessonReserve.web.*Controller.*(..))")
     public Object advice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object[] args = proceedingJoinPoint.getArgs();
-        System.out.println("★ 0");
         for (Object arg : args) {
             if (arg instanceof BindingResult) {
                 BindingResult bindingResult = (BindingResult) arg;
-                System.out.println("★ 1");
                 if (bindingResult.hasErrors()) {
-                    System.out.println("★ 2");
                     HashMap<String, String> errorMap = new HashMap<>();
                     List<FieldError> fieldErrors = bindingResult.getFieldErrors();
                     for (FieldError fieldError : fieldErrors) {

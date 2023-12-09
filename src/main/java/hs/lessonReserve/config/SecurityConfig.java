@@ -1,22 +1,22 @@
 package hs.lessonReserve.config;
 
 import hs.lessonReserve.config.oauth.PrincipalOauth2UserService;
+import hs.lessonReserve.handler.auth.LoginFailHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class StudentSecurityConfig {
+public class SecurityConfig {
 
     private final PrincipalOauth2UserService principalOauth2UserService;
+    private final LoginFailHandler loginFailHandler;
 
     @Bean
     public SecurityFilterChain filterChainForStudent(HttpSecurity http) throws Exception {
@@ -33,7 +33,8 @@ public class StudentSecurityConfig {
                         .loginPage("/login")
                         .usernameParameter("email")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/"));
+                        .defaultSuccessUrl("/")
+                        .failureHandler(loginFailHandler));
 
         http.logout(logout ->
                 logout.logoutSuccessUrl("/"));

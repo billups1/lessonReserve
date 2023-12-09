@@ -17,6 +17,10 @@
         <br>
         <input type="password" name="password" placeholder="비밀번호" required="required"/>
         <br>
+        <div th:if = "${errorMassage != null}">
+            <a style="color:red;">[[${errorMassage}]]</a>
+        </div>
+        <br>
         <button class="btn btn-secondary">로그인</button>
     </form>
     <a class="btn btn-warning" href="/oauth2/authorization/kakao">카카오 로그인</a>
