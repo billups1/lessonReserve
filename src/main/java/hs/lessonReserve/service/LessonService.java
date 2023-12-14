@@ -1,6 +1,5 @@
 package hs.lessonReserve.service;
 
-import hs.lessonReserve.config.ModelMapperConfig;
 import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.lesson.Lesson;
@@ -71,7 +70,7 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, Pageable pageable) {
+    public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, String cond1, String cond2, String searchText, Pageable pageable) {
         Page<Lesson> lessons = lessonRepository.mHomeLessonList(pageable);
         ArrayList<HomeLessonListDto> homeLessonListDtoArrayList = new ArrayList<>();
         for (Lesson lesson : lessons) {

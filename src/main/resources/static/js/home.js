@@ -1,8 +1,12 @@
 function homeLessonList() {
 console.log("homeLessonList")
+var cond1 = document.getElementById('searchCond1');
+var cond2 = document.getElementById('searchCond2');
+var searchText = document.getElementById('searchText');
+console.log(cond1, cond2, searchText);
 
     $.ajax({
-        url: "/api/lesson/home",
+        url: `/api/lesson/home?cond1=${cond1}&cond2=${cond2}&searchText=${searchText}`,
         dataType:"json"
     }).done(res=>{
         console.log("홈 레슨리스트 불러오기 성공",res);
@@ -10,12 +14,10 @@ console.log("homeLessonList")
             let lesson = getHomeLesson(l);
             $("#lessonList").append(lesson)
         })
+        let searchBox = getSearchBox();
+        $("#searchBox").append(searchBox);
 
-        let totalPages = res.data.totalPages;
-        let pageNumber = res.data.pageable.pageNumber;
 
-//        let pagination = getPagination(p);
-//        $("#lessonList").append(pagination)
     }).fail(error=>{
         console.log("홈 레슨리스트 불러오기 실패",error);
     });
@@ -44,33 +46,49 @@ function getHomeLesson(lesson) {
                 l +=  `<td><a href="/lesson/${lesson.id}">신청하기</a></td>`
             }
 
-    l +=   `</tr>`
+    l +=   `</tr><br>`
     return l;
 }
 
-function getPagination(totalPages) {
-    let p = `
-        <nav aria-label="...">
-          <ul class="pagination">
-            <li class="page-item disabled">
-              <a class="page-link">Previous</a>
-            </li>
+function getSearchBox() {
+    s = `<div>
+             <a>레슨검색</a>
+             <select name="searchCond1" id="searchCond1" onchange="itemChange(this.value)">
+                 <option value="none">=== 선택 ===</option>
+                 <option value="lessonName">강의명</option>
+                 <option value="teacher">강사</option>
+                 <option value="price">가격</option>
+                 <option value="lessonStartDate">레슨시작일</option>
+                 <option value="lessonEndDate">레슨종료일</option>
+             </select>
 
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
+             <select name="searchCond2" id="searchCond2">
+             </select>
 
-            <li class="page-item active" aria-current="page">
-              <a class="page-link" href="#">2</a>
-            </li>
+             <input type="text" name="searchText" id="searchText" required="required"/>
 
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+             <button onclick="homeLessonList()">검색</button>
 
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
+         </div>`
+    return s;
+}
 
-          </ul>
-        </nav>
+function itemChange(value){
+    var price = ["이상", "이하"]
+    var lessonDate = ["이후", "이전"]
 
-    `
+    $("#searchCond2").empty();
+
+    if (value == "lessonName" || value == "teacher") {
+        $("#searchCond2").append("<option>none</option>");
+    } else if(value == "price") {
+        for(var count = 0; count < price.length; count++) {
+            $("#searchCond2").append("<option>" + price[count] + "</option>");
+        }
+    } else if(value == "lessonStartDate" || value == "lessonEndDate") {
+        for(var count = 0; count < price.length; count++) {
+            $("#searchCond2").append("<option>" + lessonDate[count] + "</option>");
+        }
+    }
 
 }

@@ -1,10 +1,19 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+<br>
+<div layout:fragment="contents" style="text-align: center">
+  접근이 허용되지 않습니다.<br>
+  <a href="/">홈으로 돌아가기</a>
+  <br><br>
+</div>
 </body>
 </html>
