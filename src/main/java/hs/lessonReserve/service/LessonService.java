@@ -6,9 +6,11 @@ import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.lesson.LessonRepository;
 import hs.lessonReserve.domain.apply.Apply;
 import hs.lessonReserve.domain.apply.ApplyRepository;
+import hs.lessonReserve.domain.lesson.LessonRepositoryImpl;
 import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
+import hs.lessonReserve.web.dto.lesson.LessonSearchCondDto;
 import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
 public class LessonService {
 
     private final LessonRepository lessonRepository;
+    private final LessonRepositoryImpl lessonRepositoryImpl;
     private final ApplyRepository applyRepository;
     @Autowired
     ModelMapper modelMapper;
@@ -70,8 +73,8 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, String cond1, String cond2, String searchText, Pageable pageable) {
-        Page<Lesson> lessons = lessonRepository.mHomeLessonList(pageable);
+    public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto, Pageable pageable) {
+        List<Lesson> lessons = lessonRepositoryImpl.mHomeLessonList(lessonSearchCondDto);
         ArrayList<HomeLessonListDto> homeLessonListDtoArrayList = new ArrayList<>();
         for (Lesson lesson : lessons) {
             HomeLessonListDto homeLessonListDto = HomeLessonListDto.builder()
@@ -98,7 +101,7 @@ public class LessonService {
             homeLessonListDtoArrayList.add(homeLessonListDto);
         }
 
-        PageRequest pageRequest = PageRequest.of(lessons.getPageable().getPageNumber(), lessons.getPageable().getPageSize());
+        PageRequest pageRequest = PageRequest.of(0, 100);
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), homeLessonListDtoArrayList.size());
         Page<HomeLessonListDto> homeLessonListDtos = new PageImpl<>(homeLessonListDtoArrayList.subList(start, end), pageRequest, homeLessonListDtoArrayList.size());

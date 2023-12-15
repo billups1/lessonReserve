@@ -17,7 +17,6 @@ public class ImageFileApiController {
 
     @GetMapping("/image/{imageFileName}")
     public Resource downloadImage(@PathVariable String imageFileName) throws MalformedURLException {
-        System.out.println("aaa");
         String fullPath = uploadFolder + imageFileName;
         return new UrlResource("file:"+fullPath);
     }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface LessonRepository extends JpaRepository<Lesson, Long> {
+public interface LessonRepository extends JpaRepository<Lesson, Long>, LessonRepositoryCustom {
 
     @Query(value = "select * from lesson where lessonStartDate >= DATE_ADD(NOW(), INTERVAL 3 day) order by lessonStartDate", nativeQuery = true)
     Page<Lesson> mHomeLessonList(Pageable pageable);

@@ -4,6 +4,7 @@ import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.service.LessonService;
 import hs.lessonReserve.web.dto.ex.CMRespDto;
 import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
+import hs.lessonReserve.web.dto.lesson.LessonSearchCondDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,10 +28,9 @@ public class LessonApiController {
     }
 
     @GetMapping("/api/lesson/home")
-    public ResponseEntity homeLessonList(Pageable pageable, @AuthenticationPrincipal PrincipalDetails principalDetails,
-                                         @RequestParam String cond1, @RequestParam String cond2, @RequestParam String searchText) {
-
-        Page<HomeLessonListDto> lessons = lessonService.homeLessonList(principalDetails, cond1, cond2, searchText, pageable);
+    public ResponseEntity homeLessonList(Pageable pageable, @AuthenticationPrincipal PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto) {
+        System.out.println("lessonSearchCondDto = " + lessonSearchCondDto);
+        Page<HomeLessonListDto> lessons = lessonService.homeLessonList(principalDetails, lessonSearchCondDto, pageable);
         return new ResponseEntity<>(new CMRespDto<>(1,"홈 레슨리스트 불러오기 완료", lessons), HttpStatus.OK);
     }
 
