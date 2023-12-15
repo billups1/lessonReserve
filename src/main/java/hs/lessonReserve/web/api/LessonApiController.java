@@ -27,9 +27,10 @@ public class LessonApiController {
     }
 
     @GetMapping("/api/lesson/home")
-    public ResponseEntity homeLessonList(Pageable pageable, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity homeLessonList(Pageable pageable, @AuthenticationPrincipal PrincipalDetails principalDetails,
+                                         @RequestParam String cond1, @RequestParam String cond2, @RequestParam String searchText) {
 
-        Page<HomeLessonListDto> lessons = lessonService.homeLessonList(principalDetails, pageable);
+        Page<HomeLessonListDto> lessons = lessonService.homeLessonList(principalDetails, cond1, cond2, searchText, pageable);
         return new ResponseEntity<>(new CMRespDto<>(1,"홈 레슨리스트 불러오기 완료", lessons), HttpStatus.OK);
     }
 
