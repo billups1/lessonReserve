@@ -6,13 +6,13 @@
 1. 강사 레슨등록 및 수강생 레슨신청<br>
 REST 기반으로 강사가 운동레슨를 등록하고, 수강생은 등록된 레슨을 신청하는 기능을 구현했습니다.<br>
 레슨의 신청하기 버튼을 누르면 신청 페이지에서 레슨을 신청할 수 있도록 하였고, 신청완료된 레슨은 “신청완료” 표시가 나오도록 하였습니다.<br>
-<img src="https://github.com/billups1/lessonReserve/assets/123869397/e8e47bd0-638d-4807-8595-31bf3b0598f2" height="300px"></img>
+레슨 검색 기능을 구현하였으며, QueryDSL을 통한 동적 쿼리 구현 기술을 사용하였습니다.<br>
+<img src="https://github.com/billups1/lessonReserve/assets/123869397/bcd8419c-e51c-45af-9c46-22a98a407788" height="270px"></img>
 <img src="https://github.com/billups1/lessonReserve/assets/123869397/7368a318-2526-440c-a4eb-82789588068f" height="550px"></img>
 <br>
 2. 마이페이지<br>
 마이페이지를 통하여 강사 및 수강생의 본인 레슨 내역을 한번에 볼 수 있도록 구현했습니다. <br>
 수강생의 경우 수강을 취소하거나 강의 완료 후 수강평을 작성할 수 있습니다. 그에 따른 수강생의 강의별 현재상태를 “취소완료”, “취소하기”, “수강평 쓰기”, “수강평 작성완료”로 나누었습니다.<br>
-
 <img src="https://github.com/billups1/lessonReserve/assets/123869397/fb37c93f-2909-465b-b32e-a29337f31ba6" height="300px"></img>
 <br><br>
 3. 외부 API 활용<br>
@@ -22,14 +22,14 @@ REST 기반으로 강사가 운동레슨를 등록하고, 수강생은 등록된
 4. 수강평 기능<br>
 강의를 마친 후에는 수강생들이 강의에 대한 평가점수를 남길 수 있습니다. 이러한 평가 점수는 강사별 소개페이지에서 평균으로 계산되어 보여집니다.<br>
 <img src="https://github.com/billups1/lessonReserve/assets/123869397/9be51b2f-53b7-4af8-ba95-592ffa8cdcb3" height="550px"></img>
-
 <br><br>
+
 **● 사용기술**<br>
 1. 백엔드<br>
 
 기본적으로 SPRING BOOT를 기반으로 본 프로젝트를 제작하였으며, 데이터베이스는 MySQL을 이용했습니다.<br>
 
-JPA, 스프링 시큐리티, 카카오로그인을 위한 Oauth2, 카카오지도 구현을 위한 카카오 API, dto 유효성 검사를 위한 AOP, @Scheduled 어노테이션 기능 등의 백엔드 기술을 활용하였습니다.<br>
+JPA, 스프링 시큐리티, 카카오로그인을 위한 Oauth2, 카카오지도 구현을 위한 카카오 API, 유효성 검사를 위한 AOP, @Scheduled 어노테이션 기능, QueryDSL 등의 백엔드 기술을 활용하였습니다.<br>
 
 2. 프론트엔드<br>
 
