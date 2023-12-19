@@ -9,6 +9,7 @@ import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.domain.user.User;
 import hs.lessonReserve.domain.user.UserRepository;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.util.RedisUtil;
 import hs.lessonReserve.web.dto.auth.UserJoinDto;
 import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,12 +37,18 @@ public class UserService {
     private final CertificateRepository certificateRepository;
     private final LessonReviewRepository lessonReviewRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RedisUtil redisUtil;
 
     @Value("${file.path}")
     private String uploadFolder;
 
     @Transactional
     public void joinTeacher(UserJoinDto userJoinDto) {
+
+        String savedVerificationCode = redisUtil.getData(userJoinDto.getEmail());
+        if (!savedVerificationCode.equals(userJoinDto.getVerificationCode())) {
+            throw new CustomException("이메일 인증을 완료해 주세요.");
+        }
 
         System.out.println("사진: " + userJoinDto.getProfileImageFile().getOriginalFilename());
         String profileImageFilename = null;
@@ -96,6 +103,10 @@ public class UserService {
 
     @Transactional
     public void joinStudent(UserJoinDto userJoinDto) {
+        String savedVerificationCode = redisUtil.getData(userJoinDto.getEmail());
+        if (!savedVerificationCode.equals(userJoinDto.getVerificationCode())) {
+            throw new CustomException("이메일 인증을 완료해 주세요.");
+        }
 
         String profileImageFilename = null;
         if (userJoinDto.getProfileImageFile() != null) {

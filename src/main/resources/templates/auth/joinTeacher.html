@@ -13,7 +13,17 @@
 <div layout:fragment="contents">
     <h2>강사 회원가입</h2>
     <form action="/teacher/join" method="post" enctype="multipart/form-data">
-        <input type="email" name="email" placeholder="이메일" required="required"/>
+        <input type="email" name="email" id="email" placeholder="이메일" required="required"/>
+        <button type="button" onclick="verificationEmailSend()">인증메일 전송</button>
+
+        <div id="verificationCode" style="display: none;">
+            <br>
+            <input type="text" name="verificationCode" id="verificationCodeInput" placeholder="인증코드를 입력하세요.">
+            <button type="button" onclick="emailVerification()">코드확인</button>
+        </div>
+
+        <div id="emailVerificationComment"></div>
+
         <br>
         <input type="password" name="password" placeholder="비밀번호" required="required"/>
         <br>
@@ -34,6 +44,7 @@
     <br>
     <a>계정이 있으신가요?</a>
     <a href="/login">로그인 화면으로 가기</a>
+    <script src="/js/join.js"></script>
 </div>
 
 </body>

@@ -22,6 +22,7 @@ public class UserJoinDto {
     @Size(min = 1, max = 15)
     @NotBlank
     private String name;
+    private String verificationCode;
     private MultipartFile profileImageFile;
     private List<MultipartFile> certificateImageFiles;
 

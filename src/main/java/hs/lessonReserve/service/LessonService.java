@@ -35,8 +35,6 @@ public class LessonService {
     private final LessonRepository lessonRepository;
     private final LessonRepositoryImpl lessonRepositoryImpl;
     private final ApplyRepository applyRepository;
-    @Autowired
-    ModelMapper modelMapper;
 
     @Transactional
     public void makeLesson(MakeLessonDto makeLessonDto, PrincipalDetails principalDetails) {
@@ -75,31 +73,8 @@ public class LessonService {
     @Transactional(readOnly = true)
     public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto, Pageable pageable) {
         List<Lesson> lessons = lessonRepositoryImpl.mHomeLessonList(lessonSearchCondDto);
-        ArrayList<HomeLessonListDto> homeLessonListDtoArrayList = new ArrayList<>();
-        for (Lesson lesson : lessons) {
-            HomeLessonListDto homeLessonListDto = HomeLessonListDto.builder()
-                    .id(lesson.getId())
-                    .teacher(lesson.getTeacher())
-                    .name(lesson.getName())
-                    .maximumStudentsNumber(lesson.getMaximumStudentsNumber())
-                    .lessonTime(lesson.getLessonTime())
-                    .price(lesson.getPrice())
-                    .lessonStartDate(lesson.getLessonStartDate().toString().substring(0, 10))
-                    .lessonEndDate(lesson.getLessonEndDate().toString().substring(0, 10))
-                    .build();
-            homeLessonListDto.setApplyEndDate(lesson.getLessonStartDate().minusDays(3).toString().substring(0,10));
-            homeLessonListDto.setApplyStatus(lesson.getApplies().stream().filter(list -> ApplyStatus.APPLY.equals(list.getApplyStatus())).collect(Collectors.toList()).size() + " / " + lesson.getMaximumStudentsNumber());
-            List<Apply> applies = lesson.getApplies();
-            if (principalDetails != null) {
-                for (Apply apply : applies) {
-                    if (apply.getStudent().getId() == principalDetails.getUser().getId() && apply.getApplyStatus() == ApplyStatus.APPLY) {
-                        homeLessonListDto.setUserApplyStatus(true);
-                        break;
-                    }
-                }
-            }
-            homeLessonListDtoArrayList.add(homeLessonListDto);
-        }
+
+        List<HomeLessonListDto> homeLessonListDtoArrayList = lessons.stream().map(l -> new HomeLessonListDto(l, principalDetails)).collect(Collectors.toList());
 
         PageRequest pageRequest = PageRequest.of(0, 100);
         int start = (int) pageRequest.getOffset();

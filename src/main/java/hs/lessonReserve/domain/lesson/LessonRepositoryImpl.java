@@ -36,7 +36,7 @@ public class LessonRepositoryImpl implements LessonRepositoryCustom{
     private BooleanExpression searchCond(LessonSearchCondDto lessonSearchCondDto) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
-        if (lessonSearchCondDto.getCond1() == null || lessonSearchCondDto.getCond1().equals("none") || lessonSearchCondDto.getSearchText().isEmpty()) {
+        if (lessonSearchCondDto.getCond1() == null || lessonSearchCondDto.getCond1().equals("none")) {
             return null;
         } else if (lessonSearchCondDto.getCond1().equals("lessonName")) {
             return lesson.name.contains(lessonSearchCondDto.getSearchText());
