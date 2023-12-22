@@ -20,19 +20,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      - name: Start MySQL
-        uses: samin/mysql-action@v1.3
-        with:
-          # MYSQL_ROOT_PASSWORD - root superuser password
-          mysql root password: hs456789
-          # MYSQL_DATABASE - name for the default database that is created
-          mysql database: lessonReserve
-          # MYSQL_USER - create the specified user with superuser power for created database
-          mysql user: hs
-          # MYSQL_PASSWORD - specified superuser password which user is power for created database
-          mysql password: hs456789
-          
-
       - name: Get current time
         uses: 1466587594/get-current-time@v2
         id: current-time
