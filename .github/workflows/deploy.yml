@@ -15,6 +15,15 @@ jobs:
         with:
           java-version: 17
           distribution: zulu
+
+      - name: Start MySQL
+        uses: Run samin/mysql-action@v1.3
+        with:
+          mysql root password: hs456789
+          mysql database: lessonReserve
+          mysql user: hs
+          mysql password: hs456789
+
       - name: Permission
         run: chmod +x ./gradlew
       - name: Build with Gradle
