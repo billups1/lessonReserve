@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'hs'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
 	sourceCompatibility = '17'
@@ -67,4 +67,8 @@ tasks.withType(JavaCompile) {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	enabled = false // 빌드 시 plain파일 생성 안함
 }
