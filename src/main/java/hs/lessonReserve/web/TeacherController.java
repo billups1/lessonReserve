@@ -8,6 +8,7 @@ import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.service.LessonReviewService;
 import hs.lessonReserve.service.LessonService;
 import hs.lessonReserve.service.UserService;
+import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
 import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +31,7 @@ public class TeacherController {
     public String teacherMyPageForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
         // 스프링 시큐리티에서 권한 막아놓아서 따로 권한 막지 않음
 
-        List<Lesson> teacherMyPageList = lessonService.teacherMyPageList(principalDetails);
+        List<HomeLessonListDto> teacherMyPageList = lessonService.teacherMyPageList(principalDetails);
 
         model.addAttribute("lessons", teacherMyPageList);
 

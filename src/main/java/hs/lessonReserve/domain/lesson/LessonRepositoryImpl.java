@@ -1,10 +1,16 @@
 package hs.lessonReserve.domain.lesson;
 
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
 import hs.lessonReserve.web.dto.lesson.LessonSearchCondDto;
+import hs.lessonReserve.web.dto.lesson.QHomeLessonListDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,16 +22,18 @@ import static hs.lessonReserve.domain.lesson.QLesson.lesson;
 
 @Repository
 @RequiredArgsConstructor
-public class LessonRepositoryImpl implements LessonRepositoryCustom{
+public class LessonRepositoryImpl implements LessonRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Lesson> mHomeLessonList(LessonSearchCondDto lessonSearchCondDto) {
-        return queryFactory.selectFrom(lesson)
-                .where(lessonStartDate3DaysAgo(),
-                        searchCond(lessonSearchCondDto))
+    public List<Lesson> mHomeLessonList(LessonSearchCondDto lessonSearchCondDto, PrincipalDetails principalDetails) {
+        List<Lesson> lessons = queryFactory.selectFrom(lesson)
+                .where(lessonStartDate3DaysAgo(), searchCond(lessonSearchCondDto))
+                .orderBy(lesson.lessonStartDate.asc())
                 .fetch();
+
+        return lessons;
 
     }
 
@@ -64,5 +72,4 @@ public class LessonRepositoryImpl implements LessonRepositoryCustom{
 
         return null;
     }
-
 }

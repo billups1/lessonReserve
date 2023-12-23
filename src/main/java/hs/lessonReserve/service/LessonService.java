@@ -72,11 +72,11 @@ public class LessonService {
 
     @Transactional(readOnly = true)
     public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto, Pageable pageable) {
-        List<Lesson> lessons = lessonRepositoryImpl.mHomeLessonList(lessonSearchCondDto);
+        List<Lesson> lessons = lessonRepositoryImpl.mHomeLessonList(lessonSearchCondDto, principalDetails);
 
         List<HomeLessonListDto> homeLessonListDtoArrayList = lessons.stream().map(l -> new HomeLessonListDto(l, principalDetails)).collect(Collectors.toList());
 
-        PageRequest pageRequest = PageRequest.of(0, 100);
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), homeLessonListDtoArrayList.size());
         Page<HomeLessonListDto> homeLessonListDtos = new PageImpl<>(homeLessonListDtoArrayList.subList(start, end), pageRequest, homeLessonListDtoArrayList.size());
@@ -84,17 +84,14 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public List<Lesson> teacherMyPageList(PrincipalDetails principalDetails) {
+    public List<HomeLessonListDto> teacherMyPageList(PrincipalDetails principalDetails) {
 
         long teacherId = principalDetails.getUser().getId();
         List<Lesson> lessons = lessonRepository.mTeacherMyPageList(teacherId);
 
-        for (Lesson lesson : lessons) {
-            lesson.setApplyEndDate(lesson.getLessonStartDate().minusDays(3));
-            lesson.setApplyStatus(lesson.getApplies().size() + " / " + lesson.getMaximumStudentsNumber());
-        }
-
-        return lessons;
+        List<HomeLessonListDto> lessonListDto = lessons.stream().map(l -> new HomeLessonListDto(l, null)).collect(Collectors.toList());
+        System.out.println(lessonListDto);
+        return lessonListDto;
 
     }
 

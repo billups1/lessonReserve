@@ -2,6 +2,7 @@ package hs.lessonReserve.web.dto.lesson;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.QueryProjection;
 import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.apply.Apply;
@@ -37,6 +38,7 @@ public class HomeLessonListDto {
     private String applyStatus;
     private boolean userApplyStatus;
 
+    @QueryProjection
     public HomeLessonListDto(Lesson lesson, PrincipalDetails principalDetails) {
         id = lesson.getId();
 

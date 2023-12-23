@@ -1,45 +1,57 @@
-function homeLessonList() {
-console.log("homeLessonList")
+function homeLessonList(page) {
+console.log(page);
+    if(page==null) {
+        page = 0;
+    }
 
+    $( '#lessonList > tbody').empty();
     $.ajax({
-        url: `/api/lesson/home`,
+        url: `/api/lesson/home?page=${page}`,
         dataType:"json"
     }).done(res=>{
         console.log("홈 레슨리스트 불러오기 성공",res);
+
         res.data.content.forEach((l)=>{
             let lesson = getHomeLesson(l);
             $("#lessonList").append(lesson)
         })
-        let searchBox = getSearchBox();
-        $("#searchBox").append(searchBox);
-
+        $('#pagination').empty();
+        let pagination = getPagination(page, res.data.pageable.pageNumber, res.data.totalPages)
+        $("#pagination").append(pagination);
 
     }).fail(error=>{
         console.log("홈 레슨리스트 불러오기 실패",error);
     });
-
 }
 
 homeLessonList();
 
 
-function homeLessonListCond() {
-var cond1 = document.querySelector('#searchCond1 > option:checked').value;
-var cond2 = document.querySelector('#searchCond2 > option:checked').value;
-var searchText = document.getElementById('searchText').value;
-var searchDate = document.getElementById('searchDate').value;
-console.log("컨디션", cond1, cond2, searchText, searchDate);
-let data = {
-    cond1 : cond1,
-    cond2 : cond2,
-    searchText : searchText,
-    searchDate : searchDate
-}
+function homeLessonListCond(page) {
+console.log(page);
+    if(page==null) {
+        page = 0;
+    }
+    var cond1 = document.querySelector('#searchCond1 > option:checked').value;
+    if (document.querySelector('#searchCond1 > option:checked').value != "none") {
+        var cond2 = document.querySelector('#searchCond2 > option:checked').value;
+    } else {
+        var cond2 = null;
+    }
+    var searchText = document.getElementById('searchText').value;
+    var searchDate = document.getElementById('searchDate').value;
+    console.log("컨디션", cond1, "|", cond2, "|", searchText, "|", searchDate);
+    let data = {
+        cond1 : cond1,
+        cond2 : cond2,
+        searchText : searchText,
+        searchDate : searchDate
+    }
 
-$( '#lessonList > tbody').empty();
+    $( '#lessonList > tbody').empty();
 
     $.ajax({
-        url: `/api/lesson/home`,
+        url: `/api/lesson/home?page=${page}`,
         dataType:"json",
         data: data
         }).done(res=>{
@@ -48,6 +60,11 @@ $( '#lessonList > tbody').empty();
             let lesson = getHomeLesson(l);
             $("#lessonList").append(lesson)
         });
+
+        $('#pagination').empty();
+        let pagination = getPagination(page, res.data.pageable.pageNumber, res.data.totalPages)
+        $("#pagination").append(pagination);
+
     }).fail(error=>{
         console.log("홈 검색 레슨리스트 불러오기 실패",error);
     });
@@ -79,6 +96,35 @@ function getHomeLesson(lesson) {
     return l;
 }
 
+function getPagination(page, pageNumber, totalPages) {
+    p = `
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">`
+
+    var startPage = 0;
+    var endPage = totalPages;
+    var nowPage = pageNumber;
+
+    var pageCount;
+    for(var i = startPage; i<endPage; i++) {
+        if(i != nowPage) {
+            pageCount = i + 1;
+            p += `<li class="page-item"><a class="page-link" onclick="homeLessonListCond(${i})">${pageCount}</a></li>`;
+        } else {
+            pageCount = i + 1;
+            p += `<li class="page-item active" aria-current="page">
+                    <a class="page-link">${pageCount}</a>
+                  </li>`;
+        }
+    }
+
+    p +=  `</ul>
+    </nav>
+    `
+    return p;
+}
+
+getSearchBox();
 function getSearchBox() {
     s = `<div style="text-align: center">
              <a>레슨검색</a>
@@ -97,10 +143,11 @@ function getSearchBox() {
              <input type="text" name="searchText" id="searchText" style="display: inline;"/>
              <input type="date" name="searchDate" id="searchDate" style="display: none;"/>
 
-             <button onclick="homeLessonListCond()">검색</button>
+             <button onclick="homeLessonListCond(0)">검색</button>
 
          </div>`
-    return s;
+
+    $("#searchBox").append(s);
 }
 
 function itemChange(value){
