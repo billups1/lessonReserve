@@ -8,6 +8,7 @@ import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.apply.Apply;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.user.Teacher;
+import hs.lessonReserve.util.CustomFormatter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ public class HomeLessonListDto {
 
     private String name;
     private String lessonTime;
-    private int price;
+    private String price;
 
     private String lessonStartDate;
     private String lessonEndDate;
@@ -48,7 +49,7 @@ public class HomeLessonListDto {
 
         name = lesson.getName();
         lessonTime = lesson.getLessonTime();
-        price = lesson.getPrice();
+        price = CustomFormatter.makePrice(lesson.getPrice());
         lessonStartDate = lesson.getLessonStartDate().toString().substring(0, 10);
         lessonEndDate = lesson.getLessonEndDate().toString().substring(0, 10);
         applyEndDate = lesson.getLessonStartDate().minusDays(3).toString().substring(0,10);

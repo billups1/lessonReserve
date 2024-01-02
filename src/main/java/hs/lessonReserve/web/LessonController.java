@@ -4,6 +4,7 @@ import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.service.ApplyService;
 import hs.lessonReserve.service.LessonService;
+import hs.lessonReserve.web.dto.lesson.ApplyLessonDto;
 import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,9 +38,9 @@ public class LessonController {
     @GetMapping("/lesson/{lessonId}")
     public String applyLessonForm(@PathVariable long lessonId, Model model) {
 
-        Lesson lesson = lessonService.applyLessonForm(lessonId);
+        ApplyLessonDto applyLessonDto = lessonService.applyLessonForm(lessonId);
 
-        model.addAttribute("lesson", lesson);
+        model.addAttribute("lesson", applyLessonDto);
 
         return "lesson/applyLesson";
     }

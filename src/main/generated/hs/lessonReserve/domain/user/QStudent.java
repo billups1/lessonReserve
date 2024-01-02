@@ -29,6 +29,9 @@ public class QStudent extends EntityPathBase<Student> {
     public final StringPath email = _super.email;
 
     //inherited
+    public final ListPath<hs.lessonReserve.domain.gather.GatherUser, hs.lessonReserve.domain.gather.QGatherUser> gatherUsers = _super.gatherUsers;
+
+    //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final ListPath<hs.lessonReserve.domain.apply.Apply, hs.lessonReserve.domain.apply.QApply> lessons = this.<hs.lessonReserve.domain.apply.Apply, hs.lessonReserve.domain.apply.QApply>createList("lessons", hs.lessonReserve.domain.apply.Apply.class, hs.lessonReserve.domain.apply.QApply.class, PathInits.DIRECT2);

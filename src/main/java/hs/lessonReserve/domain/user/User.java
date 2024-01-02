@@ -1,5 +1,6 @@
 package hs.lessonReserve.domain.user;
 
+import hs.lessonReserve.domain.gather.GatherUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -29,6 +31,8 @@ public abstract class User {
     private String name;
     private String role;
     private String profileImageUrl;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<GatherUser> gatherUsers;
 
     private String provider;
     private String providerId;

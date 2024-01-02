@@ -17,40 +17,60 @@
 <!--    <hr>-->
 <!--</div>-->
 <body>
-<nav th:fragment="headerFragment" class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">LessonReserve</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/student/mypage">MyPage(수강생용)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/teacher/mypage">MyPage(강사용)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/student/join" align="right">회원가입(수강생용)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/teacher/join" align="right">회원가입(강사용)</a>
-                </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
-<!--                </li>-->
-            </ul>
+<div th:fragment="headerFragment" >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">LessonReserve</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/mypage">MyPage(수강생용)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/teacher/mypage">MyPage(강사용)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/join" align="right">회원가입(수강생용)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/teacher/join" align="right">회원가입(강사용)</a>
+                    </li>
+                    <!--                <li class="nav-item">-->
+                    <!--                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
+                    <!--                </li>-->
+                </ul>
+            </div>
         </div>
+    </nav>
+
+    <div class="list-group hide" id="list-group" style="display: none;">
+        <a href="/" class="list-group-item list-group-item-action">Home</a>
+        <a href="/login" class="list-group-item list-group-item-action">Login</a>
+        <a href="/student/mypage" class="list-group-item list-group-item-action">MyPage(수강생용)</a>
+        <a href="/teacher/mypage" class="list-group-item list-group-item-action">MyPage(강사용)</a>
+        <a href="/student/join" class="list-group-item list-group-item-action">회원가입(수강생용)</a>
+        <a href="/teacher/join" class="list-group-item list-group-item-action">회원가입(강사용)</a>
     </div>
-</nav>
+    <script>
+        $('.navbar-toggler').on('click', function() {
+            $('#list-group').toggle();
+        })
+
+
+    </script>
+</div>
+
+
 
 </body>
 

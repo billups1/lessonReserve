@@ -9,6 +9,7 @@ import hs.lessonReserve.domain.apply.ApplyRepository;
 import hs.lessonReserve.domain.lesson.LessonRepositoryImpl;
 import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.web.dto.lesson.ApplyLessonDto;
 import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
 import hs.lessonReserve.web.dto.lesson.LessonSearchCondDto;
 import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
@@ -96,15 +97,15 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public Lesson applyLessonForm(long lessonId) {
+    public ApplyLessonDto applyLessonForm(long lessonId) {
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
             throw new CustomException("없는 강의입니다.");
         });
 
-        lesson.setStudentNumber(lesson.getApplies().size());
+        ApplyLessonDto applyLessonDto = new ApplyLessonDto(lesson);
 
-        return lesson;
+        return applyLessonDto;
 
     }
 

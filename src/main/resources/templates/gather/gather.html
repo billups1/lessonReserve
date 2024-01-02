@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="contents">
+    <div class="center">
+        <h3>운동 모임</h3>
+        <button type="button" onclick = "location.href = '/gather/create'" class="btn btn-secondary">모임 만들기</button>
+        <div class="row" id="gatherCardContainer">
+
+        </div>
+    </div>
+    <link href="/css/main.css" rel="stylesheet">
+    <script src="/js/gather.js"></script>
+</div>
+
+</body>
+
+</html>

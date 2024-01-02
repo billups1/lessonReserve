@@ -80,7 +80,7 @@ function getHomeLesson(lesson) {
             <td><a href="/teacher/${lesson.teacherId}">${lesson.teacherName}</a></td>
             <td><a href="/teacher/${lesson.teacherId}"><img src="/image/${lesson.teacherProfileImageUrl}" width="50" height="50"/></a></td>
             <td>${lesson.lessonTime}</td>
-            <td>${lesson.price}</td>
+            <td>${lesson.price}원</td>
             <td>${lesson.lessonStartDate}</td>
             <td>${lesson.lessonEndDate}</td>
             <td>${lesson.applyEndDate}</td>

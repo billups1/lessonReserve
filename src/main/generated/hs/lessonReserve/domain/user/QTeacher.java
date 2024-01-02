@@ -31,6 +31,9 @@ public class QTeacher extends EntityPathBase<Teacher> {
     public final StringPath email = _super.email;
 
     //inherited
+    public final ListPath<hs.lessonReserve.domain.gather.GatherUser, hs.lessonReserve.domain.gather.QGatherUser> gatherUsers = _super.gatherUsers;
+
+    //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final ListPath<hs.lessonReserve.domain.lesson.Lesson, hs.lessonReserve.domain.lesson.QLesson> lessons = this.<hs.lessonReserve.domain.lesson.Lesson, hs.lessonReserve.domain.lesson.QLesson>createList("lessons", hs.lessonReserve.domain.lesson.Lesson.class, hs.lessonReserve.domain.lesson.QLesson.class, PathInits.DIRECT2);
