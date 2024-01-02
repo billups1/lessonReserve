@@ -9,3 +9,12 @@ text-align:left;
 .center div {
 margin: 0 auto;
 }
+
+.sampleImage{
+    max-width: 25%;
+    min-width: 25%;
+}
+
+.marginLow div {
+    margin: 1%;
+}

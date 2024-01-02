@@ -34,3 +34,60 @@ function getGatherCard(gather) {
 
     return g;
 }
+
+
+$('#sidoSelect').on("input", function() {
+    var sido = $('#sidoSelect').val();
+    let data = {
+        sido: sido
+    }
+    $.ajax({
+        url: "/api/address/SigunGu",
+        data: data,
+        dataType: 'json'
+    }).done(res=>{
+        console.log("시군구 리스트 불러오기 성공",res);
+        $('#SigunGuSelect').empty();
+        $('#SigunGuSelect').append(`
+            <option selected>선택안함</option>
+        `)
+        res.data.forEach(s=>{
+            $('#SigunGuSelect').append(`
+                <option>${s}</option>
+            `)
+        })
+
+    }).fail(error=>{
+        console.log("시군구 리스트 불러오기 실패",error);
+    });
+
+})
+
+$('#SigunGuSelect').on("input", function() {
+    var sido = $('#sidoSelect').val();
+    var SigunGu = $('#SigunGuSelect').val();
+    let data = {
+        sido: sido,
+        SigunGu: SigunGu
+    }
+    $.ajax({
+        url: "/api/address/eupMeonDong",
+        data: data,
+        dataType: 'json'
+    }).done(res=>{
+        console.log("읍면동 리스트 불러오기 성공",res);
+        $('#eupMeonDongSelect').empty();
+        $('#eupMeonDongSelect').append(`
+            <option selected>선택안함</option>
+        `)
+        res.data.forEach(e=>{
+            $('#eupMeonDongSelect').append(`
+                <option>${e}</option>
+            `)
+        })
+
+    }).fail(error=>{
+        console.log("읍면동 리스트 불러오기 실패",error);
+    });
+
+})

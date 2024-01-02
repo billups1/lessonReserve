@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,13 +23,11 @@ public class Gather {
 
     private String name;
     private String content;
-    private String gatherType; // SOCCER, BASKETBALL, RUNNING, YOGA, ...
     private String representativeImageUrl;
-    private String gatherTime;
-    private String roadAddress;
+    private String address;
     private int maximumParticipantNumber;
     @OneToMany(mappedBy = "gather", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<GatherUser> gatherUsers;
+    private List<GatherUser> gatherUsers = new ArrayList<>();
 
     private LocalDateTime createTime;
 

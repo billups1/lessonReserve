@@ -20,9 +20,7 @@ public class GatherRepositoryImpl implements GatherRepositoryCustom {
                                 GatherListDto.class,
                                 QGather.gather.name.as("name"),
                                 QGather.gather.content.as("content"),
-                                QGather.gather.gatherType.as("gatherType"),
                                 QGather.gather.representativeImageUrl.as("representativeImageUrl"),
-                                QGather.gather.gatherTime.as("gatherTime"),
                                 QGather.gather.maximumParticipantNumber.as("maximumParticipantNumber")
                         )
                 ).from(QGather.gather)

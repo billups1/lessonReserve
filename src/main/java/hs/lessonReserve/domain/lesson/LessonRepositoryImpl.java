@@ -1,18 +1,11 @@
 package hs.lessonReserve.domain.lesson;
 
-import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hs.lessonReserve.config.auth.PrincipalDetails;
-import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
 import hs.lessonReserve.web.dto.lesson.LessonSearchCondDto;
-import hs.lessonReserve.web.dto.lesson.QHomeLessonListDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -20,13 +20,11 @@ public class QGather extends EntityPathBase<Gather> {
 
     public static final QGather gather = new QGather("gather");
 
+    public final StringPath address = createString("address");
+
     public final StringPath content = createString("content");
 
     public final DateTimePath<java.time.LocalDateTime> createTime = createDateTime("createTime", java.time.LocalDateTime.class);
-
-    public final StringPath gatherTime = createString("gatherTime");
-
-    public final StringPath gatherType = createString("gatherType");
 
     public final ListPath<GatherUser, QGatherUser> gatherUsers = this.<GatherUser, QGatherUser>createList("gatherUsers", GatherUser.class, QGatherUser.class, PathInits.DIRECT2);
 
