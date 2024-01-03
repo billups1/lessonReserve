@@ -24,7 +24,10 @@ function getGatherCard(gather) {
             <div class="card-body">
                 <h5 class="card-title">${gather.name}</h5>
                 <p class="card-text">
-                ${gather.content}
+                    ${gather.content}
+                </p>
+                <p class="card-text">
+                    ${gather.address}
                 </p>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="gatherModalBtn" data-gatherId="${gather.id}">
                   가입 신청하기

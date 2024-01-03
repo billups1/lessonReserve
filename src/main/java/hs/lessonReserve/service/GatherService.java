@@ -43,16 +43,21 @@ public class GatherService {
 
     @Transactional(readOnly = true)
     public List<GatherListDto> gatherList(PrincipalDetails principalDetails) {
-//        List<GatherListDto> gatherListDtos = gatherRepositoryImpl.gatherListDtoList();
 
         StringBuffer sb = new StringBuffer();
-        sb.append("select g.id, g.name, g.content, g.representativeImageUrl, ga.acceptStatus ");
+        sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, ga.acceptStatus ");
         sb.append("from gather g ");
-        sb.append("inner join gatherApply ga ");
-        sb.append("on g.id = ga.gatherId and ga.userId = ?");
+        sb.append("left join gatherApply ga ");
 
-        Query query = em.createNativeQuery(sb.toString())
-                .setParameter(1, principalDetails.getUser().getId());
+        Query query;
+        if(principalDetails != null) {
+            sb.append("on g.id = ga.gatherId and ga.userId = ?");
+            query = em.createNativeQuery(sb.toString())
+                    .setParameter(1, principalDetails.getUser().getId());
+        } else {
+            sb.append("on g.id = ga.gatherId");
+            query = em.createNativeQuery(sb.toString());
+        }
 
         List<Object[]> resultList = query.getResultList();
 
@@ -75,7 +80,9 @@ public class GatherService {
                 .name(gatherCreateDto.getName())
                 .content(gatherCreateDto.getContent())
                 .maximumParticipantNumber(gatherCreateDto.getMaximumParticipantNumber())
-                .address(gatherCreateDto.getSidoSelect() + " " + gatherCreateDto.getSigunGuSelect() + " " + gatherCreateDto.getEupMeonDongSelect())
+                .address(gatherCreateDto.getSidoSelect() + " "
+                        + (gatherCreateDto.getSigunGuSelect().equals("선택안함") ? "" : gatherCreateDto.getSigunGuSelect()) + " "
+                        + (gatherCreateDto.getEupMeonDongSelect().equals("선택안함") ? "" : gatherCreateDto.getEupMeonDongSelect()))
                 .build();
 
         switch (gatherCreateDto.getFlexRadioDefault()) {
@@ -131,6 +138,7 @@ public class GatherService {
                 .user(principalDetails.getUser())
                 .gather(gather)
                 .content(gatherApplyDto.getContent())
+                .acceptStatus("APPLY")
                 .build();
 
         // 모임 리더에게 알림

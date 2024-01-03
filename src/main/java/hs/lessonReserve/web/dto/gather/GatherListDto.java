@@ -15,6 +15,7 @@ public class GatherListDto {
     private String name;
     private String content;
     private String representativeImageUrl;
+    private String address;
     private String userGatherState;
 
     public GatherListDto(Object[] objects) {
@@ -22,6 +23,7 @@ public class GatherListDto {
         this.name = (String) objects[1];
         this.content = (String) objects[2];
         this.representativeImageUrl = (String) objects[3];
-        this.userGatherState = (String) objects[4];
+        this.address = (String) objects[4];
+        this.userGatherState = (String) objects[5];
     }
 }
