@@ -3,6 +3,7 @@ package hs.lessonReserve.web;
 import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.service.GatherService;
+import hs.lessonReserve.web.dto.gather.GatherApplyDto;
 import hs.lessonReserve.web.dto.gather.GatherCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,13 @@ public class GatherController {
     public String gatherHome() {
 
         return "gather/gather";
+    }
+
+    @PostMapping("/gather")
+    public String gatherApply(GatherApplyDto gatherApplyDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println(gatherApplyDto);
+        gatherService.gatherApply(gatherApplyDto, principalDetails);
+        return "redirect:/gather";
     }
 
     @GetMapping("/gather/create")

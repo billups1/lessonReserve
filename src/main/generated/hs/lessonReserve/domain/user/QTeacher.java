@@ -31,6 +31,9 @@ public class QTeacher extends EntityPathBase<Teacher> {
     public final StringPath email = _super.email;
 
     //inherited
+    public final ListPath<hs.lessonReserve.domain.gather.gatherApply.GatherApply, hs.lessonReserve.domain.gather.gatherApply.QGatherApply> gatherApplies = _super.gatherApplies;
+
+    //inherited
     public final ListPath<hs.lessonReserve.domain.gather.GatherUser, hs.lessonReserve.domain.gather.QGatherUser> gatherUsers = _super.gatherUsers;
 
     //inherited

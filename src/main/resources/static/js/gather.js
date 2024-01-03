@@ -5,9 +5,10 @@ function gatherCard() {
         dataType: 'json'
     }).done(res=>{
         console.log("모임 리스트 불러오기 성공", res);
-
-
-
+        res.data.forEach(gather => {
+            var gatherCard = getGatherCard(gather);
+            $('#gatherCardContainer').append(gatherCard);
+        })
     }).fail(error=>{
         console.log("모임 리스트 불러오기 실패", error);
     })
@@ -19,21 +20,30 @@ function getGatherCard(gather) {
     g = `
     <div class="col">
         <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="/image/${gather.representativeImageUrl}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                    the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">${gather.name}</h5>
+                <p class="card-text">
+                ${gather.content}
+                </p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="gatherModalBtn" data-gatherId="${gather.id}">
+                  가입 신청하기
+                </button>
             </div>
         </div>
-    </div>
-
-    `
-
+    </div>`
     return g;
 }
+
+$(document).on('click', '#gatherModalBtn',function(e) {
+    $('.black-bg').addClass("show-modal");
+    $('#gatherId').val(this.getAttribute('data-gatherId'));
+});
+
+$('#close').click(function() {
+    $('.black-bg').removeClass("show-modal");
+})
+
 
 
 $('#sidoSelect').on("input", function() {
@@ -89,5 +99,5 @@ $('#SigunGuSelect').on("input", function() {
     }).fail(error=>{
         console.log("읍면동 리스트 불러오기 실패",error);
     });
-
 })
+

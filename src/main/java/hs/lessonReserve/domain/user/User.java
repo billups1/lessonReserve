@@ -1,6 +1,7 @@
 package hs.lessonReserve.domain.user;
 
 import hs.lessonReserve.domain.gather.GatherUser;
+import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,8 @@ public abstract class User {
     private String profileImageUrl;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<GatherUser> gatherUsers;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<GatherApply> gatherApplies;
 
     private String provider;
     private String providerId;

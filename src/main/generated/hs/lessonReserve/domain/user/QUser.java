@@ -24,6 +24,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath email = createString("email");
 
+    public final ListPath<hs.lessonReserve.domain.gather.gatherApply.GatherApply, hs.lessonReserve.domain.gather.gatherApply.QGatherApply> gatherApplies = this.<hs.lessonReserve.domain.gather.gatherApply.GatherApply, hs.lessonReserve.domain.gather.gatherApply.QGatherApply>createList("gatherApplies", hs.lessonReserve.domain.gather.gatherApply.GatherApply.class, hs.lessonReserve.domain.gather.gatherApply.QGatherApply.class, PathInits.DIRECT2);
+
     public final ListPath<hs.lessonReserve.domain.gather.GatherUser, hs.lessonReserve.domain.gather.QGatherUser> gatherUsers = this.<hs.lessonReserve.domain.gather.GatherUser, hs.lessonReserve.domain.gather.QGatherUser>createList("gatherUsers", hs.lessonReserve.domain.gather.GatherUser.class, hs.lessonReserve.domain.gather.QGatherUser.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
