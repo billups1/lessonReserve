@@ -1,9 +1,11 @@
 package hs.lessonReserve.service;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
+import hs.lessonReserve.domain.alarm.Alarm;
+import hs.lessonReserve.domain.alarm.AlarmGatherApply;
+import hs.lessonReserve.domain.alarm.AlarmRepository;
 import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.domain.gather.GatherRepository;
-import hs.lessonReserve.domain.gather.GatherRepositoryImpl;
 import hs.lessonReserve.domain.gather.GatherUser;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApplyRepository;
@@ -34,9 +36,9 @@ public class GatherService {
     @Value("${file.path}")
     private String uploadFolder;
 
-    private final GatherRepositoryImpl gatherRepositoryImpl;
     private final GatherRepository gatherRepository;
     private final GatherApplyRepository gatherApplyRepository;
+    private final AlarmRepository alarmRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -50,7 +52,7 @@ public class GatherService {
         sb.append("left join gatherApply ga ");
 
         Query query;
-        if(principalDetails != null) {
+        if (principalDetails != null) {
             sb.append("on g.id = ga.gatherId and ga.userId = ?");
             query = em.createNativeQuery(sb.toString())
                     .setParameter(1, principalDetails.getUser().getId());
@@ -127,8 +129,10 @@ public class GatherService {
 
     @Transactional
     public void gatherApply(GatherApplyDto gatherApplyDto, PrincipalDetails principalDetails) {
-        Gather gather = new Gather();
-        gather.setId(gatherApplyDto.getGatherId());
+        Gather gather = gatherRepository.findById(gatherApplyDto.getGatherId())
+                .orElseThrow(() -> {
+                    throw new CustomException("해당 모임이 없습니다.");
+                });
 
         if (principalDetails == null) {
             throw new CustomException("로그인이 필요합니다.");
@@ -141,11 +145,22 @@ public class GatherService {
                 .acceptStatus("APPLY")
                 .build();
 
-        // 모임 리더에게 알림
-
-
-
         gatherApplyRepository.save(gatherApply);
+
+        // 모임 리더에게 모임 가입 신청 알림
+        GatherUser gatherUser = gather.getGatherUsers().stream().filter(gu ->
+                gu.getPosition().equals("LEADER")
+        ).findFirst().orElseThrow(() -> {
+            throw new CustomException("해당 유저가 없습니다");
+        });
+
+        AlarmGatherApply alarmGatherApply = AlarmGatherApply.builder()
+                .toUser(gatherUser.getUser())
+                .fromUser(principalDetails.getUser())
+                .gatherApply(gatherApply)
+                .build();
+
+        alarmRepository.save(alarmGatherApply);
 
     }
 }
