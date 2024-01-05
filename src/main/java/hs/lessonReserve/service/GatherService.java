@@ -158,6 +158,7 @@ public class GatherService {
                 .toUser(gatherUser.getUser())
                 .fromUser(principalDetails.getUser())
                 .gatherApply(gatherApply)
+                .domain("GatherApply")
                 .build();
 
         alarmRepository.save(alarmGatherApply);

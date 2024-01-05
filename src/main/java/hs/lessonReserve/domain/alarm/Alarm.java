@@ -24,12 +24,12 @@ public class Alarm {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "toUser_id")
+    @JoinColumn(name = "toUserId")
     private User toUser;
     @ManyToOne
-    @JoinColumn(name = "fromUser_id")
+    @JoinColumn(name = "fromUserId")
     private User fromUser;
-    private String code;
+    private String domain; //
     private String status; // UN_READ, READ
     private LocalDateTime createTime;
 

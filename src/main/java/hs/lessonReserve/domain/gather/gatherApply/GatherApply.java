@@ -30,7 +30,7 @@ public class GatherApply {
     private Gather gather;
 
     private String content;
-    private String acceptStatus; // APPLY, ACCEPT, DENY
+    private String acceptStatus; // APPLY, ACCEPT, REJECT, RESULT
 
     private LocalDateTime createTime;
     @PrePersist

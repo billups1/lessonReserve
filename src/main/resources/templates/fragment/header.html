@@ -18,6 +18,16 @@
 <!--</div>-->
 <body>
 <div th:fragment="headerFragment" >
+
+    <div class="black-bg">
+        <div class="white-bg">
+            <h4>알림</h4>
+            <table class="table" id="modalAlarmTable">
+
+            </table>
+        </div>
+    </div>
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">LessonReserve</a>
@@ -40,18 +50,16 @@
                         <a class="nav-link" href="/teacher/mypage">MyPage(강사용)</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/student/join" align="right">회원가입(수강생용)</a>
+                        <a class="nav-link" href="/student/join">회원가입(수강생용)</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/teacher/join" align="right">회원가입(강사용)</a>
+                        <a class="nav-link" href="/teacher/join">회원가입(강사용)</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/gather" align="right">모임</a>
+                        <a class="nav-link" href="/gather">모임</a>
                     </li>
-                    <!--                <li class="nav-item">-->
-                    <!--                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
-                    <!--                </li>-->
                 </ul>
+                <a id="alarmCount" style="margin-left: auto; color: red;"></a>
             </div>
         </div>
     </nav>
@@ -65,13 +73,9 @@
         <a href="/teacher/join" class="list-group-item list-group-item-action">회원가입(강사용)</a>
         <a href="/gather" class="list-group-item list-group-item-action">모임</a>
     </div>
-    <script>
-        $('.navbar-toggler').on('click', function() {
-            $('#list-group').toggle();
-        })
 
-
-    </script>
+    <script src="/js/header.js"></script>
+    <link href="/css/main.css" rel="stylesheet">
 </div>
 
 

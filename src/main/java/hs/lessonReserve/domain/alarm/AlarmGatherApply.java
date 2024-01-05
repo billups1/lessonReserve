@@ -3,6 +3,7 @@ package hs.lessonReserve.domain.alarm;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 public class AlarmGatherApply extends Alarm{
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "gatherApplyId")
     private GatherApply gatherApply;
 
