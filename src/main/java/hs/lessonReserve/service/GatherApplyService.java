@@ -2,8 +2,10 @@ package hs.lessonReserve.service;
 
 import hs.lessonReserve.domain.alarm.AlarmGatherApply;
 import hs.lessonReserve.domain.alarm.AlarmRepository;
+import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApplyRepository;
+import hs.lessonReserve.domain.gather.gatherUser.GatherUserRepository;
 import hs.lessonReserve.handler.ex.CustomApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ public class GatherApplyService {
 
     private final GatherApplyRepository gatherApplyRepository;
     private final AlarmRepository alarmRepository;
+    private final GatherUserRepository gatherUserRepository;
 
     @Transactional
     public void gatherApplyAccept(long gatherApplyId) {
@@ -28,7 +31,17 @@ public class GatherApplyService {
                 .gatherApply(gatherApply)
                 .domain("GatherApplyAccept")
                 .build();
+
         alarmRepository.save(alarmGatherApply);
+
+        GatherUser gatherUser = GatherUser.builder()
+                .user(gatherApply.getUser())
+                .gather(gatherApply.getGather())
+                .position("MEMBER")
+                .build();
+
+        gatherUserRepository.save(gatherUser);
+
     }
 
     @Transactional
@@ -44,6 +57,7 @@ public class GatherApplyService {
                 .domain("GatherApplyReject")
                 .build();
         alarmRepository.save(alarmGatherApply);
+
     }
 
 }

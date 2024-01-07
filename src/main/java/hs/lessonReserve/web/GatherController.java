@@ -5,10 +5,12 @@ import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.service.GatherService;
 import hs.lessonReserve.web.dto.gather.GatherApplyDto;
 import hs.lessonReserve.web.dto.gather.GatherCreateDto;
+import hs.lessonReserve.web.dto.gather.GatherMypageListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -39,6 +41,16 @@ public class GatherController {
     public String gatherCreate(GatherCreateDto gatherCreateDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         gatherService.gatherCreate(gatherCreateDto, principalDetails);
         return "redirect:/gather";
+    }
+
+    @GetMapping("/gather/mypage")
+    public String gatherMypage(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return "gather/gatherMypage";
+    }
+
+    @GetMapping("/gather/chatting/{gatherId}")
+    public String gatherMypage(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long gatherId) {
+        return "gather/gatherChatting";
     }
 
 }

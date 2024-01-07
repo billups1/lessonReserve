@@ -4,6 +4,7 @@ import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.service.GatherService;
 import hs.lessonReserve.web.dto.ex.CMRespDto;
 import hs.lessonReserve.web.dto.gather.GatherListDto;
+import hs.lessonReserve.web.dto.gather.GatherMypageListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -24,6 +25,12 @@ public class GatherApiController {
     public ResponseEntity gatherList(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         List<GatherListDto> gatherListDtos = gatherService.gatherList(principalDetails);
         return new ResponseEntity(new CMRespDto<>(1, "모임 리스트 불러오기 완료", gatherListDtos), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/gather/list/mypage")
+    public ResponseEntity gatherListMypage(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        List<GatherMypageListDto> gatherMypageListDtos = gatherService.gatherMypage(principalDetails);
+        return new ResponseEntity(new CMRespDto<>(1, "모임 마이페이지 리스트 불러오기 완료", gatherMypageListDtos), HttpStatus.OK);
     }
 
 

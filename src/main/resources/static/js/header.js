@@ -2,7 +2,7 @@ $('.navbar-toggler').on('click', function() {
     $('#list-group').toggle();
 })
 
-
+// 알림창 열기
 $('#alarmCount').click(function(){
     $.ajax({
         url: '/api/alarm/list',
@@ -38,7 +38,7 @@ $('#alarmCount').click(function(){
         console.log("현재 알람 리스트 불러오기 실패",error);
     });
 
-    $('.black-bg').addClass("show-modal");
+    $('#alarmModal').addClass("show-modal");
     
 })
 

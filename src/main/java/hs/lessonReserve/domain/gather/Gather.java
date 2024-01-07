@@ -1,6 +1,7 @@
 package hs.lessonReserve.domain.gather;
 
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
+import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

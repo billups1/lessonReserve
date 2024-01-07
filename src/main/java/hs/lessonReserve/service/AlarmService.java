@@ -22,18 +22,16 @@ import java.util.Optional;
 public class AlarmService {
 
     private final AlarmRepository alarmRepository;
-    private final UserRepository userRepository;
-    private final GatherRepository gatherRepository;
 
     @Transactional(readOnly = true)
     public int alarmCount(PrincipalDetails principalDetails) {
-        List<Alarm> alarms = alarmRepository.findByToUserId(principalDetails.getUser().getId());
+        List<Alarm> alarms = alarmRepository.findByToUserIdOrderByIdDesc(principalDetails.getUser().getId());
         return alarms.size();
     }
 
     @Transactional(readOnly = true)
     public List<AlarmListDto> alarmList(PrincipalDetails principalDetails) {
-        List<Alarm> alarms = alarmRepository.findByToUserId(principalDetails.getUser().getId());
+        List<Alarm> alarms = alarmRepository.findByToUserIdOrderByIdDesc(principalDetails.getUser().getId());
         ArrayList<AlarmListDto> alarmListDtos = new ArrayList<>();
         for (Alarm alarm : alarms) {
             if (alarm.getDomain().equals("GatherApply")) {

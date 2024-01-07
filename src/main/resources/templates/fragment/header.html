@@ -2,24 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<!--<div  style="background-color:#b0cdd6">-->
-<!--    <div>-->
-<!--        <a href="/"><img src="/images/img.png" width="150"></a>-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <span sec:authorize="isAuthenticated()">-->
-<!--            <span sec:authorize="hasRole('USER')">-->
-<!--                <a href="/members/my-page" class="text-decoration-none"> 마이 페이지 | </a>-->
-<!--            </span>-->
-<!--            <a href="/logout" class="text-decoration-none"> 로그아웃 | </a>-->
-<!--        </span>-->
-<!--    </div>-->
-<!--    <hr>-->
-<!--</div>-->
 <body>
 <div th:fragment="headerFragment" >
 
-    <div class="black-bg">
+    <div class="black-bg" id="alarmModal">
         <div class="white-bg">
             <h4>알림</h4>
             <table class="table" id="modalAlarmTable">
@@ -58,6 +44,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/gather">모임</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gather/mypage">내 모임</a>
+                    </li>
                 </ul>
                 <a id="alarmCount" style="margin-left: auto; color: red;"></a>
             </div>
@@ -72,6 +61,7 @@
         <a href="/student/join" class="list-group-item list-group-item-action">회원가입(수강생용)</a>
         <a href="/teacher/join" class="list-group-item list-group-item-action">회원가입(강사용)</a>
         <a href="/gather" class="list-group-item list-group-item-action">모임</a>
+        <a href="/gather/mypage" class="list-group-item list-group-item-action">내 모임</a>
     </div>
 
     <script src="/js/header.js"></script>

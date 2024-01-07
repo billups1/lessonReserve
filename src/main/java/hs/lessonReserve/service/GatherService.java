@@ -1,18 +1,18 @@
 package hs.lessonReserve.service;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
-import hs.lessonReserve.domain.alarm.Alarm;
 import hs.lessonReserve.domain.alarm.AlarmGatherApply;
 import hs.lessonReserve.domain.alarm.AlarmRepository;
 import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.domain.gather.GatherRepository;
-import hs.lessonReserve.domain.gather.GatherUser;
+import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApplyRepository;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.web.dto.gather.GatherApplyDto;
 import hs.lessonReserve.web.dto.gather.GatherCreateDto;
 import hs.lessonReserve.web.dto.gather.GatherListDto;
+import hs.lessonReserve.web.dto.gather.GatherMypageListDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -47,17 +47,22 @@ public class GatherService {
     public List<GatherListDto> gatherList(PrincipalDetails principalDetails) {
 
         StringBuffer sb = new StringBuffer();
-        sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, ga.acceptStatus ");
-        sb.append("from gather g ");
-        sb.append("left join gatherApply ga ");
 
         Query query;
         if (principalDetails != null) {
-            sb.append("on g.id = ga.gatherId and ga.userId = ?");
+            sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, ga.acceptStatus ");
+            sb.append("from gather g ");
+            sb.append("left join gatherApply ga ");
+            sb.append("on g.id = ga.gatherId and ga.userId = ? ");
+            sb.append("left join gatheruser gu ");
+            sb.append("on g.id = gu.gatherId and gu.userId = ? ");
+            sb.append("where (ga.acceptStatus is null or (ga.acceptStatus != 'ACCEPT' and ga.acceptStatus != 'REJECT')) and (gu.position is null or gu.position != 'LEADER')");
             query = em.createNativeQuery(sb.toString())
-                    .setParameter(1, principalDetails.getUser().getId());
+                    .setParameter(1, principalDetails.getUser().getId())
+                    .setParameter(2, principalDetails.getUser().getId());
         } else {
-            sb.append("on g.id = ga.gatherId");
+            sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, null ");
+            sb.append("from gather g ");
             query = em.createNativeQuery(sb.toString());
         }
 
@@ -163,5 +168,24 @@ public class GatherService {
 
         alarmRepository.save(alarmGatherApply);
 
+    }
+
+    public List<GatherMypageListDto> gatherMypage(PrincipalDetails principalDetails) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, gu.position = 'LEADER' ");
+        sb.append("from gather g ");
+        sb.append("inner join gatheruser gu ");
+        sb.append("on g.id = gu.gatherId and gu.userId = ? ");
+
+        Query query = em.createNativeQuery(sb.toString())
+                .setParameter(1, principalDetails.getUser().getId());
+
+        List<Object[]> resultList = query.getResultList();
+
+        List<GatherMypageListDto> gatherMypageListDtos = resultList.stream().map(r -> {
+            return new GatherMypageListDto(r);
+        }).collect(Collectors.toList());
+
+        return gatherMypageListDtos;
     }
 }

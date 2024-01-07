@@ -28,11 +28,18 @@ function getGatherCard(gather) {
                 </p>
                 <p class="card-text">
                     ${gather.address}
-                </p>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="gatherModalBtn" data-gatherId="${gather.id}">
-                  가입 신청하기
-                </button>
-            </div>
+                </p>`
+    if (gather.userGatherState == null) {
+        g +=`<button type="button" class="btn btn-primary" data-bs-toggle="modal" id="gatherModalBtn" data-gatherId="${gather.id}">
+          가입 신청하기
+        </button>`
+    } else {
+        g +=`<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-gatherId="${gather.id}">
+          신청완료
+        </button>`
+    }
+
+    g +=    `</div>
         </div>
     </div>`
     return g;
