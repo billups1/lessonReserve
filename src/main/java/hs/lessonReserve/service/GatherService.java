@@ -170,6 +170,7 @@ public class GatherService {
 
     }
 
+    @Transactional(readOnly = true)
     public List<GatherMypageListDto> gatherMypage(PrincipalDetails principalDetails) {
         StringBuffer sb = new StringBuffer();
         sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, gu.position = 'LEADER' ");
@@ -187,5 +188,27 @@ public class GatherService {
         }).collect(Collectors.toList());
 
         return gatherMypageListDtos;
+    }
+
+    @Transactional(readOnly = true)
+    public void gatherChatting(PrincipalDetails principalDetails, long gatherId) {
+        Gather gather = gatherRepository.findById(gatherId).orElseThrow(() -> {
+            throw new CustomException("없는 모입입니다.");
+        });
+
+        boolean gatherJoinState = false;
+
+        List<GatherUser> gatherUsers = gather.getGatherUsers();
+        for (GatherUser gatherUser : gatherUsers) {
+            if (gatherUser.getUser().getId() == principalDetails.getUser().getId()) {
+                gatherJoinState = true;
+                break;
+            }
+        }
+
+        if (!gatherJoinState) {
+            throw new CustomException("접근 권한이 없습니다.");
+        }
+
     }
 }

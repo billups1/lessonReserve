@@ -49,7 +49,8 @@ public class GatherController {
     }
 
     @GetMapping("/gather/chatting/{gatherId}")
-    public String gatherMypage(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long gatherId) {
+    public String gatherChatting(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long gatherId) {
+        gatherService.gatherChatting(principalDetails, gatherId);
         return "gather/gatherChatting";
     }
 

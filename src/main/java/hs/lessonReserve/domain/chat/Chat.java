@@ -1,5 +1,6 @@
 package hs.lessonReserve.domain.chat;
 
+import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.domain.user.User;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
@@ -24,12 +25,13 @@ public class Chat {
     private String messageType; // ENTER, TALK
 
     @ManyToOne
-    @JoinColumn(name = "chatRoomId")
-    private ChatRoom chatRoom;
+    @JoinColumn(name = "gatherId")
+    private Gather gather;
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
     private String message;
+
     private LocalDateTime createTime;
 
     @PostConstruct
