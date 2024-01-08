@@ -12,16 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Data
-public class ChatDto {
+public class ChatSendDto {
     private String type; // 메시지 타입 ENTER, TALK, LEAVE
     private long gatherId; // 방 번호
     private long userId; // 채팅을 보낸 사람
+    private String userName;
     private String message; // 메시지
-    private LocalDateTime createTime; // 생성 시간
-
-    @PostConstruct
-    private void createTime() {
-        this.createTime = LocalDateTime.now();
-    }
+    private String createTime; // 생성 시간
 
 }

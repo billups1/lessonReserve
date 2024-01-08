@@ -9,6 +9,7 @@ import hs.lessonReserve.web.dto.gather.GatherMypageListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,8 +50,11 @@ public class GatherController {
     }
 
     @GetMapping("/gather/chatting/{gatherId}")
-    public String gatherChatting(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long gatherId) {
+    public String gatherChatting(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long gatherId, Model model) {
         gatherService.gatherChatting(principalDetails, gatherId);
+        model.addAttribute("gatherId", gatherId);
+        model.addAttribute("userId", principalDetails.getUser().getId());
+        model.addAttribute("userName", principalDetails.getUser().getName());
         return "gather/gatherChatting";
     }
 

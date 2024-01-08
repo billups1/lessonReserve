@@ -2,6 +2,7 @@ package hs.lessonReserve.domain.chat;
 
 import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.domain.user.User;
+import hs.lessonReserve.web.dto.chat.ChatSendDto;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,14 @@ public class Chat {
 
     @PostConstruct
     public void createTime(String createTime) {
-        this.createTime = LocalDateTime.now();;
+        this.createTime = LocalDateTime.now();
+    }
+
+    public Chat(ChatSendDto chatSendDto, User user) {
+        this.messageType = chatSendDto.getType();
+        this.gather = new Gather(chatSendDto.getGatherId());
+        this.user = user;
+        this.message = chatSendDto.getMessage();
+        this.createTime = LocalDateTime.now();
     }
 }

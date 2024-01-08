@@ -49,5 +49,7 @@ public class Gather {
         this.gatherUsers.add(gatherUsers);
     }
 
-
+    public Gather(long id) {
+        this.id = id;
+    }
 }

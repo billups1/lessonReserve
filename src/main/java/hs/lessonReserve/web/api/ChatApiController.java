@@ -1,43 +1,41 @@
 package hs.lessonReserve.web.api;
 
-import hs.lessonReserve.domain.chat.Chat;
-import hs.lessonReserve.domain.gather.GatherRepository;
-import hs.lessonReserve.domain.user.User;
-import hs.lessonReserve.domain.user.UserRepository;
-import hs.lessonReserve.handler.ex.CustomApiException;
-import hs.lessonReserve.web.dto.chat.ChatDto;
+import hs.lessonReserve.service.ChatService;
+import hs.lessonReserve.web.dto.chat.ChatListDto;
+import hs.lessonReserve.web.dto.chat.ChatSendDto;
+import hs.lessonReserve.web.dto.ex.CMRespDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class ChatApiController {
 
-    private final SimpMessageSendingOperations template;
-    private final UserRepository userRepository;
+    private final ChatService chatService;
 
     @MessageMapping("/api/chat/enterUser")
-    public void enterUser(@Payload ChatDto chatDto, SimpMessageHeaderAccessor headerAccessor) {
-
-        headerAccessor.getSessionAttributes().put("gatherId", chatDto.getGatherId());
-        headerAccessor.getSessionAttributes().put("userId", chatDto.getUserId());
-
-        User user = userRepository.findById(chatDto.getUserId()).orElseThrow(() -> {
-            throw new CustomApiException("없는 유저입니다.");
-        });
-
-        chatDto.setMessage(user.getName() + " 님이 입장하셨습니다.");
-        template.convertAndSend("/sub/chat/gather/" + chatDto.getGatherId(), chatDto);
+    public void enterUser(@Payload ChatSendDto chatSendDto, SimpMessageHeaderAccessor headerAccessor) {
+        chatService.sendMessage(chatSendDto, headerAccessor);
     }
 
     @MessageMapping("/api/chat/sendMessage")
-    public void sendMessage(@Payload ChatDto chatDto, SimpMessageHeaderAccessor headerAccessor) {
-        template.convertAndSend("/sub/chat/gather/" + chatDto.getGatherId(), chatDto);
+    public void sendMessage(@Payload ChatSendDto chatSendDto, SimpMessageHeaderAccessor headerAccessor) {
+        chatService.sendMessage(chatSendDto, headerAccessor);
     }
 
+    @GetMapping("/api/chat/list/{gatherId}")
+    public ResponseEntity chatList(@PathVariable long gatherId) {
+        List<ChatListDto> chatListDtos = chatService.chatList(gatherId);
+        return new ResponseEntity<>(new CMRespDto<>(1, "채팅 리스트 불러오기 완료", chatListDtos), HttpStatus.OK);
+    }
 
 }

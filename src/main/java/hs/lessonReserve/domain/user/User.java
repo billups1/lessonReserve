@@ -48,4 +48,7 @@ public abstract class User {
         this.createTime = LocalDateTime.now();
     }
 
+    public User(long id) {
+        this.id = id;
+    }
 }
