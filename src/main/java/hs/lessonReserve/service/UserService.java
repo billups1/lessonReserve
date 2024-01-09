@@ -14,6 +14,7 @@ import hs.lessonReserve.util.RedisUtil;
 import hs.lessonReserve.web.dto.auth.StudentModifyDto;
 import hs.lessonReserve.web.dto.auth.UserJoinDto;
 import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
+import hs.lessonReserve.web.dto.teacher.TeacherModifyDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -155,31 +156,79 @@ public class UserService {
     }
 
     public StudentModifyDto studentModifyDto(PrincipalDetails principalDetails) {
-        StudentModifyDto studentModifyDto = new StudentModifyDto((Student) principalDetails.getUser());
-        return studentModifyDto;
+        try {
+            StudentModifyDto studentModifyDto = new StudentModifyDto((Student) principalDetails.getUser());
+            return studentModifyDto;
+        } catch (ClassCastException e) {
+            throw new CustomException("강사님 회원수정 메뉴를 이용해 주세요.");
+        }
     }
 
     @Transactional
     public void studentModify(PrincipalDetails principalDetails, StudentModifyDto studentModifyDto) {
 
-        User user = principalDetails.getUser();
+        User user = userRepository.findById(principalDetails.getUser().getId()).orElseThrow(() -> {
+            throw new CustomException("없는 유저입니다.");
+        });
 
-        String profileImageFileName = null;
-        if (studentModifyDto.getProfileImageFile() != null) {
+        user.setName(studentModifyDto.getName());
+        user.setPassword(bCryptPasswordEncoder.encode(studentModifyDto.getPassword()));
+
+        if (studentModifyDto.isProfileImageDelete()) { // 기존 사진 삭제
+            user.setProfileImageUrl(null);
+        } else if (studentModifyDto.getProfileImageFile() != null) { // 사진 새로 등록
             UUID uuid = UUID.randomUUID();
-            profileImageFileName = uuid + studentModifyDto.getProfileImageFile().getOriginalFilename();
+            String profileImageFileName = uuid + studentModifyDto.getProfileImageFile().getOriginalFilename();
             Path path = Paths.get(uploadFolder + profileImageFileName);
             try {
                 Files.write(path, studentModifyDto.getProfileImageFile().getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            user.setProfileImageUrl(profileImageFileName);
         }
+        principalDetails.setUser(user);
 
-        user.setName(studentModifyDto.getName());
-        user.setPassword(studentModifyDto.getPassword());
-        if (principalDetails.get) // 사진 없으면 추가, 삭제 여부 버튼 만들기
+    }
+
+    public TeacherModifyDto teacherModifyDto(PrincipalDetails principalDetails) {
+
+        Teacher teacher = (Teacher) principalDetails.getUser();
+
+        ArrayList<String> certificatePaperImageUrls = new ArrayList<>();
+        teacher.getCertificates().stream().map(certificate -> {
+            return certificatePaperImageUrls.add(certificate.getCertificatePaperImageUrl());
+        });
+        TeacherModifyDto teacherModifyDto = new TeacherModifyDto(teacher, certificatePaperImageUrls);
+
+        return teacherModifyDto;
+    }
+
+    @Transactional
+    public void teacherModify(PrincipalDetails principalDetails, TeacherModifyDto teacherModifyDto) {
+        System.out.println("받는"+teacherModifyDto);
+
+        User user = userRepository.findById(principalDetails.getUser().getId()).orElseThrow(() -> {
+            throw new CustomException("없는 유저입니다.");
+        });
+
+        user.setName(teacherModifyDto.getName());
+        user.setPassword(bCryptPasswordEncoder.encode(teacherModifyDto.getPassword()));
+
+        if (teacherModifyDto.isProfileImageDelete()) { // 기존 사진 삭제
+            user.setProfileImageUrl(null);
+        } else if (teacherModifyDto.getProfileImageFile() != null) { // 사진 새로 등록
+            UUID uuid = UUID.randomUUID();
+            String profileImageFileName = uuid + teacherModifyDto.getProfileImageFile().getOriginalFilename();
+            Path path = Paths.get(uploadFolder + profileImageFileName);
+            try {
+                Files.write(path, teacherModifyDto.getProfileImageFile().getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            user.setProfileImageUrl(profileImageFileName);
+        }
+        principalDetails.setUser(user);
 
     }
 }

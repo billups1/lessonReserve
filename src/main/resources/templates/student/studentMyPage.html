@@ -34,9 +34,9 @@
 
         <tr th:each="dto : ${dtos}">
             <td><a th:text="${dto.applyId}">번호</a></td>
-            <td th:text="${dto.name}">강의명</td>
-            <td th:text="${dto.teacher.name}">강사</td>
-            <td><img th:src="|/image/${dto.teacher.profileImageUrl}|" width="50" height="50"/></td>
+            <td th:text="${dto.lessonName}">강의명</td>
+            <td th:text="${dto.teacherName}">강사</td>
+            <td><img th:src="|/image/${dto.teacherProfileImageUrl}|" width="50" height="50"/></td>
             <td th:text="${dto.lessonTime}">시간</td>
             <td th:text="${dto.price}">가격</td>
             <td th:text="${dto.lessonStartDate}">레슨 시작일</td>
@@ -44,21 +44,21 @@
             <td th:text="${dto.applyEndDate}">수강신청 마감일</td>
             <td th:text="${dto.applyCreateTime}">수강신청일</td>
             <td th:text="${dto.applyStatus}">수강자수</td>
-            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'APPLY')}">
+            <th:block th:if="${#strings.equals(dto.applyStatus, 'APPLY')}">
                 <td>
                     <button th:onclick="cancelApply([[${dto.lessonId}]])">취소하기</button>
                 </td>
             </th:block>
-            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'CANCEL')}">
+            <th:block th:if="${#strings.equals(dto.applyStatus, 'CANCEL')}">
                 <td><a>취소완료</a></td>
             </th:block>
-            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'COMPLETED')}">
+            <th:block th:if="${#strings.equals(dto.applyStatus, 'COMPLETED')}">
                 <td>
                     수강완료<br>
                     <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/student/lesson/review/{lessonId}(lessonId=${dto.applyId})}'|">수강평 쓰기</button>
                 </td>
             </th:block>
-            <th:block th:if="${#strings.equals(dto.userApplyStatus, 'REVIEWCOMPLETED')}">
+            <th:block th:if="${#strings.equals(dto.applyStatus, 'REVIEWCOMPLETED')}">
                 <td>
                     수강평<br>
                     작성완료

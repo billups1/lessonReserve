@@ -2,6 +2,7 @@ package hs.lessonReserve.config.auth;
 
 import hs.lessonReserve.domain.user.User;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @Getter
+@Setter
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;

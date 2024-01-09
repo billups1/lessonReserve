@@ -72,14 +72,14 @@ public class StudentController {
 
         StudentModifyDto studentModifyDto = userService.studentModifyDto(principalDetails);
         model.addAttribute("dto", studentModifyDto);
-        return "auth/modifyStudent";
+        return "student/modifyStudent";
     }
 
     @PostMapping("/student/modify")
     public String studentModify(@AuthenticationPrincipal PrincipalDetails principalDetails, @Valid StudentModifyDto studentModifyDto, BindingResult bindingResult) {
 
         userService.studentModify(principalDetails, studentModifyDto);
-        return "auth/modifyStudent";
+        return "redirect:/student/mypage";
     }
 
 }

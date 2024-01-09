@@ -11,7 +11,8 @@
 </head>
 <body>
 <div layout:fragment="contents" class="center">
-    <h2>강사 마이페이지</h2>
+    <h2 class="center">강사 마이페이지</h2>
+    <button class="btn btn-primary" style="float:right;" onclick="location.href = '/teacher/modify'">회원정보 수정</button>
 
     <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/teacher/lesson/create}'|" style="float:right;">강의 만들기</button>
     <br>

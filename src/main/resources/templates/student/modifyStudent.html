@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div layout:fragment="contents">
+    <h2 class="center">회원정보 수정</h2>
+    <form action="/student/modify" method="post" enctype="multipart/form-data">
+
+        <label for="email" class="form-label">이메일</label>
+        <input type="text" readonly class="form-control-plaintext" id="email" th:value="${dto.email}">
+        <br>
+
+        <label for="password" class="form-label">비밀번호</label>
+        <input type="password" name="password" id="password" placeholder="비밀번호" class="form-control"
+               required="required"/>
+        <br>
+
+        <label for="name" class="form-label">이름</label>
+        <input type="text" name="name" id="name" placeholder="이름" class="form-control" th:value="${dto.name}"
+               required="required"/>
+        <br>
+
+        <label for="profileImageFile" class="form-label">프로필 사진</label>
+        <input type="file" name="profileImageFile" id="profileImageFile" class="form-control" placeholder="프로필 이미지"/>
+        <br>
+        <div>
+
+            <th:block th:if="${dto.profileImageUrl == null}">
+                현재사진 : 없음
+            </th:block>
+            <th:block th:unless="${dto.profileImageUrl == null}">
+                현재사진 :
+                <img th:src="@{/image/} + ${dto.profileImageUrl}" style="max-width=150px;">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="profileImageDelete"
+                           id="profileImageDelete">
+                    <label class="form-check-label" for="profileImageDelete">
+                        사진 삭제하기
+                    </label>
+                </div>
+            </th:block>
+
+        </div>
+        <br>
+
+        <button class="btn btn-primary">수정하기</button>
+    </form>
+</div>
+
+</body>
+</html>

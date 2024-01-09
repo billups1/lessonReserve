@@ -12,6 +12,7 @@ public class StudentModifyDto {
     private String password;
     private String profileImageUrl;
     private MultipartFile profileImageFile;
+    private boolean profileImageDelete;
 
     public StudentModifyDto(Student student) {
         this.email = student.getEmail();
