@@ -23,8 +23,11 @@ public class AlarmApiController {
 
     @GetMapping("/api/alarm/count")
     public ResponseEntity alarmCount(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        int alarmCount = alarmService.alarmCount(principalDetails);
-        return new ResponseEntity(new CMRespDto<>(1, "알람 갯수 조회 완료", alarmCount), HttpStatus.OK);
+        if (principalDetails != null) {
+            int alarmCount = alarmService.alarmCount(principalDetails);
+            return new ResponseEntity(new CMRespDto<>(1, "알람 갯수 조회 완료", alarmCount), HttpStatus.OK);
+        }
+        return null;
     }
 
     @GetMapping("/api/alarm/list")

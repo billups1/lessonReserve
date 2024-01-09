@@ -10,10 +10,10 @@
     <title>Title</title>
 </head>
 <body>
-<div layout:fragment="contents">
+<div layout:fragment="contents" class="center">
     <h2>강사 마이페이지</h2>
 
-    <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/teacher/lesson/create}'|">강의 만들기</button>
+    <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/teacher/lesson/create}'|" style="float:right;">강의 만들기</button>
     <br>
     <br>
     <h3>내가 진행중인 강의</h3>
@@ -55,6 +55,7 @@
         </tr>
     </table>
     <script src="/js/teacherMyPage.js"></script>
+    <link href="/css/main.css" rel="stylesheet">
 </div>
 
 </body>

@@ -1,5 +1,6 @@
 package hs.lessonReserve.service;
 
+import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.domain.LessonReview.LessonReview;
 import hs.lessonReserve.domain.LessonReview.LessonReviewRepository;
 import hs.lessonReserve.domain.certificate.Certificate;
@@ -10,15 +11,14 @@ import hs.lessonReserve.domain.user.User;
 import hs.lessonReserve.domain.user.UserRepository;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.util.RedisUtil;
+import hs.lessonReserve.web.dto.auth.StudentModifyDto;
 import hs.lessonReserve.web.dto.auth.UserJoinDto;
 import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -152,5 +152,34 @@ public class UserService {
         TeacherIntroduceDto teacherIntroduceDto = new TeacherIntroduceDto(teacher, lessonReviews, averageScore);
 
         return teacherIntroduceDto;
+    }
+
+    public StudentModifyDto studentModifyDto(PrincipalDetails principalDetails) {
+        StudentModifyDto studentModifyDto = new StudentModifyDto((Student) principalDetails.getUser());
+        return studentModifyDto;
+    }
+
+    @Transactional
+    public void studentModify(PrincipalDetails principalDetails, StudentModifyDto studentModifyDto) {
+
+        User user = principalDetails.getUser();
+
+        String profileImageFileName = null;
+        if (studentModifyDto.getProfileImageFile() != null) {
+            UUID uuid = UUID.randomUUID();
+            profileImageFileName = uuid + studentModifyDto.getProfileImageFile().getOriginalFilename();
+            Path path = Paths.get(uploadFolder + profileImageFileName);
+            try {
+                Files.write(path, studentModifyDto.getProfileImageFile().getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        user.setName(studentModifyDto.getName());
+        user.setPassword(studentModifyDto.getPassword());
+        if (principalDetails.get) // 사진 없으면 추가, 삭제 여부 버튼 만들기
+
     }
 }

@@ -24,9 +24,12 @@ public class AlarmService {
     private final AlarmRepository alarmRepository;
 
     @Transactional(readOnly = true)
-    public int alarmCount(PrincipalDetails principalDetails) {
-        List<Alarm> alarms = alarmRepository.findByToUserIdOrderByIdDesc(principalDetails.getUser().getId());
-        return alarms.size();
+    public Integer alarmCount(PrincipalDetails principalDetails) {
+        if (principalDetails != null) {
+            List<Alarm> alarms = alarmRepository.findByToUserIdOrderByIdDesc(principalDetails.getUser().getId());
+            return alarms.size();
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)

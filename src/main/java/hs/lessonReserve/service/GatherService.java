@@ -8,11 +8,10 @@ import hs.lessonReserve.domain.gather.GatherRepository;
 import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApplyRepository;
+import hs.lessonReserve.domain.gather.gatherUser.GatherUserRepository;
+import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
-import hs.lessonReserve.web.dto.gather.GatherApplyDto;
-import hs.lessonReserve.web.dto.gather.GatherCreateDto;
-import hs.lessonReserve.web.dto.gather.GatherListDto;
-import hs.lessonReserve.web.dto.gather.GatherMypageListDto;
+import hs.lessonReserve.web.dto.gather.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -39,6 +38,7 @@ public class GatherService {
     private final GatherRepository gatherRepository;
     private final GatherApplyRepository gatherApplyRepository;
     private final AlarmRepository alarmRepository;
+    private final  GatherUserRepository gatherUserRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -205,10 +205,47 @@ public class GatherService {
                 break;
             }
         }
-
         if (!gatherJoinState) {
             throw new CustomException("접근 권한이 없습니다.");
         }
+    }
+
+    public List<GatherMemberDto> memberList(long gatherId) {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("select u.id, u.name, gu.position ");
+        sb.append("from user u ");
+        sb.append("inner join gatheruser gu ");
+        sb.append("on u.id = gu.userId and gu.gatherId = ?");
+
+        Query query = em.createNativeQuery(sb.toString())
+                .setParameter(1, gatherId);
+        List<Object[]> resultList = query.getResultList();
+
+        List<GatherMemberDto> gatherMemberDtos = resultList.stream().map(rl -> {
+            return new GatherMemberDto(rl);
+        }).collect(Collectors.toList());
+
+        return gatherMemberDtos;
+    }
+
+    public void gatherDelete(PrincipalDetails principalDetails, long gatherId) {
+
+        List<GatherUser> gatherUsers = gatherUserRepository.findByGatherId(gatherId);
+
+        GatherUser gatherUser = gatherUsers.stream().filter(gu -> gu.getUser().getId() == principalDetails.getUser().getId()).findFirst().orElseThrow(() -> {
+            throw new CustomApiException("없는 유저입니다.");
+        });
+
+        if (!gatherUser.getPosition().equals("LEADER")) {
+            throw new CustomApiException("모임을 삭제할 권한이 없습니다.");
+        }
+
+        Gather gather = gatherRepository.findById(gatherId).orElseThrow(() -> {
+            throw new CustomApiException("없는 모임입니다.");
+        });
+
+        gatherRepository.delete(gather);
 
     }
 }

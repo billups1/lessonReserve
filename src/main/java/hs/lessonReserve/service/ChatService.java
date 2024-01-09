@@ -7,6 +7,9 @@ import hs.lessonReserve.domain.user.UserRepository;
 import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.web.dto.chat.ChatListDto;
 import hs.lessonReserve.web.dto.chat.ChatSendDto;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,8 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
     private final SimpMessageSendingOperations template;
+    @PersistenceContext
+    EntityManager em;
 
     @Transactional
     public void sendMessage(ChatSendDto chatSendDto, SimpMessageHeaderAccessor headerAccessor) {
@@ -49,10 +55,23 @@ public class ChatService {
     public List<ChatListDto> chatList(long gatherId) {
 
         StringBuffer sb = new StringBuffer();
-        select * from chat c
-        left join gatherUser gu
-        on c.userId = gu.userId and c.gatherId = gu.userId
-        where c.gatherId = 8;
+        sb.append("select u.name, u.profileImageUrl, c.message, gu.position, u.id, DATE_FORMAT(c.createTime, '%Y-%m-%d %H:%i') ");
+        sb.append("from chat c ");
+        sb.append("left join gatherUser gu ");
+        sb.append("on c.userId = gu.userId and gu.gatherId = ? ");
+        sb.append("left join user u ");
+        sb.append("on c.userId = u.id");
+
+        Query query = em.createNativeQuery(sb.toString())
+                .setParameter(1, gatherId);
+
+        List<Object[]> resultList = query.getResultList();
+
+        List<ChatListDto> chatListDtos = resultList.stream().map(rl -> {
+            return new ChatListDto(rl);
+        }).collect(Collectors.toList());
+
+        return chatListDtos;
 
     }
 }

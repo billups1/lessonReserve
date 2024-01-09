@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,6 +33,15 @@ public class GatherApiController {
     public ResponseEntity gatherListMypage(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         List<GatherMypageListDto> gatherMypageListDtos = gatherService.gatherMypage(principalDetails);
         return new ResponseEntity(new CMRespDto<>(1, "모임 마이페이지 리스트 불러오기 완료", gatherMypageListDtos), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/api/gather/delete/{gatherId}")
+    public ResponseEntity gatherDelete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long gatherId) {
+
+        gatherService.gatherDelete(principalDetails, gatherId);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "모임 삭제 완료", null), HttpStatus.OK);
+
     }
 
 

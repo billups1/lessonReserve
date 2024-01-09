@@ -1,5 +1,4 @@
 function homeLessonList(page) {
-console.log(page);
     if(page==null) {
         page = 0;
     }

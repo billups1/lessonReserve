@@ -22,31 +22,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/student/mypage">MyPage(수강생용)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/teacher/mypage">MyPage(강사용)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/student/join">회원가입(수강생용)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/teacher/join">회원가입(강사용)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/gather">모임</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/gather/mypage">내 모임</a>
-                    </li>
+                <ul class="navbar-nav" id="navBar">
+
+
                 </ul>
                 <a id="alarmCount" style="margin-left: auto; color: red;"></a>
             </div>
@@ -56,16 +34,21 @@
     <div class="list-group hide" id="list-group" style="display: none;">
         <a href="/" class="list-group-item list-group-item-action">Home</a>
         <a href="/login" class="list-group-item list-group-item-action">Login</a>
-        <a href="/student/mypage" class="list-group-item list-group-item-action">MyPage(수강생용)</a>
-        <a href="/teacher/mypage" class="list-group-item list-group-item-action">MyPage(강사용)</a>
+        <a href="/student/mypage" class="list-group-item list-group-item-action">마이페이지</a>
+        <a href="/teacher/mypage" class="list-group-item list-group-item-action">내 레슨(강사용)</a>
         <a href="/student/join" class="list-group-item list-group-item-action">회원가입(수강생용)</a>
         <a href="/teacher/join" class="list-group-item list-group-item-action">회원가입(강사용)</a>
         <a href="/gather" class="list-group-item list-group-item-action">모임</a>
         <a href="/gather/mypage" class="list-group-item list-group-item-action">내 모임</a>
     </div>
 
-    <script src="/js/header.js"></script>
+    <script src="/js/fragment/header.js"></script>
     <link href="/css/main.css" rel="stylesheet">
+
+
+    <input type="hidden" id="userId"> <!-- js 데이터 전달용-->
+    <input type="hidden" id="userName"> <!-- js 데이터 전달용-->
+
 </div>
 
 

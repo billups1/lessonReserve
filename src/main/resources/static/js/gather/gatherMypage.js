@@ -34,10 +34,7 @@ function getGatherCard(gather) {
                 `
     if (gather.leaderState) {
         g +=`<br>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="gatherMemberBtn">
-          모임 멤버 명단
-        </button><br>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="gatherDeleteBtn">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="gatherDelete(${gather.id})" id="gatherDeleteBtn">
           모임 없애기
         </button>`
     }
@@ -46,4 +43,20 @@ function getGatherCard(gather) {
         </div>
     </div>`
     return g;
+}
+
+function gatherDelete(gatherId) {
+console.log(gatherId)
+    if (window.confirm("정말 모임을 삭제하겠습니까?")) {
+          $.ajax({
+              method: 'delete',
+              url: `/api/gather/delete/${gatherId}`,
+              dataType: 'json'
+          }).done(res=>{
+              console.log("모임 삭제 성공", res);
+          }).fail(error=>{
+              console.log("모임 삭제 실패", error);
+          })
+    }
+
 }

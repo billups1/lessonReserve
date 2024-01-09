@@ -97,3 +97,61 @@ $.ajax({
 }).fail(error=>{
     console.log("현재 알람 개수 불러오기 실패",error);
 });
+
+
+$(document).ready(function() {
+
+$.ajax({
+    url: "/api/user",
+    dataType: "json"
+}).done(res=>{
+    $('#userId').val(res.data.userId);
+    $('#userName').val(res.data.userName);
+    console.log($('#userId').val());
+
+    if ($('#userId').val()) {
+        $('#navBar').append(`
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">레슨</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gather">마이페이지</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gather/mypage">내 레슨(강사용)</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/mypage">MyPage(수강생용)</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/mypage">MyPage(강사용)</a>
+            </li>
+        `)
+
+        $('#logoutContainer').append(`
+            <a class="nav-link" href="/logout">로그아웃</a>
+        `)
+
+    } else {
+        $('#navBar').append(`
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">레슨</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gather">모임</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/join">회원가입(수강생용)</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/join">회원가입(강사용)</a>
+            </li>
+        `)
+    }
+}).fail(error=>{
+    console.log("유저 정보 불러오기 실패", error);
+});
+})

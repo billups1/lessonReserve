@@ -11,36 +11,42 @@
 
 <body>
 <div layout:fragment="contents">
-    <h2 class="center">수강생 회원가입</h2>
+    <h2 class="center">회원정보 수정</h2>
     <form action="/student/join" method="post" enctype="multipart/form-data">
+
         <label for="email" class="form-label">이메일</label>
-        <input type="email" name="email" id="email" placeholder="이메일" class="form-control" required="required"/>
-        <button type="button" class="btn btn-primary" onclick="verificationEmailSend()">인증메일 전송</button>
-
-        <div id="verificationCode" style="display: none;">
-            <br>
-            <input type="text" name="verificationCode" class="form-control" id="verificationCodeInput" placeholder="인증코드를 입력하세요.">
-            <button type="button" onclick="emailVerification()">코드확인</button>
-        </div>
-
-        <div id="emailVerificationComment"></div>
+        <input type="text" readonly class="form-control-plaintext" id="email" th:value="${dto.email}">
         <br>
 
         <label for="password" class="form-label">비밀번호</label>
         <input type="password" name="password" id="password" placeholder="비밀번호" class="form-control" required="required"/>
         <br>
+
         <label for="name" class="form-label">이름</label>
-        <input type="text" name="name" id="name" placeholder="이름" class="form-control" required="required"/>
+        <input type="text" name="name" id="name" placeholder="이름" class="form-control" th:value="${dto.name}" required="required"/>
         <br>
+
         <label for="profileImageFile" class="form-label">프로필 사진</label>
         <input type="file" name="profileImageFile" id="profileImageFile" class="form-control" placeholder="프로필 이미지"/>
         <br>
+        <div>
+
+            <th:block th:if="${dto.profileImageUrl == null}">
+                현재사진 : 없음
+            </th:block>
+            <th:block th:unless="${dto.profileImageUrl == null}">
+                현재사진 :
+                <img src="/image/${dto.profileImageUrl}" style="maxwidth=150px;">
+            </th:block>
+
+        </div>
+
         <button class="btn btn-primary">가입하기</button>
     </form>
 
     <a>계정이 있으신가요?</a>
     <a href="/login">로그인 화면으로 가기</a>
-    <script src="/js/join.js"></script>
+<!--    <script src="/js/join.js"></script>-->
 </div>
 
 </body>
