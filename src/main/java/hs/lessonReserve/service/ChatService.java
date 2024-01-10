@@ -58,9 +58,10 @@ public class ChatService {
         sb.append("select u.name, u.profileImageUrl, c.message, gu.position, u.id, DATE_FORMAT(c.createTime, '%Y-%m-%d %H:%i') ");
         sb.append("from chat c ");
         sb.append("left join gatherUser gu ");
-        sb.append("on c.userId = gu.userId and gu.gatherId = ? ");
+        sb.append("on c.userId = gu.userId and c.gatherId = gu.gatherId ");
         sb.append("left join user u ");
-        sb.append("on c.userId = u.id");
+        sb.append("on c.userId = u.id ");
+        sb.append("where c.gatherId = ?");
 
         Query query = em.createNativeQuery(sb.toString())
                 .setParameter(1, gatherId);

@@ -210,6 +210,7 @@ public class GatherService {
         }
     }
 
+    @Transactional
     public List<GatherMemberDto> memberList(long gatherId) {
 
         StringBuffer sb = new StringBuffer();
@@ -229,14 +230,16 @@ public class GatherService {
         return gatherMemberDtos;
     }
 
+    @Transactional
     public void gatherDelete(PrincipalDetails principalDetails, long gatherId) {
 
         List<GatherUser> gatherUsers = gatherUserRepository.findByGatherId(gatherId);
 
+        // 리더 찾기
         GatherUser gatherUser = gatherUsers.stream().filter(gu -> gu.getUser().getId() == principalDetails.getUser().getId()).findFirst().orElseThrow(() -> {
             throw new CustomApiException("없는 유저입니다.");
         });
-
+        // 리더 아니면 모임 삭제할 권한 없음 에러 띄우기
         if (!gatherUser.getPosition().equals("LEADER")) {
             throw new CustomApiException("모임을 삭제할 권한이 없습니다.");
         }

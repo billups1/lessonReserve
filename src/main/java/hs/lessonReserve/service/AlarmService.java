@@ -25,14 +25,17 @@ public class AlarmService {
 
     @Transactional(readOnly = true)
     public Integer alarmCount(PrincipalDetails principalDetails) {
-        if (principalDetails != null) {
-            List<Alarm> alarms = alarmRepository.findByToUserIdOrderByIdDesc(principalDetails.getUser().getId());
-            return alarms.size();
+        List<Alarm> alarms = alarmRepository.findByToUserIdOrderByIdDesc(principalDetails.getUser().getId());
+        int alarmCount = 0;
+        for (Alarm alarm : alarms) {
+            if (alarm.getStatus().equals("UN_READ")) {
+                alarmCount++;
+            }
         }
-        return null;
+        return alarmCount;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AlarmListDto> alarmList(PrincipalDetails principalDetails) {
         List<Alarm> alarms = alarmRepository.findByToUserIdOrderByIdDesc(principalDetails.getUser().getId());
         ArrayList<AlarmListDto> alarmListDtos = new ArrayList<>();
@@ -53,8 +56,7 @@ public class AlarmService {
                         .gatherApplyAcceptStatus("GatherApplyAcceptResult")
                         .alarmId(alarmGatherApply.getId())
                         .build());
-            }
-            else if (alarm.getDomain().equals("GatherApplyReject")) {
+            } else if (alarm.getDomain().equals("GatherApplyReject")) {
                 AlarmGatherApply alarmGatherApply = (AlarmGatherApply) alarm;
                 alarmListDtos.add(AlarmListDto.builder()
                         .message(alarmGatherApply.getGatherApply().getGather().getName() + " 에 가입이 거절되었습니다.")
@@ -63,6 +65,8 @@ public class AlarmService {
                         .alarmId(alarmGatherApply.getId())
                         .build());
             }
+
+            alarm.setStatus("READ"); // 확인한 알람 READ로 바꾸기
         }
         return alarmListDtos;
     }

@@ -11,7 +11,7 @@
 <body>
 <div layout:fragment="contents">
 
-  <h2>수강평 작성</h2>
+  <h2 style="center">수강평 작성</h2>
     <a style="font-size:30px;"><b>[[${apply.lesson.teacher.name}]]</b> 강사님의 <b>[[${apply.lesson.name}]]</b> 강의를 평가해 주세요.</a>
   <form method="post" th:action="|/student/LessonReview/${apply.id}|">
       <label for="score">평가점수</label><br>

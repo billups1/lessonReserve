@@ -1,14 +1,21 @@
 
 var stompClient = null;
-var userId = $('#userId').val();
-var userName = $('#userName').val();
-var gatherId = $('#gatherId').val();
+var userId = null;
+var userName = null;
+var gatherId = null;
 let today = new Date();
 var createTime = today.toLocaleString();
 
 $(document).ready(function() {
-    connect();
+    userId = $('#userId').val();
+    userName = $('#userName').val();
+    gatherId = $('#gatherId').val();
+    console.log("userId",userId);
+})
+console.log("userId",userId);
 
+$(document).ready(function() {
+    connect();
     $.ajax({
         url: `/api/chat/list/${gatherId}`,
         dataType: "json"
@@ -87,6 +94,7 @@ $('#gatherChattingSend').on('keyup', function(key) {
 });
 
 function sendMessage(event) {
+console.log("userId",userId);
     var messageContent = $('#messageInput').val();
     if (messageContent && stompClient) {
         var chatMessage = {

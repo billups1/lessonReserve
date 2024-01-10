@@ -46,6 +46,12 @@ function getGatherCard(gather) {
 }
 
 $(document).on('click', '#gatherModalBtn',function(e) {
+console.log($('#userId').val())
+    if (!$('#userId').val()) {
+        alert('로그인이 필요합니다.')
+        return;
+    }
+
     $('.black-bg').addClass("show-modal");
     $('#gatherId').val(this.getAttribute('data-gatherId'));
 });
