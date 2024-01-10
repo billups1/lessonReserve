@@ -52,9 +52,9 @@ public class GatherController {
     @GetMapping("/gather/chatting/{gatherId}")
     public String gatherChatting(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long gatherId, Model model) {
         gatherService.gatherChatting(principalDetails, gatherId);
+        String gatherName = gatherService.gatherName(gatherId);
         model.addAttribute("gatherId", gatherId);
-        model.addAttribute("userId", principalDetails.getUser().getId());
-        model.addAttribute("userName", principalDetails.getUser().getName());
+        model.addAttribute("gatherName", gatherName);
         return "gather/gatherChatting";
     }
 

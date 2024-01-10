@@ -11,19 +11,20 @@
 <body>
 <div layout:fragment="contents">
 
-  <h2 style="center">수강평 작성</h2>
-    <a style="font-size:30px;"><b>[[${apply.lesson.teacher.name}]]</b> 강사님의 <b>[[${apply.lesson.name}]]</b> 강의를 평가해 주세요.</a>
+  <h2 class="center">수강평 작성</h2>
+    <br>
+    <a style="font-size:20px;"><b>[[${apply.lesson.teacher.name}]]</b> 강사님의 <b>[[${apply.lesson.name}]]</b> 강의를 평가해 주세요.</a>
   <form method="post" th:action="|/student/LessonReview/${apply.id}|">
-      <label for="score">평가점수</label><br>
-      <input id="score" type="number" name="score" placeholder="평가점수를 입력하세요." style="width:100px;font-size:20px;">
+      <label for="score" class="form-label">평가점수(1~5점 사이의 점수를 입력해 주세요.)</label><br>
+      <input id="score" type="number" name="score" placeholder="평가점수를 입력하세요." class="form-control" style="width:100px;font-size:20px;">
 
       <br>
       <br>
-      <label for="content">수강평</label><br>
-      <input id="content" type="text" name="content" placeholder="수강평을 입력하세요." style="width:300px;height:300px;font-size:20px;">
+      <label for="content" class="form-label">수강평</label><br>
+      <input id="content" type="text" name="content" placeholder="수강평을 입력하세요." class="form-control"  style="height:300px;">
       <br><br>
       <br>
-      <button>수강평 작성</button>
+      <button class="btn btn-primary">수강평 작성</button>
 
   </form>
 

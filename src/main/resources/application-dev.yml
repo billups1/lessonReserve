@@ -9,7 +9,7 @@ server:
 spring:
 
   datasource:
-    url: jdbc:mysql://localhost:3306/lessonReserve?serverTimeZone=Asia/Seoul #lessonReserveActive #lessonReserve
+    url: jdbc:mysql://localhost:3306/lessonReserveActive?serverTimeZone=Asia/Seoul #lessonReserveActive #lessonReserve
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 1234
@@ -36,7 +36,7 @@ spring:
       client:
         registration:
           kakao:
-            client-id: 90173a07001d061202a538588b019750
+            client-id: ${kakao.client-id}
             redirect-uri: http://localhost:8080/login/oauth2/code/kakao
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code

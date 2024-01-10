@@ -41,29 +41,43 @@ public class AlarmService {
         ArrayList<AlarmListDto> alarmListDtos = new ArrayList<>();
         for (Alarm alarm : alarms) {
             if (alarm.getDomain().equals("GatherApply")) {
-                AlarmGatherApply alarmGatherApply = (AlarmGatherApply) alarm;
-                alarmListDtos.add(AlarmListDto.builder()
-                        .message(alarmGatherApply.getFromUser().getName() + " 님이 " + alarmGatherApply.getGatherApply().getGather().getName() + " 에 가입을 신청하셨습니다.")
-                        .gatherApplyId(alarmGatherApply.getGatherApply().getId())
-                        .gatherApplyAcceptStatus(alarmGatherApply.getGatherApply().getAcceptStatus())
-                        .alarmId(alarmGatherApply.getId())
-                        .build());
+                try {
+                    AlarmGatherApply alarmGatherApply = (AlarmGatherApply) alarm;
+                    System.out.println("aaa" + alarmGatherApply.getGatherApply().getId());
+                    System.out.println("aaa" + alarmGatherApply.getGatherApply().getGather().getId());
+                    alarmListDtos.add(AlarmListDto.builder()
+                            .message(alarmGatherApply.getFromUser().getName() + " 님이 " + alarmGatherApply.getGatherApply().getGather().getName() + " 에 가입을 신청하셨습니다.")
+                            .gatherApplyId(alarmGatherApply.getGatherApply().getId())
+                            .gatherApplyAcceptStatus(alarmGatherApply.getGatherApply().getAcceptStatus())
+                            .alarmId(alarmGatherApply.getId())
+                            .build());
+                } catch (NullPointerException e) {
+                    continue;
+                }
             } else if (alarm.getDomain().equals("GatherApplyAccept")) {
-                AlarmGatherApply alarmGatherApply = (AlarmGatherApply) alarm;
-                alarmListDtos.add(AlarmListDto.builder()
-                        .message(alarmGatherApply.getGatherApply().getGather().getName() + " 에 가입이 승인되었습니다.")
-                        .gatherApplyId(alarmGatherApply.getGatherApply().getId())
-                        .gatherApplyAcceptStatus("GatherApplyAcceptResult")
-                        .alarmId(alarmGatherApply.getId())
-                        .build());
+                try {
+                    AlarmGatherApply alarmGatherApply = (AlarmGatherApply) alarm;
+                    alarmListDtos.add(AlarmListDto.builder()
+                            .message(alarmGatherApply.getGatherApply().getGather().getName() + " 에 가입이 승인되었습니다.")
+                            .gatherApplyId(alarmGatherApply.getGatherApply().getId())
+                            .gatherApplyAcceptStatus("GatherApplyAcceptResult")
+                            .alarmId(alarmGatherApply.getId())
+                            .build());
+                } catch (NullPointerException e) {
+                    continue;
+                }
             } else if (alarm.getDomain().equals("GatherApplyReject")) {
-                AlarmGatherApply alarmGatherApply = (AlarmGatherApply) alarm;
-                alarmListDtos.add(AlarmListDto.builder()
-                        .message(alarmGatherApply.getGatherApply().getGather().getName() + " 에 가입이 거절되었습니다.")
-                        .gatherApplyId(alarmGatherApply.getGatherApply().getId())
-                        .gatherApplyAcceptStatus("GatherApplyRejectResult")
-                        .alarmId(alarmGatherApply.getId())
-                        .build());
+                try {
+                    AlarmGatherApply alarmGatherApply = (AlarmGatherApply) alarm;
+                    alarmListDtos.add(AlarmListDto.builder()
+                            .message(alarmGatherApply.getGatherApply().getGather().getName() + " 에 가입이 거절되었습니다.")
+                            .gatherApplyId(alarmGatherApply.getGatherApply().getId())
+                            .gatherApplyAcceptStatus("GatherApplyRejectResult")
+                            .alarmId(alarmGatherApply.getId())
+                            .build());
+                } catch (NullPointerException e) {
+                    continue;
+                }
             }
 
             alarm.setStatus("READ"); // 확인한 알람 READ로 바꾸기

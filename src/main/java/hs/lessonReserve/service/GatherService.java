@@ -121,6 +121,7 @@ public class GatherService {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    gather.setRepresentativeImageUrl(profileImageFilename);
                 }
                 break;
         }
@@ -250,5 +251,12 @@ public class GatherService {
 
         gatherRepository.delete(gather);
 
+    }
+
+    public String gatherName(long gatherId) {
+        Gather gather = gatherRepository.findById(gatherId).orElseThrow(() -> {
+            throw new CustomException("없는 모임입니다.");
+        });
+        return gather.getName();
     }
 }
