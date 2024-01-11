@@ -53,4 +53,9 @@ public class LessonController {
         return "redirect:/";
     }
 
+    @GetMapping("/lesson/payment") // 레슨id 추가
+    public String lessonPayment() {
+        return "lesson/lessonPayment";
+    }
+
 }

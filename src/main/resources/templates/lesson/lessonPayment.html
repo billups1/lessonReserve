@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="contents">
+    <h2 class="center">레슨 결제</h2>
+
+
+    <link href="/css/main.css" rel="stylesheet">
+
+    <button id="paymentBtn">결제하기</button>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script src="/js/lesson/payment.js"></script>
+
+</div>
+
+</body>
+
+</html>
