@@ -1,27 +1,83 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragment/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/layout}">
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
 
-<div layout:fragment="contents">
-    <h2 class="center">레슨 결제</h2>
+    <div layout:fragment="contents">
+        <h2 class="center">레슨 결제</h2>
 
+        <div>
+            <div id="lessonInfo">
+                <h4>레슨 정보</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>강사</th>
+                            <th>레슨명</th>
+                            <th>레슨 소개</th>
+                            <th>레슨 시간</th>
+                            <th>레슨 장소</th>
+                            <th>수강자수</th>
+                            <th>레슨시작일</th>
+                            <th>레슨종료일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a>${dto.teacherName}</a> <img src="/image/${dto.teacherProfileImageUrl}"></td>
+                            <td>${dto.lessonName}</td>
+                            <td>${dto.lessonContent}원</td>
+                            <td>${dto.lessonTime}원</td>
+                            <td>${dto.lessonRoadAddress}원</td>
+                            <td>${dto.lessonApplyStatus}원</td>
+                            <td>${dto.lessonStartDate}</td>
+                            <td>${dto.lessonEndDate}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <link href="/css/main.css" rel="stylesheet">
+                <br>
 
-    <button id="paymentBtn">결제하기</button>
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-    <script src="/js/lesson/payment.js"></script>
+                <h4>결제 금액 : <b>${dto.lessonPrice}</b> 원</h4>
 
-</div>
+                <br>
+                
+                <h4>결제 수단</h4>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="list-group" id="myTab" role="tablist">
+                            <a class="list-group-item list-group-item-action active" id="list-home-list"
+                                data-bs-toggle="list" role="tab" aria-controls="list-home">카카오페이</a>
+                            <a class="list-group-item list-group-item-action" id="list-profile-list"
+                                data-bs-toggle="list" role="tab"
+                                aria-controls="list-profile">다날</a>
+                            <a class="list-group-item list-group-item-action" id="list-settings-list"
+                                data-bs-toggle="list" role="tab"
+                                aria-controls="list-settings">Settings</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <br>
+        <button class="btn btn-primary" id="paymentBtn">결제하기</button>
+
+        <link href="/css/main.css" rel="stylesheet">
+
+        
+        <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+        <script src="/js/lesson/payment.js"></script>
+
+    </div>
 
 </body>
 

@@ -1,13 +1,37 @@
+$('#lessonInfo').append(`
+  <table>
+    <thead>
+        <tr>
+            <th row>강사</th>
+            <th></th>
 
-IMP.init('imp56433423')
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>${dto.teacherName}</td>
+            <td><img src="${dto.teacherProfileImageUrl}"></td>
+
+        </tr>
+    </tbody>
+  </table>
+`)
+
+
+
+
+
+
+
 
 $('#paymentBtn').click(function () {
   requestPay();
 })
 
 function requestPay() {
+  IMP.init('imp56433423')
   IMP.request_pay({
-    pg: "kcp.AO09C", //보안 필요
+    pg: "kakaopay.TC0ONETIME", //보안 필요 // 아임포트 테스트계정 결제 o : 다날, 카카오페이    결제 x : nhnkcp, ksnet(사업자번호 미등록)
     pay_method: "card",
     merchant_uid: Math.random(),   // 주문번호
     name: "노르웨이 회전 의자",
