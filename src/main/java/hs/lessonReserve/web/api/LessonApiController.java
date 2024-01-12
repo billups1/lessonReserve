@@ -51,9 +51,8 @@ public class LessonApiController {
 
     @PostMapping("/api/lesson/apply/paymentComplete")
     public ResponseEntity lessonPaymentComplete(String orderNum, String productId, String userId, String totalPrice, String imp_uid) {
-        System.out.println("orderNum = " + orderNum);
-        System.out.println("imp_uid = " + imp_uid);
-        System.out.println("주문정보 저장 성공");
+
+        lessonService.paymentValidate(orderNum, productId, userId, totalPrice, imp_uid);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "결제 정보 저장" +
                 " 완료", null), HttpStatus.OK);

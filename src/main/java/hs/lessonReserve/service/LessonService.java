@@ -1,5 +1,7 @@
 package hs.lessonReserve.service;
 
+import com.nimbusds.jose.shaded.gson.Gson;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.lesson.Lesson;
@@ -16,6 +18,7 @@ import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,10 +26,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +45,11 @@ public class LessonService {
     private final LessonRepository lessonRepository;
     private final LessonRepositoryImpl lessonRepositoryImpl;
     private final ApplyRepository applyRepository;
+
+    @Value("payment.iamport.apiKey")
+    private String apiKey;
+    @Value("payment.iamport.apiKey")
+    private String secretKey;
 
     @Transactional
     public void makeLesson(MakeLessonDto makeLessonDto, PrincipalDetails principalDetails) {
@@ -114,4 +128,45 @@ public class LessonService {
             throw new CustomException("없는 강의입니다.");
         });
     }
+
+    public void paymentValidate(String orderNum, String productId, String userId, String totalPrice, String impUid) {
+
+
+
+    }
+
+    public String getIamportToken() throws IOException {
+
+        URL url = new URL("https://api.iamport.kr/users/getToken");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        conn.setRequestMethod("post");
+
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+
+        conn.setDoOutput(true);
+
+        JsonObject json = new JsonObject();
+        json.addProperty("imp_key", apiKey);
+        json.addProperty("imp_secret", secretKey);
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        bw.write(json.toString());
+        bw.flush(); // bw 비우기
+        bw.close();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        Gson gson = new Gson();
+        String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
+        String accessToken = gson.fromJson(br.readLine(), Map.class).get("acces_token").toString();
+        br.close();
+
+        conn.disconnect();
+
+        System.out.printf("iamport 엑세스토큰 발급 성공" + accessToken);
+        return accessToken;
+    }
+
+
 }

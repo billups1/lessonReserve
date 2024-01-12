@@ -78,3 +78,10 @@ logging:
 file:
   path: C:/workspace/lessonReserve/upload/
 
+payment:
+  iamport:
+    apiKey: "asd"
+    secretKey: "asd"
+
+
+

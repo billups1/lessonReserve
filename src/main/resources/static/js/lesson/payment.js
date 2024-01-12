@@ -1,27 +1,8 @@
+
+
 $('#lessonInfo').append(`
-  <table>
-    <thead>
-        <tr>
-            <th row>강사</th>
-            <th></th>
 
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>${dto.teacherName}</td>
-            <td><img src="${dto.teacherProfileImageUrl}"></td>
-
-        </tr>
-    </tbody>
-  </table>
 `)
-
-
-
-
-
-
 
 
 $('#paymentBtn').click(function () {
@@ -34,13 +15,13 @@ function requestPay() {
     pg: "kakaopay.TC0ONETIME", //보안 필요 // 아임포트 테스트계정 결제 o : 다날, 카카오페이    결제 x : nhnkcp, ksnet(사업자번호 미등록)
     pay_method: "card",
     merchant_uid: Math.random(),   // 주문번호
-    name: "노르웨이 회전 의자",
-    amount: 100,                         // 숫자 타입
-    buyer_email: "eglesv2@hanmail.net",
-    buyer_name: "홍길동",
-    buyer_tel: "010-4242-4242",
-    buyer_addr: "서울특별시 강남구 신사동",
-    buyer_postcode: "01181"
+    name: $('#lessonName'),
+    amount: $('#lessonPrice'),                         // 숫자 타입
+    buyer_email: $('#buyer_email'),
+    buyer_name: $('#buyer_name'),
+    buyer_tel: $('#buyer_tel'),
+    buyer_addr: $('#buyer_addr'),
+    buyer_postcode: $('#buyer_postcode')
   }, function (rsp) { // callback
     if (rsp.success) {
       // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
