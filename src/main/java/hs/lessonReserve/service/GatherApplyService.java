@@ -1,6 +1,6 @@
 package hs.lessonReserve.service;
 
-import hs.lessonReserve.domain.alarm.AlarmGatherApply;
+import hs.lessonReserve.domain.alarm.Alarm_GatherApply;
 import hs.lessonReserve.domain.alarm.AlarmRepository;
 import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
@@ -26,7 +26,7 @@ public class GatherApplyService {
         GatherApply gatherApply = gatherApplyRepository.findById(gatherApplyId).orElseThrow(() -> {
             throw new CustomApiException("없는 유저입니다.");
         });
-        AlarmGatherApply alarmGatherApply = AlarmGatherApply.builder()
+        Alarm_GatherApply alarmGatherApply = Alarm_GatherApply.builder()
                 .toUser(gatherApply.getUser())
                 .gatherApply(gatherApply)
                 .domain("GatherApplyAccept")
@@ -51,7 +51,7 @@ public class GatherApplyService {
         GatherApply gatherApply = gatherApplyRepository.findById(gatherApplyId).orElseThrow(() -> {
             throw new CustomApiException("없는 유저입니다.");
         });
-        AlarmGatherApply alarmGatherApply = AlarmGatherApply.builder()
+        Alarm_GatherApply alarmGatherApply = Alarm_GatherApply.builder()
                 .toUser(gatherApply.getUser())
                 .gatherApply(gatherApply)
                 .domain("GatherApplyReject")

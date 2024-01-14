@@ -9,7 +9,7 @@ server:
 spring:
 
   datasource:
-    url: jdbc:mysql://localhost:3306/lessonReserveActive?serverTimeZone=Asia/Seoul #lessonReserveActive #lessonReserve
+    url: jdbc:mysql://localhost:3306/lessonReserve?serverTimeZone=Asia/Seoul #lessonReserveActive #lessonReserve
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 1234
@@ -68,9 +68,6 @@ spring:
             required: true
           auth: false
 
-
-
-
 logging:
   level:
     com.example.log: debug
@@ -80,8 +77,8 @@ file:
 
 payment:
   iamport:
-    apiKey: "asd"
-    secretKey: "asd"
+    apiKey: ${iamport.apiKey}
+    secretKey: ${iamport.apiSecret}
 
 
 

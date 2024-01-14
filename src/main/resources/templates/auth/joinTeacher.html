@@ -10,7 +10,8 @@
 </head>
 
 <body>
-<div layout:fragment="contents">
+<div layout:fragment="contents" class="center">
+    <div class="col-5">
     <h2 class="center">강사 회원가입</h2>
     <form action="/teacher/join" method="post" enctype="multipart/form-data">
         <label for="email" class="form-label">이메일</label>
@@ -29,6 +30,10 @@
         <label for="password" class="form-label">비밀번호</label>
         <input type="password" name="password" placeholder="비밀번호" id="password" class="form-control" required="required"/>
         <br>
+        <label for="password" class="form-label">비밀번호 재확인</label>
+        <input type="password" name="passwordRecheck" id="passwordRecheck" placeholder="비밀번호 재입력" class="form-control"
+               required="required" />
+        <div id="passwordRecheckComment"></div><br>
         <label for="name" class="form-label">이름</label>
         <input type="text" name="name" placeholder="이름" class="form-control" id="name" required="required"/>
         <br>
@@ -47,6 +52,7 @@
     <a>계정이 있으신가요?</a>
     <a href="/login">로그인 화면으로 가기</a>
     <script src="/js/join.js"></script>
+</div>
 </div>
 
 </body>

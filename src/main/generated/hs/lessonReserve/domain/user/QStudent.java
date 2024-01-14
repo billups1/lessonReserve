@@ -23,6 +23,9 @@ public class QStudent extends EntityPathBase<Student> {
     public final QUser _super = new QUser(this);
 
     //inherited
+    public final StringPath address = _super.address;
+
+    //inherited
     public final DateTimePath<java.time.LocalDateTime> createTime = _super.createTime;
 
     //inherited
@@ -44,6 +47,12 @@ public class QStudent extends EntityPathBase<Student> {
 
     //inherited
     public final StringPath password = _super.password;
+
+    //inherited
+    public final StringPath phone = _super.phone;
+
+    //inherited
+    public final StringPath postcode = _super.postcode;
 
     //inherited
     public final StringPath profileImageUrl = _super.profileImageUrl;

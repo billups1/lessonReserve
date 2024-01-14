@@ -40,7 +40,9 @@ public class ApplyLessonDto {
         this.content = lesson.getContent();
         this.price = lesson.getPrice();
         this.studentNumber = lesson.getApplies().stream()
-                .filter(apply -> ApplyStatus.APPLY.equals(apply.getApplyStatus())).collect(Collectors.toList()).size();
+                .filter(apply -> ApplyStatus.APPLY.equals(apply.getApplyStatus()))
+                .filter(apply -> apply.getStudent() != null)
+                .collect(Collectors.toList()).size();
         this.maximumStudentsNumber = lesson.getMaximumStudentsNumber();
         this.roadAddress = lesson.getRoadAddress();
         this.teacherId = lesson.getTeacher().getId();

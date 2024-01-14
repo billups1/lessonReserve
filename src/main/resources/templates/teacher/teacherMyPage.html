@@ -11,7 +11,7 @@
 </head>
 <body>
 <div layout:fragment="contents" class="center">
-    <h2 class="center">강사 마이페이지</h2>
+    <h2 class="center">내 레슨(강사용)</h2>
     <button class="btn btn-primary" style="float:right;" onclick="location.href = '/teacher/modify'">회원정보 수정</button>
 
     <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/teacher/lesson/create}'|" style="float:right;">강의 만들기</button>
@@ -20,7 +20,6 @@
     <h3 class="center">내가 진행중인 강의</h3>
     <table class="table">
         <tr>
-            <th>번호</th>
             <th>강의명</th>
             <th>강사</th>
             <th>프로필사진</th>
@@ -34,7 +33,6 @@
         </tr>
 
         <tr th:each="lesson : ${lessons}">
-            <td><a th:text="${lesson.id}">번호</a></td>
             <td th:text="${lesson.name}">강의명</td>
             <td th:text="${lesson.teacherId}">강사</td>
             <td><img th:src="|/image/${lesson.teacherProfileImageUrl}|" width="50" height="50"/></td>

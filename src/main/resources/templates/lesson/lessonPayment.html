@@ -9,101 +9,92 @@
 </head>
 
 <body>
-
     <div layout:fragment="contents">
         <h2 class="center">레슨 결제</h2>
+        <div id="lessonInfo">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>강사</th>
+                        <th>레슨 소개</th>
+                        <th>결제하기</th>
+                    </tr>
+                </thead>
 
-        <label>
-            <div id="lessonInfo">
-                <table border="" class="table">
-                    <thead>
-                        <tr>
-                            <th>강사 소개</th>
-                            <th>레슨 소개</th>
-                            <th>결제하기</th>
-                        </tr>
-                    </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="4"><img th:src="@{/image/} + ${dto.teacherProfileImageUrl}" width="250"
+                                style="text-align: center;"><br>
+                            <p style="font-size: 20px" class="center"><b>[[${dto.teacherName}]]</b> 강사님</p>
+                        </td>
+                        <td rowspan="4" width="35%">
+                            <label>레슨명</label> <br>
+                            <input type="text" class="form-control-plaintext" th:value="${dto.lessonName}"
+                                id="lessonName" readonly><br>
+                            <label>레슨장소</label> <br>
+                            <input type="text" class="form-control-plaintext" th:value="${dto.lessonRoadAddress}"
+                                readonly><br>
+                            <label>레슨 시작일</label> <br>
+                            <input type="text" class="form-control-plaintext" th:value="${dto.lessonStartDate}"
+                                readonly><br>
+                            <label>레슨 종료일</label> <br>
+                            <input type="text" class="form-control-plaintext" th:value="${dto.lessonEndDate}"
+                                readonly><br>
+                        <td>
+                            <input type="checkbox" id="lessonPolicyChkBox" name="lessonPolicyChkBox"><label
+                                for="lessonPolicyChkBox" value="checked"> 레슨 이용 약관에 동의해 주세요.</label> <a href="/lesson/lessonPolicy"
+                                onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">약관보기</a> <br>
+                            <input type="checkbox" id="pgPolicyChkBox" name="pgPolicyChkBox" value="checked"><label
+                                for="pgPolicyChkBox"></label>결제 대행사
+                            약관에 동의해 주세요.
+                            </label> <a href="/lesson/pgCompanyPolicy" target="_blank" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">약관보기</a>
+                        <div id="policyAgreeComment"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a>레슨금액</a> <input type="text" th:value="${dto.lessonPrice}" id="lessonPrice"
+                                style="float: right;" class="form-control-plaintext" readonly><br></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>결제 수단</h4>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="list-group" id="pgTab" role="tablist">
+                                        <a class="list-group-item list-group-item-action active" id="kakaopay"
+                                            data-toggle="kakaopay" role="tab" aria-controls="list-home">카카오페이</a>
+                                        <a class="list-group-item list-group-item-action" id="danal" data-toggle="danal"
+                                            role="tab" aria-controls="list-profile">다날</a>
+                                        <a class="list-group-item list-group-item-action" id="kcp"
+                                            data-toggle="kcp" role="tab" aria-controls="list-settings">NHN KCP</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><button class="btn btn-primary" id="paymentBtn"
+                                style="width: 100%; min-height: 50px;">결제하기</button></td>
+                    </tr>
+                </tbody>
+            </table>
 
-                    <tbody>
-                        <tr>
-                            <td rowspan="4"><img src="/image/${dto.teacherProfileImageUrl}" width="25%"
-                                    height="25%"><b>${dto.teacherName}</b> 강사</td>
-                            <td rowspan="4">
-                                <label>레슨명</label> <br>
-                                <input type="text" class="form-control-plaintext" value=`${dto.lessonName}` id="lessonName" readonly><br>
-                                <label>레슨장소</label> <br>
-                                <input type="text" class="form-control-plaintext" value=`${dto.lessonRoadAddress}` readonly><br>
-                                <label>레슨 시작일</label> <br>
-                                <input type="text" class="form-control-plaintext" value=`${dto.lessonStartDate}` readonly><br>
-                                <label>레슨 종료일</label> <br>
-                                <input type="text" class="form-control-plaintext" value=`${dto.lessonEndDate}` readonly><br>
-                            <td>
-                                <input type="checkbox" id="lessonPolicyChkBox" name="lessonPolicyChkBox"><label
-                                    for="lessonPolicyChkBox"> 레슨 이용 약관에 동의해 주세요.</label> <a href="/lesson/lessonPolicy"
-                                    target="_blank">약관보기</a> <br>
-                                <input type="checkbox" id="pgPolicyChkBox" name="pgPolicyChkBox"><label
-                                    for="pgPolicyChkBox"></label>결제 대행사
-                                약관에 동의해 주세요.
-        </label> <a href="#" target="_blank">약관보기</a>
-        </td>
-        </tr>
-        <tr>
-            <td><a>레슨금액</a> <input type="number" value=`${dto.lessonPrice}` id="lessonPrice" style="float: right;" readonly><br></td>
-        </tr>
-        <tr>
-            <td>
-                <h4>결제 수단</h4>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="list-group" id="myTab" role="tablist">
-                            <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list"
-                                role="tab" aria-controls="list-home">카카오페이</a>
-                            <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list"
-                                role="tab" aria-controls="list-profile">다날</a>
-                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list"
-                                role="tab" aria-controls="list-settings">NHN KCP</a>
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td><button class="btn btn-primary" id="paymentBtn" style="width: 100%; min-height: 50px;">결제하기</button></td>
-        </tr>
-        </tbody>
-        </table>
+            <input id="lessonId" th:value="${dto.lessonId}" hidden>
+            <input id="buyer_email" th:value="${dto.userEmail}" hidden>
+            <input id="buyer_name" th:value="${dto.userName}" hidden>
+            <input id="buyer_tel" th:value="${dto.userTel}" hidden>
+            <input id="buyer_addr" th:value="${dto.userAddress}" hidden>
+            <input id="buyer_postcode" th:value="${dto.userPostcode}" hidden>
 
-        <input id="buyer_email" value="${dto.userEmail}" hidden>
-        <input id="buyer_name" value="${dto.userName}" hidden>
-        <input id="buyer_tel" value="${dto.userTel}" hidden>
-        <input id="buyer_addr" value="${dto.userAddress}" hidden>
-        <input id="buyer_postcode" value="${dto.userPostcode}" hidden>
+            <br>
 
-        <br>
+        </div>
 
-
-
+        <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+        <script src="/js/lesson/payment.js"></script>
+        <link href="/css/main.css" rel="stylesheet">
     </div>
 
-    <br>
-
-
-
-    <br>
-    <br>
-
-
-    </div>
-
-
-
-    <link href="/css/main.css" rel="stylesheet">
-
-
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-    <script src="/js/lesson/payment.js"></script>
-
-    </div>
 
 </body>
 

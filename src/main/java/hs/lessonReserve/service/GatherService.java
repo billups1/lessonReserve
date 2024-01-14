@@ -1,7 +1,7 @@
 package hs.lessonReserve.service;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
-import hs.lessonReserve.domain.alarm.AlarmGatherApply;
+import hs.lessonReserve.domain.alarm.Alarm_GatherApply;
 import hs.lessonReserve.domain.alarm.AlarmRepository;
 import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.domain.gather.GatherRepository;
@@ -160,7 +160,7 @@ public class GatherService {
             throw new CustomException("해당 유저가 없습니다");
         });
 
-        AlarmGatherApply alarmGatherApply = AlarmGatherApply.builder()
+        Alarm_GatherApply alarmGatherApply = Alarm_GatherApply.builder()
                 .toUser(gatherUser.getUser())
                 .fromUser(principalDetails.getUser())
                 .gatherApply(gatherApply)

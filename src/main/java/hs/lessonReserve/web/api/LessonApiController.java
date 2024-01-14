@@ -2,6 +2,7 @@ package hs.lessonReserve.web.api;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import hs.lessonReserve.config.auth.PrincipalDetails;
+import hs.lessonReserve.domain.payment.Payment;
 import hs.lessonReserve.service.LessonService;
 import hs.lessonReserve.web.dto.ex.CMRespDto;
 import hs.lessonReserve.web.dto.lesson.HomeLessonListDto;
@@ -40,22 +41,21 @@ public class LessonApiController {
     }
 
     @PostMapping("/api/lesson/apply/payment")
-    public ResponseEntity lessonPayment(String imp_uid, String merchant_uid) {
+    public ResponseEntity lessonPayment(@AuthenticationPrincipal PrincipalDetails principalDetails, String imp_uid, String merchant_uid, int totalPrice, long lessonId, String pay_method, String pg_provider,
+                                        boolean lessonPolicyAgree, boolean pgPolicyAgree) {
         System.out.println("imp_uid = " + imp_uid);
         System.out.println("merchant_uid = " + merchant_uid);
         System.out.println("결제 완료");
 
-        return new ResponseEntity<>(new CMRespDto<>(1, "결제 완료", 100), HttpStatus.OK);
+        long paymentId = lessonService.paymentValidateAndSave(principalDetails, imp_uid, merchant_uid, totalPrice, lessonId, pay_method, pg_provider, lessonPolicyAgree, pgPolicyAgree);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "결제 완료", paymentId), HttpStatus.OK);
     }
 
-
-    @PostMapping("/api/lesson/apply/paymentComplete")
-    public ResponseEntity lessonPaymentComplete(String orderNum, String productId, String userId, String totalPrice, String imp_uid) {
-
-        lessonService.paymentValidate(orderNum, productId, userId, totalPrice, imp_uid);
-
-        return new ResponseEntity<>(new CMRespDto<>(1, "결제 정보 저장" +
-                " 완료", null), HttpStatus.OK);
+    @PostMapping("/api/lesson/payment/cancel")
+    public ResponseEntity lessonPaymentCancel(@AuthenticationPrincipal PrincipalDetails principalDetails, long paymentId) {
+        Payment payment = lessonService.lessonCancel(principalDetails, paymentId);
+        return new ResponseEntity<>(new CMRespDto(1, "결제취소 완료", null), HttpStatus.OK);
     }
 
 }

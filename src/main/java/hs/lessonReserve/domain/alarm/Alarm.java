@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -25,11 +27,13 @@ public class Alarm {
 
     @ManyToOne
     @JoinColumn(name = "toUserId")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User toUser;
     @ManyToOne
     @JoinColumn(name = "fromUserId")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User fromUser;
-    private String domain; //
+    private String domain; // GatherApply, GatherApplyReject, GatherApplyAccept, LessonApply, LessonPaymentCancel
     private String status; // UN_READ, READ
     private LocalDateTime createTime;
 

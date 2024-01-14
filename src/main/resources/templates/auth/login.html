@@ -10,22 +10,30 @@
 </head>
 <body>
 <div layout:fragment="contents">
-    <h2 class="center">로그인</h2>
-
+    <h2 class="centerT">로그인</h2>
+    <div class="center">
+        <div class="col-5">
     <form action="/login" method="post">
-        <label for="email" class="form-label">이메일</label>
-        <input type="email" name="email" id="email" placeholder="이메일" class="form-control" required="required"/>
+        <label for="email" class="left form-label">이메일</label>
+        <input type="text" name="email" id="email" placeholder="이메일" class="form-control" required="required"/>
         <br>
-        <label for="password" class="form-label">비밀번호</label>
+        <label for="password" class="left form-label">비밀번호</label>
         <input type="password" name="password" id="password" placeholder="비밀번호" class="form-control" required="required"/>
         <br>
         <div th:if = "${errorMassage != null}">
             <a style="color:red;">[[${errorMassage}]]</a>
         </div>
         <br>
-        <button class="btn btn-secondary">로그인</button>
+        <button class="btn btn-secondary centerT" style="width:160px">로그인</button>
     </form>
-    <a class="btn btn-warning" href="/oauth2/authorization/kakao">카카오 로그인</a>
+
+    <a class="btn btn-warning centerT" href="/oauth2/authorization/kakao" style="width:160px">카카오 로그인</a>
+        <br><br>
+        <div class="centerT">비밀번호를 잊어버리셨나요? <a href="/login/passwordForget" onclick="window.open(this.href, '_blank', 'width=800, height=600'");>비밀번호 찾기</a>
+    </div>
+    </div>
+    </div>
+
 </div>
 
 </body>

@@ -28,7 +28,6 @@
             <th>레슨 종료일</th>
             <th>수강신청 마감일</th>
             <th>수강신청일</th>
-            <th>수강자수</th>
             <th>현재상태</th>
         </tr>
 
@@ -43,10 +42,10 @@
             <td th:text="${dto.lessonEndDate}">레슨 종료일</td>
             <td th:text="${dto.applyEndDate}">수강신청 마감일</td>
             <td th:text="${dto.applyCreateTime}">수강신청일</td>
-            <td th:text="${dto.applyStatus}">수강자수</td>
             <th:block th:if="${#strings.equals(dto.applyStatus, 'APPLY')}">
                 <td>
-                    <button th:onclick="cancelApply([[${dto.lessonId}]])">취소하기</button>
+                    <button th:onclick="|location.href='@{/lesson/cancel/{paymentId}(paymentId=${dto.paymentId})}'|">취소하기</button>
+<!--                    <button class="btn btn-primary" th:onclick="cancelApply([[${dto.lessonId}]])">취소하기</button>-->
                 </td>
             </th:block>
             <th:block th:if="${#strings.equals(dto.applyStatus, 'CANCEL')}">
@@ -55,7 +54,7 @@
             <th:block th:if="${#strings.equals(dto.applyStatus, 'COMPLETED')}">
                 <td>
                     수강완료<br>
-                    <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/student/lesson/review/{lessonId}(lessonId=${dto.applyId})}'|">수강평 쓰기</button>
+                    <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/student/lesson/review/{applyId}(applyId=${dto.applyId})}'|">수강평 쓰기</button>
                 </td>
             </th:block>
             <th:block th:if="${#strings.equals(dto.applyStatus, 'REVIEWCOMPLETED')}">
@@ -64,7 +63,6 @@
                     작성완료
                 </td>
             </th:block>
-
         </tr>
     </table>
     <script src="/js/studentMyPage.js"></script>

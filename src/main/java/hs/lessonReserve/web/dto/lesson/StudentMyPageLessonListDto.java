@@ -28,6 +28,7 @@ public class StudentMyPageLessonListDto {
     private String applyCreateTime;
     private String applyStatus;
     private long lessonId;
+    private long paymentId;
 
     public StudentMyPageLessonListDto(Object[] objects) {
         this.applyId = (long) objects[0];
@@ -42,5 +43,6 @@ public class StudentMyPageLessonListDto {
         this.applyCreateTime = (String) objects[9];
         this.applyStatus = (String) objects[10];
         this.lessonId = (long) objects[11];
+        this.paymentId = objects[12] != null ? (long) objects[12] : 0;
     }
 }

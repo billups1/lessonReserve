@@ -51,4 +51,22 @@ public class AuthController {
         return "auth/login";
     }
 
+    @GetMapping("/login/passwordForget")
+    public String passwordForget() {
+        return "auth/passwordForget";
+    }
+
+    @PostMapping("/login/passwordForget")
+    public String passwordForget(String name, String email) {
+        userService.passwordForget(name, email);
+        return "redirect:/auth/passwordForgetConfirm";
+    }
+
+    @GetMapping("/login/passwordForgetConfirm")
+    public String passwordForgetConfirm() {
+        return "auth/passwordForgetConfirm";
+    }
+
+
+
 }

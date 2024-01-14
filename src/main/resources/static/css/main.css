@@ -1,13 +1,16 @@
-.center {
+.center  {
+text-align:center;
+}
+.center div {
+margin: 0 auto;
+}
+
+.centerT {
 text-align:center;
 }
 
 .left {
 text-align:left;
-}
-
-.center div {
-margin: 0 auto;
 }
 
 .sampleImage{

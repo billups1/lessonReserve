@@ -54,14 +54,15 @@ public class HomeLessonListDto {
         lessonEndDate = lesson.getLessonEndDate().toString().substring(0, 10);
         applyEndDate = lesson.getLessonStartDate().minusDays(3).toString().substring(0,10);
         applyStatus = lesson.getApplies().stream()
-                .filter(list -> ApplyStatus.APPLY.equals(list.getApplyStatus()))
+                .filter(a -> ApplyStatus.APPLY.equals(a.getApplyStatus()))
+                .filter(a -> a.getStudent() != null)
                 .collect(Collectors.toList()).size() + " / " + lesson.getMaximumStudentsNumber();
 
         List<Apply> applies = lesson.getApplies();
         userApplyStatus = false;
         if (principalDetails != null) {
             for (Apply apply : applies) {
-                if (apply.getStudent().getId() == principalDetails.getUser().getId() && apply.getApplyStatus() == ApplyStatus.APPLY) {
+                if (apply.getStudent() != null && apply.getStudent().getId() == principalDetails.getUser().getId() && apply.getApplyStatus() == ApplyStatus.APPLY) {
                     userApplyStatus = true;
                     break;
                 }

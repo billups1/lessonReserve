@@ -39,6 +39,7 @@ public class UserService {
     private final LessonReviewRepository lessonReviewRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RedisUtil redisUtil;
+    private final EmailService emailService;
 
     @Value("${file.path}")
     private String uploadFolder;
@@ -49,6 +50,9 @@ public class UserService {
         String savedVerificationCode = redisUtil.getData(userJoinDto.getEmail());
         if (!savedVerificationCode.equals(userJoinDto.getVerificationCode())) {
             throw new CustomException("이메일 인증을 완료해 주세요.");
+        }
+        if (userJoinDto.getPassword() != userJoinDto.getPasswordRecheck()) {
+            throw new CustomException("비밀번호 란과 비밀번호 확인 란의 값을 동일하게 작성해 주세요.");
         }
 
         System.out.println("사진: " + userJoinDto.getProfileImageFile().getOriginalFilename());
@@ -171,12 +175,18 @@ public class UserService {
             throw new CustomException("없는 유저입니다.");
         });
 
+        if (studentModifyDto.getPassword() != studentModifyDto.getPasswordRecheck()) {
+            throw new CustomException("비밀번호 란과 비밀번호 확인 란의 값을 동일하게 작성해 주세요.");
+        }
+
         user.setName(studentModifyDto.getName());
         user.setPassword(bCryptPasswordEncoder.encode(studentModifyDto.getPassword()));
 
+        System.out.println(studentModifyDto.isProfileImageDelete());
+        System.out.println(studentModifyDto.getProfileImageUrl());
         if (studentModifyDto.isProfileImageDelete()) { // 기존 사진 삭제
             user.setProfileImageUrl(null);
-        } else if (studentModifyDto.getProfileImageFile() != null) { // 사진 새로 등록
+        } else if (!studentModifyDto.getProfileImageFile().isEmpty()) { // 사진 새로 등록
             UUID uuid = UUID.randomUUID();
             String profileImageFileName = uuid + studentModifyDto.getProfileImageFile().getOriginalFilename();
             Path path = Paths.get(uploadFolder + profileImageFileName);
@@ -217,7 +227,7 @@ public class UserService {
 
         if (teacherModifyDto.isProfileImageDelete()) { // 기존 사진 삭제
             user.setProfileImageUrl(null);
-        } else if (teacherModifyDto.getProfileImageFile() != null) { // 사진 새로 등록
+        } else if (!teacherModifyDto.getProfileImageFile().isEmpty()) { // 사진 새로 등록
             UUID uuid = UUID.randomUUID();
             String profileImageFileName = uuid + teacherModifyDto.getProfileImageFile().getOriginalFilename();
             Path path = Paths.get(uploadFolder + profileImageFileName);
@@ -229,6 +239,25 @@ public class UserService {
             user.setProfileImageUrl(profileImageFileName);
         }
         principalDetails.setUser(user);
+
+    }
+
+    public void userWithdrawal(PrincipalDetails principalDetails) {
+
+        User user = principalDetails.getUser();
+
+        userRepository.delete(user);
+
+    }
+
+    @Transactional
+    public void passwordForget(String name, String email) {
+        // 이메일 발송
+        String newPassword = emailService.sendPasswordForgetMail(email, name);
+
+        // 비밀번호 데이터 수정
+        User user = userRepository.findByEmail(email);
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 
     }
 }

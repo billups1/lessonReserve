@@ -36,6 +36,9 @@ public abstract class User {
     private List<GatherUser> gatherUsers;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<GatherApply> gatherApplies;
+    private String phone;
+    private String address;
+    private String postcode;
 
     private String provider;
     private String providerId;

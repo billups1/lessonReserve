@@ -74,7 +74,6 @@ function getHomeLesson(lesson) {
     let l = `
     <tbody>
         <tr>
-            <td>${lesson.id}</td>
             <td>${lesson.name}</td>
             <td><a href="/teacher/${lesson.teacherId}">${lesson.teacherName}</a></td>
             <td><a href="/teacher/${lesson.teacherId}"><img src="/image/${lesson.teacherProfileImageUrl}" width="50" height="50"/></a></td>

@@ -35,7 +35,7 @@ public class ApplyService {
         StringBuffer sb = new StringBuffer();
         sb.append("select a.id, l.name, u.name, u.profileImageUrl, l.lessonTime, l.price, ");
         sb.append("DATE_FORMAT(l.lessonStartDate, '%Y-%m-%d'), DATE_FORMAT(l.lessonEndDate, '%Y-%m-%d'), DATE_FORMAT(DATE_ADD(l.lessonEndDate, INTERVAL -3 DAY), '%Y-%m-%d'), DATE_FORMAT(a.createTime, '%Y-%m-%d'), ");
-        sb.append("a.applyStatus, l.id ");
+        sb.append("a.applyStatus, l.id, a.paymentId ");
         sb.append("from apply a ");
         sb.append("inner join lesson l ");
         sb.append("on a.lessonId = l.id ");
@@ -52,36 +52,12 @@ public class ApplyService {
             return new StudentMyPageLessonListDto(rl);
         }).collect(Collectors.toList());
 
-
-//        long studentId = principalDetails.getUser().getId();
-//        List<Apply> studentMyPageList = applyRepository.findAllByStudentIdOrderByCreateTime(studentId);
-//        ArrayList<StudentMyPageLessonListDto> studentMyPageLessonListDtos = new ArrayList<>();
-//
-//        for (Apply apply : studentMyPageList) {
-//            StudentMyPageLessonListDto studentMyPageLessonListDto = StudentMyPageLessonListDto.builder()
-//                    .applyId(apply.getId())
-//                    .teacher(apply.getLesson().getTeacher())
-//                    .name(apply.getLesson().getName())
-//                    .maximumStudentsNumber(apply.getLesson().getMaximumStudentsNumber())
-//                    .lessonTime(apply.getLesson().getLessonTime())
-//                    .price(apply.getLesson().getPrice())
-//                    .lessonStartDate(apply.getLesson().getLessonStartDate().toString().substring(0, 10))
-//                    .lessonEndDate(apply.getLesson().getLessonEndDate().toString().substring(0, 10))
-//                    .applyEndDate(apply.getLesson().getLessonStartDate().minusDays(3).toString().substring(0, 10))
-//                    .applyCreateTime(apply.getCreateTime().toString().substring(0, 10))
-//                    .applyStatus(apply.getLesson().getApplies().size() + " / " + apply.getLesson().getMaximumStudentsNumber())
-//                    .userApplyStatus(apply.getApplyStatus())
-//                    .lessonId(apply.getLesson().getId())
-//                    .build();
-//            studentMyPageLessonListDtos.add(studentMyPageLessonListDto);
-//        }
-
         return studentMyPageLessonListDtos;
     }
 
 
     @Transactional
-    public void makeApply(long lessonId, PrincipalDetails principalDetails) {
+    public void applyAvailabilityValidate(long lessonId, PrincipalDetails principalDetails) {
 
         if (principalDetails == null) {
             throw new CustomException("로그인 후 수강신청해 주세요.");
@@ -94,14 +70,6 @@ public class ApplyService {
         if (lesson.getApplies().size() >= lesson.getMaximumStudentsNumber()) {
             throw new CustomException("수강인원이 모두 찼습니다.");
         }
-
-        Apply apply = Apply.builder()
-                .lesson(lesson)
-                .student(principalDetails.getUser())
-                .applyStatus(ApplyStatus.APPLY)
-                .build();
-
-        applyRepository.save(apply);
 
     }
 

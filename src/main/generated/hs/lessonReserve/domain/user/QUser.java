@@ -20,6 +20,8 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final StringPath address = createString("address");
+
     public final DateTimePath<java.time.LocalDateTime> createTime = createDateTime("createTime", java.time.LocalDateTime.class);
 
     public final StringPath email = createString("email");
@@ -33,6 +35,10 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath name = createString("name");
 
     public final StringPath password = createString("password");
+
+    public final StringPath phone = createString("phone");
+
+    public final StringPath postcode = createString("postcode");
 
     public final StringPath profileImageUrl = createString("profileImageUrl");
 

@@ -1,3 +1,12 @@
+$('#passwordRecheck').on('input', function () {
+    if ($('#password').val() != $('#passwordRecheck').val()) {
+        $('#passwordRecheckComment').empty();
+        $('#passwordRecheckComment').append(`<a style="color: red;">비밀번호 란과 비밀번호 확인 란의 값을 동일하게 작성해 주세요.</a>`)
+    } else {
+            $('#passwordRecheckComment').empty();
+    }
+})
+
 function verificationEmailSend() {
     var email = document.getElementById("email").value;
     console.log(email);

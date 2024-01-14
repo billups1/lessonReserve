@@ -1,7 +1,7 @@
-package hs.lessonReserve.domain.gather.gatherUser;
+package hs.lessonReserve.domain.payment;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import hs.lessonReserve.domain.gather.Gather;
+import hs.lessonReserve.domain.apply.Apply;
+import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,22 +18,35 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
-public class GatherUser {
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "gatherId")
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    private Gather gather;
-    @ManyToOne
     @JoinColumn(name = "userId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private User user;
-    private String position; // LEADER, VICE-LEADER, MEMBER
-    private LocalDateTime withdrawalDate;
+
+    @ManyToOne
+    @JoinColumn(name = "lessonId")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Lesson lesson;
+    private int price;
+    private String impUid;
+    private String merchantUid;
+
+    private String paymentMethod; // card, bankTransfer,...
+    private String paymentGateway; // kakao, danal,...
+    private boolean lessonPolicyAgree;
+    private boolean pgPolicyAgree;
+
+    @OneToOne(mappedBy = "payment")
+    private Apply apply;
+
+    private String status; // payComplete, beforeTransfer
+    private LocalDateTime cancelTime;
 
     private LocalDateTime createTime;
 

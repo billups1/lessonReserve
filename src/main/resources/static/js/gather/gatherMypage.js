@@ -54,6 +54,7 @@ console.log(gatherId)
               dataType: 'json'
           }).done(res=>{
               console.log("모임 삭제 성공", res);
+              window.location.reload();
           }).fail(error=>{
               console.log("모임 삭제 실패", error);
           })
