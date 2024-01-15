@@ -141,7 +141,7 @@ function getSearchBox() {
              <input type="text" name="searchText" id="searchText" style="display: inline;"/>
              <input type="date" name="searchDate" id="searchDate" style="display: none;"/>
 
-             <button onclick="homeLessonListCond(0)">검색</button>
+             <button class="btn btn-primary" onclick="homeLessonListCond(0)">검색</button>
 
          </div>`
 

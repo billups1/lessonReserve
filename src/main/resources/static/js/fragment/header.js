@@ -118,7 +118,6 @@ function getAlarmCount() {
 
 getAlarmCount();
 
-//$(document).ready(function() {
 
 $.ajax({
     url: "/api/user",
@@ -130,20 +129,35 @@ $.ajax({
 
     if ($('#userId').val()) {
         $('#navBar').append(`
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">레슨</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                모임
+              </a>
+              <ul class="dropdown-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">레슨</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/student/mypage">내 레슨(수강생용)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/teacher/mypage">내 레슨(강사용)</a>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/student/mypage">내 레슨(수강생용)</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/teacher/mypage">내 레슨(강사용)</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/gather">모임</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/gather/mypage">내 모임</a>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                모임
+              </a>
+              <ul class="dropdown-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="/gather">전체 모임</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/gather/mypage">내 모임</a>
+                </li>
+              </ul>
             </li>
         `)
 
@@ -173,4 +187,3 @@ $.ajax({
 }).fail(error=>{
     console.log("유저 정보 불러오기 실패", error);
 });
-//})

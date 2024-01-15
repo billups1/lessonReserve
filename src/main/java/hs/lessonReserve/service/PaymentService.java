@@ -24,4 +24,14 @@ public class PaymentService {
 
         return payment.getMerchantUid();
     }
+
+    public void paymentUserValidate(PrincipalDetails principalDetails, long paymentId) {
+        Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> {
+            throw new CustomException("없는 유저입니다.");
+        });
+
+        if (principalDetails.getUser().getId() != payment.getUser().getId()) {
+            throw new CustomException("잘못된 접근입니다.");
+        }
+    }
 }

@@ -114,6 +114,7 @@ $('#policyAgreeComment').empty();
       dataType: "json"
     }).done(res=>{
           console.log("취소 성공",res);
+          location.replace("/lesson/cancelComplete/" + $('#paymentId').val());
       }).fail(error=>{
           console.log("취소 실패",error);
       });

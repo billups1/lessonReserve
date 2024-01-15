@@ -47,7 +47,7 @@
             </th:block>
             <th:block th:unless="${lesson.userApplyStatus}">
                 <td>
-                    <button th:onclick="cancelLesson([[${lesson.id}]])">취소하기</button>
+                    <button class="btn btn-primary" th:onclick="cancelLesson([[${lesson.id}]])">취소하기</button>
                 </td>
             </th:block>
 

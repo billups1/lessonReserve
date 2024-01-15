@@ -89,9 +89,9 @@ public class LessonController {
         return "lesson/cancel/lessonCancel";
     }
 
-    @GetMapping("/lesson/cancelComplete/{applyId}")
-    public String lessonCancelComplete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long applyId, Model model) {
-
+    @GetMapping("/lesson/cancelComplete/{paymentId}")
+    public String lessonCancelComplete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable long paymentId, Model model) {
+        paymentService.paymentUserValidate(principalDetails, paymentId);
         return "lesson/lessonPaymentComplete";
     }
 
