@@ -1,6 +1,3 @@
-$('.navbar-toggler').on('click', function() {
-    $('#list-group').toggle();
-})
 
 // 알림창 열기
 $('#alarmCount').click(function(){
@@ -131,11 +128,11 @@ $.ajax({
         $('#navBar').append(`
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                모임
+                레슨
               </a>
               <ul class="dropdown-menu">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">레슨</a>
+                    <a class="nav-link active" aria-current="page" href="/">전체 레슨</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/student/mypage">내 레슨(수강생용)</a>
@@ -158,6 +155,9 @@ $.ajax({
                     <a class="nav-link" href="/gather/mypage">내 모임</a>
                 </li>
               </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">회원정보수정</a>
             </li>
         `)
 

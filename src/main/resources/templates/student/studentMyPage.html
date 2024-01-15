@@ -14,33 +14,27 @@
     <h2 class="center">수강생 마이페이지</h2>
     <button class="btn btn-primary" style="float:right;" onclick="location.href = '/student/modify'">회원정보 수정</button>
 
-    <br>
+    <br><br>
     <h3 class="center">내가 신청한 강의</h3>
-    <table class="table">
+    <table class="table center">
         <tr>
             <th>번호</th>
             <th>강의명</th>
             <th>강사</th>
-            <th>프로필사진</th>
             <th>시간</th>
             <th>가격</th>
-            <th>레슨 시작일</th>
-            <th>레슨 종료일</th>
-            <th>수강신청 마감일</th>
+            <th>레슨 시작일 /<br>레슨 종료일</th>
             <th>수강신청일</th>
             <th>현재상태</th>
         </tr>
 
         <tr th:each="dto : ${dtos}">
             <td><a th:text="${dto.applyId}">번호</a></td>
-            <td th:text="${dto.lessonName}">강의명</td>
-            <td th:text="${dto.teacherName}">강사</td>
-            <td><img th:src="|/image/${dto.teacherProfileImageUrl}|" width="50" height="50"/></td>
+            <td><a th:href="@{/lesson/{lessonId}(lessonId=${dto.lessonId})}">[[${dto.lessonName}]]</a></td>
+            <td><img th:src="|/image/${dto.teacherProfileImageUrl}|" width="60" height="60"/><br>[[${dto.teacherName}]]</td>
             <td th:text="${dto.lessonTime}">시간</td>
             <td th:text="${dto.price}">가격</td>
-            <td th:text="${dto.lessonStartDate}">레슨 시작일</td>
-            <td th:text="${dto.lessonEndDate}">레슨 종료일</td>
-            <td th:text="${dto.applyEndDate}">수강신청 마감일</td>
+            <td>[[${dto.lessonStartDate}]]<br>~<br>[[${dto.lessonEndDate}]]</td>
             <td th:text="${dto.applyCreateTime}">수강신청일</td>
             <th:block th:if="${#strings.equals(dto.applyStatus, 'APPLY')}">
                 <td>

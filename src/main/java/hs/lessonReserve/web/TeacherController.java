@@ -37,9 +37,9 @@ public class TeacherController {
     public String teacherMyPageForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
         // 스프링 시큐리티에서 권한 막아놓아서 따로 권한 막지 않음
 
-        List<HomeLessonListDto> teacherMyPageList = lessonService.teacherMyPageList(principalDetails);
+        List<HomeLessonListDto> teacherMyPageDtos = lessonService.teacherMyPageList(principalDetails);
 
-        model.addAttribute("lessons", teacherMyPageList);
+        model.addAttribute("lessons", teacherMyPageDtos);
 
         return "teacher/teacherMyPage";
     }

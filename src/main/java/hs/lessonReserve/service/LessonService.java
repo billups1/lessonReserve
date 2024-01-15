@@ -203,6 +203,10 @@ public class LessonService {
             throw new CustomApiException("없는 payment 입니다.");
         });
 
+        if (LocalDateTime.now().isAfter(payment.getLesson().getLessonStartDate())) {
+            throw new CustomApiException("레슨 시작일이 이미 지나 레슨을 취소할 수 없습니다.");
+        }
+
         String iamportToken;
         try {
             iamportToken = getIamportToken();

@@ -75,19 +75,17 @@ function getHomeLesson(lesson) {
     <tbody>
         <tr>
             <td>${lesson.name}</td>
-            <td><a href="/teacher/${lesson.teacherId}">${lesson.teacherName}</a></td>
-            <td><a href="/teacher/${lesson.teacherId}"><img src="/image/${lesson.teacherProfileImageUrl}" width="50" height="50"/></a></td>
+            <td><a href="/teacher/${lesson.teacherId}"><img src="/image/${lesson.teacherProfileImageUrl}" width="60" height="60"/></a><br><a href="/teacher/${lesson.teacherId}">${lesson.teacherName}</a></td>
             <td>${lesson.lessonTime}</td>
-            <td>${lesson.price}원</td>
-            <td>${lesson.lessonStartDate}</td>
-            <td>${lesson.lessonEndDate}</td>
+            <td>${lesson.price}</td>
+            <td>${lesson.lessonStartDate}<br>~<br>${lesson.lessonEndDate}</td>
             <td>${lesson.applyEndDate}</td>
             <td>${lesson.applyStatus}</td>`
 
     if(lesson.userApplyStatus) {
                 l +=  `<td><a>신청완료</a></td>`
             } else {
-                l +=  `<td><a href="/lesson/${lesson.id}">신청하기</a></td>`
+                l +=  `<td><a href="/lesson/${lesson.id}">자세히<br>보기</a></td>`
             }
 
     l +=   `</tr></tbody><br>`

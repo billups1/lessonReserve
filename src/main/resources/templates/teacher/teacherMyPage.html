@@ -18,15 +18,13 @@
     <br>
     <br>
     <h3 class="center">내가 진행중인 강의</h3>
-    <table class="table">
+    <table class="table center">
         <tr>
             <th>강의명</th>
             <th>강사</th>
-            <th>프로필사진</th>
             <th>시간</th>
             <th>가격</th>
-            <th>레슨 시작일</th>
-            <th>레슨 종료일</th>
+            <th>레슨 시작일 /<br>레슨 종료일</th>
             <th>수강신청 마감일</th>
             <th>수강자수</th>
             <th>취소하기</th>
@@ -34,12 +32,10 @@
 
         <tr th:each="lesson : ${lessons}">
             <td th:text="${lesson.name}">강의명</td>
-            <td th:text="${lesson.teacherId}">강사</td>
-            <td><img th:src="|/image/${lesson.teacherProfileImageUrl}|" width="50" height="50"/></td>
+            <td><img th:src="|/image/${lesson.teacherProfileImageUrl}|" width="60" height="60"/><br>[[${lesson.teacherName}]]</td>
             <td th:text="${lesson.lessonTime}">시간</td>
             <td th:text="${lesson.price}">가격</td>
-            <td th:text="${lesson.lessonStartDate}">레슨 시작일</td>
-            <td th:text="${lesson.lessonEndDate}">레슨 종료일</td>
+            <td>[[${lesson.lessonStartDate}]]<br>~<br>[[${lesson.lessonEndDate}]]</td>
             <td th:text="${lesson.applyEndDate}">수강신청 마감일</td>
             <td th:text="${lesson.applyStatus}">수강자수</td>
             <th:block th:if="${lesson.userApplyStatus}">

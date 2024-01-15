@@ -3,6 +3,7 @@ package hs.lessonReserve.web.dto.lesson;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.user.Teacher;
+import hs.lessonReserve.util.CustomFormatter;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class StudentMyPageLessonListDto {
     private String teacherName;
     private String teacherProfileImageUrl;
     private String lessonTime;
-    private int price;
+    private String price;
     private String lessonStartDate;
     private String lessonEndDate;
     private String applyEndDate;
@@ -36,7 +37,7 @@ public class StudentMyPageLessonListDto {
         this.teacherName = (String) objects[2];
         this.teacherProfileImageUrl = (String) objects[3];
         this.lessonTime = (String) objects[4];
-        this.price = (int) objects[5];
+        this.price = CustomFormatter.makePrice((int)objects[5]) + "원";
         this.lessonStartDate = (String) objects[6];
         this.lessonEndDate = (String) objects[7];
         this.applyEndDate = (String) objects[8];
