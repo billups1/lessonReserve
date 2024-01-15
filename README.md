@@ -5,42 +5,52 @@
 주요 내용은 다음과 같습니다. <br><br>
 
 **● 주요기능**
-
-1. 동네 운동 모임 기능 <br>
+<ol>
+<li>동네 운동 모임 기능 <br>
 회원이 동네 운동 모임을 만들어 홍보하고, 함께 운동할 사람들을 모집할 수 있습니다.<br>
 모임 목록을 본 회원은 참여신청 버튼을 클릭하여 마음에 드는 모임에 참여 신청을 할 수 있고, <br>
 리더는 화면 상단 알림을 통해 이것을 확인한 후 승인/거절을 선택할 수 있습니다.<br>
 또한 모임 참여자들이 실시간 대화를 할 수 있는 채팅 기능을 구현했습니다. WebSocket을 활용하였습니다.<br>
 
-![Animation1-min](https://github.com/billups1/lessonReserve/assets/123869397/5b1b01a6-897b-48f5-918e-77a994d147d6)
+![Animation1-min](https://github.com/billups1/lessonReserve/assets/123869397/5b1b01a6-897b-48f5-918e-77a994d147d6)</li>
 <br>
-2. 강사 레슨등록 및 수강생 레슨신청<br>
+
+<li>강사 레슨등록 및 수강생 레슨신청<br>
 REST 기반으로 강사가 운동레슨를 등록하고, 수강생은 등록된 레슨을 신청하는 기능을 구현했습니다.<br>
 레슨의 신청하기 버튼을 누르면 신청 페이지에서 레슨을 신청할 수 있도록 하였고, 신청완료된 레슨은 리스트 표 상에 “신청완료” 표시가 나오도록 하였습니다.<br>
 조건별 레슨 검색 기능을 구현하였으며, QueryDSL을 통한 동적 쿼리 구현 기술을 사용하였습니다.<br>
 레슨 장소를 카카오 API를 이용한 카카오지도로 표시하였습니다.<br>
 <img src="https://github.com/billups1/lessonReserve/assets/123869397/bcd8419c-e51c-45af-9c46-22a98a407788" height="270px"></img>
-<img src="https://github.com/billups1/lessonReserve/assets/123869397/53a31133-fa59-46d3-826a-5d8db12886f6" height="550px"></img>
+<img src="https://github.com/billups1/lessonReserve/assets/123869397/53a31133-fa59-46d3-826a-5d8db12886f6" height="550px"></img></li>
 <br>
 
-3. 마이페이지<br>
+<li>레슨 결제 시스템<br>
+아임포트를 이용하여 레슨 결제 시스템을 구현하였습니다. 테스트 계정을 이용하여 실제 카드로 결제가 가능하도록 하였습니다.
+레슨 취소 기능을 구현하여, 레슨 시작일이 경과하지 않은 레슨에 한하여 수강생이 레슨을 취소하고 결제 취소도 가능하도록 하였습니다.</li>
+
+<br>
+<li>마이페이지<br>
 마이페이지를 통하여 강사 및 수강생의 레슨 내역을 한번에 볼 수 있도록 구현했습니다. <br>
 수강생은 수강을 취소하거나 강의 완료 후 수강평을 작성할 수 있습니다. 그에 따른 수강생의 강의별 현재상태를 “취소완료”, “취소하기”, “수강평 쓰기”, “수강평 작성완료”로 나누었습니다.<br>
-<img src="https://github.com/billups1/lessonReserve/assets/123869397/fb37c93f-2909-465b-b32e-a29337f31ba6" height="300px"></img>
+<img src="https://github.com/billups1/lessonReserve/assets/123869397/fb37c93f-2909-465b-b32e-a29337f31ba6" height="300px"></img></li>
 <br><br>
 
-4. 수강평 기능<br>
+<li>수강평 기능<br>
 강의를 마친 후에는 수강생들이 강의에 대한 평가점수를 남길 수 있습니다. 이러한 평가 점수는 강사별 소개페이지에서 평균으로 계산되어 보여집니다.<br>
-<img src="https://github.com/billups1/lessonReserve/assets/123869397/9be51b2f-53b7-4af8-ba95-592ffa8cdcb3" height="550px"></img>
+<img src="https://github.com/billups1/lessonReserve/assets/123869397/9be51b2f-53b7-4af8-ba95-592ffa8cdcb3" height="550px"></img></li>
 <br><br>
+</ol>
 
 **● 사용기술**<br>
-1. 백엔드<br>
+<ol>
+<li>백엔드<br>
 
 기본적으로 JAVA SPRING BOOT를 기반으로 본 프로젝트를 제작하였으며, 데이터베이스는 MySQL을 이용했습니다.<br>
+JPA, 스프링 시큐리티, 카카오로그인을 위한 Oauth2, 카카오지도 구현을 위한 카카오 API, 유효성 검사를 위한 AOP, @Scheduled 어노테이션 기능, QueryDSL, GOOGLE SMPT를 이용한 메일인증, WebSocket 백엔드 기술을 활용하였습니다.</li>
+<br>
 
-JPA, 스프링 시큐리티, 카카오로그인을 위한 Oauth2, 카카오지도 구현을 위한 카카오 API, 유효성 검사를 위한 AOP, @Scheduled 어노테이션 기능, QueryDSL, GOOGLE SMPT를 이용한 메일인증, WebSocket 백엔드 기술을 활용하였습니다.<br>
+<li>프론트엔드<br>
 
-2. 프론트엔드<br>
-
-타임리프, 자바스크립트, 부트스트랩을 이용하여 화면을 직접 구현했고, 빠르게 로드되는 홈 화면을 구현하기 위해 AJAX를 활용하였습니다.<br>
+타임리프, 자바스크립트, 부트스트랩을 이용하여 화면을 직접 구현했고, 빠르게 로드되는 홈 화면을 구현하기 위해 AJAX를 활용하였습니다.</li>
+</ol>
+<br>
