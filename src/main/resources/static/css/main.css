@@ -2,7 +2,11 @@ td, th {
 vertical-align : middle;
 }
 
-.center  {
+img {
+    border-radius: 20%;
+}
+
+.center {
 text-align:center;
 }
 .center div {

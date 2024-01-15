@@ -171,7 +171,7 @@ $.ajax({
                 <a class="nav-link active" aria-current="page" href="/">레슨</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/gather">모임</a>
+                <a class="nav-link active" href="/gather">모임</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/login">Login</a>
