@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/layout}">
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/layout}">
 <html lang="en">
 
 <head>
@@ -9,27 +9,28 @@
 </head>
 
 <body>
-<div layout:fragment="contents">
-    <h3 class="center">모임 채팅방</h3><br>
-    <div style="margin: 0 auto;">
-        <div style="border: 4pt groove gray; display: inline-block;">
-            <div style="font-size: large; width: 180px; text-align: center;">
-                회원목록
-            </div>
-            <div id="gatherMemberContainer" style="height: 660px; background: beige; overflow-y: auto;">
-            </div>
-        </div>
-        <div style="border: 4pt groove gray; width: 500px; display: inline-block;">
-            <div style="font-size: large; text-align: center;">
-                [[${gatherName}]]
-            </div>
-            <div id="gatherChattingContainer"
-                 style="width: 100%; height: 600px; background: skyblue; overflow-y: auto;">
+    <div layout:fragment="contents">
+        <h3 class="center">모임 채팅방</h3><br>
+        <div style="height: 660px; width: 660px; margin: auto;">
 
-            </div>
-            <div id="gatherChattingInput" style="width: 500px; height: 80px;">
-                <input id="messageInput" style="width: 80%; height: 100%">
-                <button style="width: 17%; height: 100%" id="gatherChattingSend">보내기</button>
+            <!--  회원목록창    -->
+            <div style="border: 2pt solid gray; width: 24%; height: 100%; display: inline-block;">
+                <div style="height: 5%; width: 100%; font-size: large; text-align: center;">
+                    회원목록
+                </div>
+                <div id="gatherMemberContainer" style="height: 95%; width: 100%; background: beige; overflow-y: auto;">
+                </div>
+            </div><div style="border: 2pt solid gray; width: 74%; height: 100%; display: inline-block;">
+                <div style="font-size: large; text-align: center; height: 5%; width: 100%">
+                    [[${gatherName}]]
+                </div>
+                <div id="gatherChattingContainer"
+                    style="width: 100%; height: 80%; background: skyblue; overflow-y: auto;">
+                </div>
+                <div id="gatherChattingInput" style="width: 100%; height: 15%;">
+                    <input id="messageInput" style="width: 79%; height: 100%"><button style="width: 19%; height: 100%"
+                        id="gatherChattingSend">보내기</button>
+                </div>
             </div>
         </div>
 
@@ -40,7 +41,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
         <link href="/css/chat.css" rel="stylesheet">
     </div>
-</div>
 </body>
 
 </html>

@@ -43,7 +43,7 @@ $(document).ready(function() {
     res.data.forEach(member => {
         var memberElement = `
         <div style="font-size: large; padding: 6px; border: 1pt solid gray">
-            ${member.name}
+            ${member.name} == null || ${member.name} == '' ? '(이름없음)' : ${member.name}
         </div>
         `
         $('#gatherMemberContainer').append(memberElement);
