@@ -6,20 +6,20 @@ var gatherId = null;
 let today = new Date();
 var createTime = today.toLocaleString();
 
-$(document).ready(function() {
+$(document).ready(function () {
     userId = $('#userId').val();
     userName = $('#userName').val();
     gatherId = $('#gatherId').val();
-    console.log("userId",userId);
+    console.log("userId", userId);
 })
-console.log("userId",userId);
+console.log("userId", userId);
 
-$(document).ready(function() {
+$(document).ready(function () {
     connect();
     $.ajax({
         url: `/api/chat/list/${gatherId}`,
         dataType: "json"
-    }).done(res=>{
+    }).done(res => {
         console.log("채팅리스트 불러오기 성공", res);
         res.data.forEach(chat => {
             var className = chat.userId == userId ? "myMessage" : "otherMessage";
@@ -32,23 +32,27 @@ $(document).ready(function() {
             `
             $('#gatherChattingContainer').append(chatElement);
         });
-    }).fail(error=>{
+    }).fail(error => {
         console.log("채팅리스트 불러오기 실패", error);
     });
     $.ajax({
         url: `/api/chat/memberList/${gatherId}`,
         dataType: "json"
-    }).done(res=>{
-    console.log("모임 멤버 리스트 불러오기 성공", res);
-    res.data.forEach(member => {
-        var memberElement = `
-        <div style="font-size: large; padding: 6px; border: 1pt solid gray">
-            ${member.name} == null || ${member.name} == '' ? '(이름없음)' : ${member.name}
-        </div>
+    }).done(res => {
+        console.log("모임 멤버 리스트 불러오기 성공", res);
+        res.data.forEach(member => {
+            var memberElement = `
+        <div style="font-size: large; padding: 6px; border: 1pt solid gray">`
+            if (member.name == null || member.name == '') {
+                memberElement += '(이름없음)';
+            } else {
+                memberElement += member.name;
+            }
+            memberElement += `</div>
         `
-        $('#gatherMemberContainer').append(memberElement);
+            $('#gatherMemberContainer').append(memberElement);
         });
-    }).fail(error=>{
+    }).fail(error => {
         console.log("모임 멤버 리스트 불러오기 실패", error);
     });
 
@@ -69,17 +73,17 @@ function onConnected() {
     console.log("onConnected")
     stompClient.subscribe('/sub/chat/gather/' + gatherId, onMessageReceived);
 
-//  입장 메세지
-//    stompClient.send('/pub/api/chat/enterUser',
-//        {},
-//        JSON.stringify({
-//            gatherId: gatherId,
-//            userId: userId,
-//            userName, userName,
-//            createTime: null,
-//            type: "ENTER"
-//        })
-//    )
+    //  입장 메세지
+    //    stompClient.send('/pub/api/chat/enterUser',
+    //        {},
+    //        JSON.stringify({
+    //            gatherId: gatherId,
+    //            userId: userId,
+    //            userName, userName,
+    //            createTime: null,
+    //            type: "ENTER"
+    //        })
+    //    )
 }
 
 function onError() {
@@ -87,14 +91,14 @@ function onError() {
 }
 
 $('#gatherChattingSend').click(sendMessage);
-$('#gatherChattingSend').on('keyup', function(key) {
+$('#gatherChattingSend').on('keyup', function (key) {
     if (key.keyCode == 13) {
         sendMessage();
     }
 });
 
 function sendMessage(event) {
-console.log("userId",userId);
+    console.log("userId", userId);
     var messageContent = $('#messageInput').val();
     if (messageContent && stompClient) {
         var chatMessage = {

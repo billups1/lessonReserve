@@ -1,16 +1,16 @@
 function homeLessonList(page) {
-    if(page==null) {
+    if (page == null) {
         page = 0;
     }
 
-    $( '#lessonList > tbody').empty();
+    $('#lessonList > tbody').empty();
     $.ajax({
         url: `/api/lesson/home?page=${page}`,
-        dataType:"json"
-    }).done(res=>{
-        console.log("홈 레슨리스트 불러오기 성공",res);
+        dataType: "json"
+    }).done(res => {
+        console.log("홈 레슨리스트 불러오기 성공", res);
 
-        res.data.content.forEach((l)=>{
+        res.data.content.forEach((l) => {
             let lesson = getHomeLesson(l);
             $("#lessonList").append(lesson)
         })
@@ -18,8 +18,8 @@ function homeLessonList(page) {
         let pagination = getPagination(page, res.data.pageable.pageNumber, res.data.totalPages)
         $("#pagination").append(pagination);
 
-    }).fail(error=>{
-        console.log("홈 레슨리스트 불러오기 실패",error);
+    }).fail(error => {
+        console.log("홈 레슨리스트 불러오기 실패", error);
     });
 }
 
@@ -27,8 +27,8 @@ homeLessonList();
 
 
 function homeLessonListCond(page) {
-console.log(page);
-    if(page==null) {
+    console.log(page);
+    if (page == null) {
         page = 0;
     }
     var cond1 = document.querySelector('#searchCond1 > option:checked').value;
@@ -41,21 +41,21 @@ console.log(page);
     var searchDate = document.getElementById('searchDate').value;
     console.log("컨디션", cond1, "|", cond2, "|", searchText, "|", searchDate);
     let data = {
-        cond1 : cond1,
-        cond2 : cond2,
-        searchText : searchText,
-        searchDate : searchDate
+        cond1: cond1,
+        cond2: cond2,
+        searchText: searchText,
+        searchDate: searchDate
     }
 
-    $( '#lessonList > tbody').empty();
+    $('#lessonList > tbody').empty();
 
     $.ajax({
         url: `/api/lesson/home?page=${page}`,
-        dataType:"json",
+        dataType: "json",
         data: data
-        }).done(res=>{
-        console.log("홈 레슨리스트 불러오기 성공",res);
-        res.data.content.forEach((l)=>{
+    }).done(res => {
+        console.log("홈 레슨리스트 불러오기 성공", res);
+        res.data.content.forEach((l) => {
             let lesson = getHomeLesson(l);
             $("#lessonList").append(lesson)
         });
@@ -64,8 +64,8 @@ console.log(page);
         let pagination = getPagination(page, res.data.pageable.pageNumber, res.data.totalPages)
         $("#pagination").append(pagination);
 
-    }).fail(error=>{
-        console.log("홈 검색 레슨리스트 불러오기 실패",error);
+    }).fail(error => {
+        console.log("홈 검색 레슨리스트 불러오기 실패", error);
     });
 
 }
@@ -82,13 +82,13 @@ function getHomeLesson(lesson) {
             <td>${lesson.applyEndDate}</td>
             <td>${lesson.applyStatus}</td>`
 
-    if(lesson.userApplyStatus) {
-                l +=  `<td><a>신청완료</a></td>`
-            } else {
-                l +=  `<td><a href="/lesson/${lesson.id}">자세히<br>보기</a></td>`
-            }
+    if (lesson.userApplyStatus) {
+        l += `<td><a>신청완료</a></td>`
+    } else {
+        l += `<td><a href="/lesson/${lesson.id}">자세히<br>보기</a></td>`
+    }
 
-    l +=   `</tr></tbody><br>`
+    l += `</tr></tbody><br>`
     return l;
 }
 
@@ -102,8 +102,8 @@ function getPagination(page, pageNumber, totalPages) {
     var nowPage = pageNumber;
 
     var pageCount;
-    for(var i = startPage; i<endPage; i++) {
-        if(i != nowPage) {
+    for (var i = startPage; i < endPage; i++) {
+        if (i != nowPage) {
             pageCount = i + 1;
             p += `<li class="page-item"><a class="page-link" onclick="homeLessonListCond(${i})">${pageCount}</a></li>`;
         } else {
@@ -114,7 +114,7 @@ function getPagination(page, pageNumber, totalPages) {
         }
     }
 
-    p +=  `</ul>
+    p += `</ul>
     </nav>
     `
     return p;
@@ -122,7 +122,7 @@ function getPagination(page, pageNumber, totalPages) {
 
 getSearchBox();
 function getSearchBox() {
-    s = `<div style="text-align: center">
+    s = `<div id="searchLesson" style="text-align: center">
              <a>레슨검색</a>
              <select name="searchCond1" id="searchCond1" onchange="itemChange(this.value)">
                  <option value="none">=== 선택 ===</option>
@@ -133,7 +133,7 @@ function getSearchBox() {
                  <option value="lessonEndDate">레슨종료일</option>
              </select>
 
-             <select name="searchCond2" id="searchCond2">
+             <select name="searchCond2" id="searchCond2" style="display:none;">
              </select>
 
              <input type="text" name="searchText" id="searchText" style="display: inline;"/>
@@ -146,7 +146,7 @@ function getSearchBox() {
     $("#searchBox").append(s);
 }
 
-function itemChange(value){
+function itemChange(value) {
     var price = ["이상", "이하"]
     var lessonDate = ["이후", "이전"]
 
@@ -154,20 +154,22 @@ function itemChange(value){
 
     if (value == "lessonName" || value == "teacher") {
         $("#searchCond2").append("<option>none</option>");
-        document.getElementById("searchText").style.display="inline";
-        document.getElementById("searchDate").style.display="none";
-    } else if(value == "price") {
-        for(var count = 0; count < price.length; count++) {
+        document.getElementById("searchCond2").style.display = "none";
+        document.getElementById("searchText").style.display = "inline";
+        document.getElementById("searchDate").style.display = "none";
+    } else if (value == "price") {
+        document.getElementById("searchCond2").style.display = "inline";
+        for (var count = 0; count < price.length; count++) {
             $("#searchCond2").append("<option>" + price[count] + "</option>");
         }
-        document.getElementById("searchText").style.display="inline";
-        document.getElementById("searchDate").style.display="none";
-    } else if(value == "lessonStartDate" || value == "lessonEndDate") {
-        for(var count = 0; count < price.length; count++) {
+        document.getElementById("searchText").style.display = "inline";
+        document.getElementById("searchDate").style.display = "none";
+    } else if (value == "lessonStartDate" || value == "lessonEndDate") {
+        document.getElementById("searchCond2").style.display = "inline";
+        for (var count = 0; count < price.length; count++) {
             $("#searchCond2").append("<option>" + lessonDate[count] + "</option>");
         }
-        document.getElementById("searchText").style.display="none";
-        document.getElementById("searchDate").style.display="inline";
+        document.getElementById("searchText").style.display = "none";
+        document.getElementById("searchDate").style.display = "inline";
     }
-
 }

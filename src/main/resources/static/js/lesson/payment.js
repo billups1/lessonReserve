@@ -19,30 +19,30 @@ function tabOpen(toggle) {
 }
 
 $('#paymentBtn').click(function () {
-if(!$("#lessonPolicyChkBox").is(":checked") || !$("#pgPolicyChkBox").is(":checked") ) {
-$('#policyAgreeComment').empty();
+  if (!$("#lessonPolicyChkBox").is(":checked") || !$("#pgPolicyChkBox").is(":checked")) {
+    $('#policyAgreeComment').empty();
     $('#policyAgreeComment').append(`
         <a style="color: red;">약관에 동의해 주세요.</a>
     `)
     return;
-}
+  }
   requestPay();
 })
 
 function requestPay() {
 
-var pg;
-for(let i = 0; $('#pgTab').children('a').length; i++) {
+  var pg;
+  for (let i = 0; $('#pgTab').children('a').length; i++) {
     if ($('.list-group-item').eq(i).hasClass('active')) {
-        var pgCompany = $('.list-group-item').eq(i).data('toggle');
-        if (pgCompany == "kakaopay") {
-            pg = "kakaopay.TC0ONETIME";
-        } else if (pgCompany == "danal") {
-            pg = "danal_tpay.9810030929"
-        }
-        break;
+      var pgCompany = $('.list-group-item').eq(i).data('toggle');
+      if (pgCompany == "kakaopay") {
+        pg = "kakaopay.TC0ONETIME";
+      } else if (pgCompany == "danal") {
+        pg = "danal_tpay.9810030929"
+      }
+      break;
     }
-}
+  }
 
   IMP.init('imp56433423')
   IMP.request_pay({
@@ -78,9 +78,10 @@ for(let i = 0; $('#pgTab').children('a').length; i++) {
         data: data
       }).done(function (res) {
         console.log("res", res.data);
-        window.location.href ='/lesson/paymentComplete/'+res.data;
+        window.location.href = '/lesson/paymentComplete/' + res.data;
       }).fail(error => {
         console.log("결제 실패", error);
+        cancelPay();
       });
     } else {
       console.log(rsp.status);
@@ -90,33 +91,33 @@ for(let i = 0; $('#pgTab').children('a').length; i++) {
 };
 
 $('#cancelBtn').click(function () {
-if(!$("#refundPolicyChkBox").is(":checked") || !$("#pgPolicyChkBox").is(":checked") ) {
-$('#policyAgreeComment').empty();
+  if (!$("#refundPolicyChkBox").is(":checked") || !$("#pgPolicyChkBox").is(":checked")) {
+    $('#policyAgreeComment').empty();
     $('#policyAgreeComment').append(`
         <a style="color: red;">약관에 동의해 주세요.</a>
     `)
     return;
-}
+  }
   cancelPay();
 })
 
-  function cancelPay() {
-    $.ajax({
-      url: "/api/lesson/payment/cancel",  // 예: http://www.myservice.com/payments/cancel
-      type: "POST",
-      data: {
-        paymentId: $('#paymentId').val(), // 예: ORD20180131-0000011
-        cancel_request_amount: null,  // 환불금액
-        refund_holder: null,  // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-        refund_bank: null,  // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-        refund_account: null  // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-      },
-      dataType: "json"
-    }).done(res=>{
-          console.log("취소 성공",res);
-          location.replace("/lesson/cancelComplete/" + $('#paymentId').val());
-      }).fail(error=>{
-          console.log("취소 실패",error);
-      });
-;
-  }
+function cancelPay() {
+  $.ajax({
+    url: "/api/lesson/payment/cancel",  // 예: http://www.myservice.com/payments/cancel
+    type: "POST",
+    data: {
+      paymentId: $('#paymentId').val(), // 예: ORD20180131-0000011
+      cancel_request_amount: null,  // 환불금액
+      refund_holder: null,  // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+      refund_bank: null,  // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+      refund_account: null  // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+    },
+    dataType: "json"
+  }).done(res => {
+    console.log("취소 성공", res);
+    location.replace("/lesson/cancelComplete/" + $('#paymentId').val());
+  }).fail(error => {
+    console.log("취소 실패", error);
+  });
+  ;
+}

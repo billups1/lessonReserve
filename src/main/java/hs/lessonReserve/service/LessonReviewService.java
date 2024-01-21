@@ -9,8 +9,11 @@ import hs.lessonReserve.domain.apply.ApplyRepository;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.user.Student;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.web.dto.admin.AdminLessonReviewDto;
 import hs.lessonReserve.web.dto.lessonReview.LessonReviewDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,4 +46,12 @@ public class LessonReviewService {
 
     }
 
+    public Page<AdminLessonReviewDto> adminLessonReviewDtosByLessonId(long lessonId, Pageable pageable) {
+        Page<LessonReview> lessonReviewPage = lessonReviewRepository.findAllByLessonId(lessonId, pageable);
+        Page<AdminLessonReviewDto> adminLessonReviewDtos = lessonReviewPage.map(lessonReview -> {
+            return new AdminLessonReviewDto(lessonReview);
+        });
+
+        return adminLessonReviewDtos;
+    }
 }

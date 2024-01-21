@@ -17,6 +17,9 @@ import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.domain.user.User;
 import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.web.dto.admin.AdminLessonDto;
+import hs.lessonReserve.web.dto.admin.AdminLessonListDto;
+import hs.lessonReserve.web.dto.admin.AdminLessonSearchCondDto;
 import hs.lessonReserve.web.dto.lesson.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,22 +57,22 @@ public class LessonService {
     private String secretKey;
 
     @Transactional
-    public void makeLesson(MakeLessonDto makeLessonDto, PrincipalDetails principalDetails) {
+    public void makeLesson(LessonCreateDto lessonCreateDto, PrincipalDetails principalDetails) {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime lessonStartDate = LocalDateTime.parse(makeLessonDto.getLessonStartDate() + " 00:00:00.000", dateTimeFormatter);
-        LocalDateTime lessonEndDate = LocalDateTime.parse(makeLessonDto.getLessonEndDate() + " 23:59:59.000", dateTimeFormatter);
+        LocalDateTime lessonStartDate = LocalDateTime.parse(lessonCreateDto.getLessonStartDate() + " 00:00:00.000", dateTimeFormatter);
+        LocalDateTime lessonEndDate = LocalDateTime.parse(lessonCreateDto.getLessonEndDate() + " 23:59:59.000", dateTimeFormatter);
 
         Lesson lesson = Lesson.builder()
-                .name(makeLessonDto.getLessonName())
-                .content(makeLessonDto.getLessonContent())
-                .lessonTime(makeLessonDto.getLessonTime())
-                .maximumStudentsNumber(makeLessonDto.getMaximumStudentsNumber())
+                .name(lessonCreateDto.getLessonName())
+                .content(lessonCreateDto.getLessonContent())
+                .lessonTime(lessonCreateDto.getLessonTime())
+                .maximumStudentsNumber(lessonCreateDto.getMaximumStudentsNumber())
                 .teacher((Teacher) principalDetails.getUser())
-                .price(makeLessonDto.getPrice())
+                .price(lessonCreateDto.getPrice())
                 .lessonStartDate(lessonStartDate)
                 .lessonEndDate(lessonEndDate)
-                .roadAddress(makeLessonDto.getRoadAddress())
+                .roadAddress(lessonCreateDto.getRoadAddress())
                 .build();
 
         lessonRepository.save(lesson);
@@ -89,7 +92,7 @@ public class LessonService {
 
     @Transactional(readOnly = true)
     public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto, Pageable pageable) {
-        List<Lesson> lessons = lessonRepositoryImpl.mHomeLessonList(lessonSearchCondDto, principalDetails);
+        List<Lesson> lessons = lessonRepositoryImpl.mHomeLessonList(lessonSearchCondDto);
 
         List<HomeLessonListDto> homeLessonListDtoArrayList = lessons.stream().map(l -> new HomeLessonListDto(l, principalDetails)).collect(Collectors.toList());
 
@@ -298,5 +301,24 @@ public class LessonService {
         return accessToken;
     }
 
+    @Transactional(readOnly = true)
+    public Page<AdminLessonListDto> adminLessonListDto(Pageable pageable, AdminLessonSearchCondDto adminLessonSearchCondDto) {
+//        Page<Lesson> lessons = lessonRepository.findAllByOrderByIdDesc(pageable);
+//        Page<AdminLessonListDto> adminLessonListDtos = lessons.map(lesson -> {
+//            return new AdminLessonListDto(lesson);
+//        });
 
+        Page<AdminLessonListDto> adminLessonListDtos = lessonRepositoryImpl.mAdminLessonListDto(adminLessonSearchCondDto, pageable);
+
+        return adminLessonListDtos;
+    }
+
+    @Transactional(readOnly = true)
+    public AdminLessonDto adminLessonDto(long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
+            throw new CustomException("없는 레슨입니다.");
+        });
+        AdminLessonDto adminLessonDto = new AdminLessonDto(lesson);
+        return adminLessonDto;
+    }
 }

@@ -1,15 +1,13 @@
 package hs.lessonReserve.web;
 
 import hs.lessonReserve.config.auth.PrincipalDetails;
-import hs.lessonReserve.domain.lesson.Lesson;
-import hs.lessonReserve.domain.payment.Payment;
 import hs.lessonReserve.service.ApplyService;
 import hs.lessonReserve.service.LessonService;
 import hs.lessonReserve.service.PaymentService;
 import hs.lessonReserve.web.dto.lesson.ApplyLessonDto;
 import hs.lessonReserve.web.dto.lesson.LessonPaymentCancelFormDto;
 import hs.lessonReserve.web.dto.lesson.LessonPaymentFormDto;
-import hs.lessonReserve.web.dto.lesson.MakeLessonDto;
+import hs.lessonReserve.web.dto.lesson.LessonCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,13 +27,13 @@ public class LessonController {
     @GetMapping("/teacher/lesson/create")
     public String makeLessonFrom() {
 
-        return "lesson/makeLesson";
+        return "lesson/lessonCreate";
     }
 
     @PostMapping("/teacher/lesson/create")
-    public String makeLesson(@Validated MakeLessonDto makeLessonDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        System.out.println(makeLessonDto.toString());
-        lessonService.makeLesson(makeLessonDto, principalDetails);
+    public String makeLesson(@Validated LessonCreateDto lessonCreateDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println(lessonCreateDto.toString());
+        lessonService.makeLesson(lessonCreateDto, principalDetails);
 
         return "redirect:/";
     }

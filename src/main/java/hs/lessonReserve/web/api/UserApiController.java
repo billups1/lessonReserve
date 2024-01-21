@@ -29,6 +29,7 @@ public class UserApiController {
         if (principalDetails != null) {
             map.put("userId", principalDetails.getUser().getId());
             map.put("userName", principalDetails.getUser().getName());
+            map.put("userRole", principalDetails.getUser().getRole());
         }
         return new ResponseEntity(new CMRespDto<>(1, "유저 정보 반환 완료", map), HttpStatus.OK);
     }

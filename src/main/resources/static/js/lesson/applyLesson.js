@@ -15,10 +15,10 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var geocoder = new kakao.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
-geocoder.addressSearch(roadAddress, function(result, status) {
+geocoder.addressSearch(roadAddress, function (result, status) {
 
     // 정상적으로 검색이 완료됐으면
-     if (status === kakao.maps.services.Status.OK) {
+    if (status === kakao.maps.services.Status.OK) {
 
         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 

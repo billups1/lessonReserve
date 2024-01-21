@@ -4,22 +4,24 @@ import hs.lessonReserve.config.auth.PrincipalDetails;
 import hs.lessonReserve.constant.ApplyStatus;
 import hs.lessonReserve.domain.apply.Apply;
 import hs.lessonReserve.domain.apply.ApplyRepository;
+import hs.lessonReserve.domain.apply.ApplyRepositoryImpl;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.lesson.LessonRepository;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.web.dto.admin.AdminApplyDto;
+import hs.lessonReserve.web.dto.admin.AdminApplySearchCondDto;
 import hs.lessonReserve.web.dto.lesson.StudentMyPageLessonListDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 public class ApplyService {
 
     private final ApplyRepository applyRepository;
+    private final ApplyRepositoryImpl applyRepositoryImpl;
     private final LessonRepository lessonRepository;
     @PersistenceContext
     EntityManager em;
@@ -94,5 +97,20 @@ public class ApplyService {
             throw new CustomException("없는 수강신청입니다.");
         });
         return apply;
+    }
+
+    public Page<AdminApplyDto> adminApplyDtosByLessonId(long lessonId, Pageable pageable) {
+
+        Page<Apply> applies = applyRepository.findAllByLessonId(lessonId, pageable);
+        Page<AdminApplyDto> adminApplyDtos = applies.map(apply -> {
+            return new AdminApplyDto(apply);
+        });
+
+        return adminApplyDtos;
+    }
+
+    public Page<AdminApplyDto> adminApplyDtos(Pageable pageable, AdminApplySearchCondDto adminApplySearchCondDto) {
+        Page<AdminApplyDto> adminApplyDtos = applyRepositoryImpl.adminApplyDtos(pageable, adminApplySearchCondDto);
+        return adminApplyDtos;
     }
 }

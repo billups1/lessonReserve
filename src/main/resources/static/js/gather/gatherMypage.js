@@ -2,13 +2,13 @@ function gatherCard() {
     $.ajax({
         url: `/api/gather/list/mypage`,
         dataType: 'json'
-    }).done(res=>{
+    }).done(res => {
         console.log("모임 리스트 불러오기 성공", res);
         res.data.forEach(gather => {
             var gatherCard = getGatherCard(gather);
             $('#gatherCardContainer').append(gatherCard);
         })
-    }).fail(error=>{
+    }).fail(error => {
         console.log("모임 리스트 불러오기 실패", error);
     })
 }
@@ -33,31 +33,31 @@ function getGatherCard(gather) {
                 </button>
                 `
     if (gather.leaderState) {
-        g +=`<br>
+        g += `<br>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="gatherDelete(${gather.id})" id="gatherDeleteBtn">
           모임 없애기
         </button>`
     }
 
-    g +=    `</div>
+    g += `</div>
         </div>
     </div>`
     return g;
 }
 
 function gatherDelete(gatherId) {
-console.log(gatherId)
+    console.log(gatherId)
     if (window.confirm("정말 모임을 삭제하겠습니까?")) {
-          $.ajax({
-              method: 'delete',
-              url: `/api/gather/delete/${gatherId}`,
-              dataType: 'json'
-          }).done(res=>{
-              console.log("모임 삭제 성공", res);
-              window.location.reload();
-          }).fail(error=>{
-              console.log("모임 삭제 실패", error);
-          })
+        $.ajax({
+            method: 'delete',
+            url: `/api/gather/delete/${gatherId}`,
+            dataType: 'json'
+        }).done(res => {
+            console.log("모임 삭제 성공", res);
+            window.location.reload();
+        }).fail(error => {
+            console.log("모임 삭제 실패", error);
+        })
     }
 
 }

@@ -8,5 +8,5 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface LessonRepositoryCustom {
-    List<Lesson> mHomeLessonList(LessonSearchCondDto lessonSearchCondDto, PrincipalDetails principalDetails);
+    List<Lesson> mHomeLessonList(LessonSearchCondDto lessonSearchCondDto);
 }

@@ -23,4 +23,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long>, LessonRep
     @Query(value = "delete from Lesson where id = :lessonId and teacherId = :teacherId", nativeQuery = true)
     void mDeleteLesson(long lessonId, long teacherId);
 
+    Page<Lesson> findAllByOrderByIdDesc(Pageable pageable);
+
 }

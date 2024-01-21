@@ -60,3 +60,17 @@ text-align:left;
 .hide {
     display: none;
 }
+
+#search {
+    margin: auto;
+    box-sizing: border-box;
+}
+
+#searchLesson > input, #searchLesson > select {
+    height: 100%;
+    padding: 5px;
+}
+
+#searchLesson > button {
+    height: 100%;
+}

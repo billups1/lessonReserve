@@ -5,12 +5,15 @@ import hs.lessonReserve.domain.LessonReview.LessonReview;
 import hs.lessonReserve.domain.LessonReview.LessonReviewRepository;
 import hs.lessonReserve.domain.certificate.Certificate;
 import hs.lessonReserve.domain.certificate.CertificateRepository;
+import hs.lessonReserve.domain.lesson.Lesson;
+import hs.lessonReserve.domain.lesson.LessonRepository;
 import hs.lessonReserve.domain.user.Student;
 import hs.lessonReserve.domain.user.Teacher;
 import hs.lessonReserve.domain.user.User;
 import hs.lessonReserve.domain.user.UserRepository;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.util.RedisUtil;
+import hs.lessonReserve.web.dto.admin.AdminUserDto;
 import hs.lessonReserve.web.dto.auth.StudentModifyDto;
 import hs.lessonReserve.web.dto.auth.UserJoinDto;
 import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
@@ -35,6 +38,7 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final LessonRepository lessonRepository;
     private final CertificateRepository certificateRepository;
     private final LessonReviewRepository lessonReviewRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -259,5 +263,14 @@ public class UserService {
         User user = userRepository.findByEmail(email);
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 
+    }
+
+    public AdminUserDto adminUserDtoByLessonId(long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
+            throw new CustomException("없는 레슨입니다.");
+        });
+
+        AdminUserDto adminUserDto = new AdminUserDto(lesson.getTeacher());
+        return adminUserDto;
     }
 }
