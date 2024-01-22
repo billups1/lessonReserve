@@ -49,7 +49,7 @@ public class HomeLessonListDto {
 
         name = lesson.getName();
         lessonTime = lesson.getLessonTime();
-        price = CustomFormatter.makePrice(lesson.getPrice()) + "원";
+        price = CustomFormatter.makePrice(lesson.getPrice());
         lessonStartDate = lesson.getLessonStartDate().toString().substring(0, 10);
         lessonEndDate = lesson.getLessonEndDate().toString().substring(0, 10);
         applyEndDate = lesson.getLessonStartDate().minusDays(3).toString().substring(0,10);

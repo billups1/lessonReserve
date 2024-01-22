@@ -13,7 +13,7 @@ public class CustomFormatter {
         DecimalFormat dFComma = new DecimalFormat("#,###");
         String stringPrice = dFComma.format(price);
 
-        return stringPrice;
+        return stringPrice+"원";
     }
 
     public static String make_yyyyMMdd(LocalDateTime localDateTime) {

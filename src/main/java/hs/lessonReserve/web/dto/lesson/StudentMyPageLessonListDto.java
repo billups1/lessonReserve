@@ -37,7 +37,7 @@ public class StudentMyPageLessonListDto {
         this.teacherName = (String) objects[2];
         this.teacherProfileImageUrl = (String) objects[3];
         this.lessonTime = (String) objects[4];
-        this.price = CustomFormatter.makePrice((int)objects[5]) + "원";
+        this.price = CustomFormatter.makePrice((int)objects[5]);
         this.lessonStartDate = (String) objects[6];
         this.lessonEndDate = (String) objects[7];
         this.applyEndDate = (String) objects[8];

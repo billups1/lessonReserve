@@ -5,6 +5,7 @@ import hs.lessonReserve.domain.alarm.Alarm_GatherApply;
 import hs.lessonReserve.domain.alarm.AlarmRepository;
 import hs.lessonReserve.domain.gather.Gather;
 import hs.lessonReserve.domain.gather.GatherRepository;
+import hs.lessonReserve.domain.gather.GatherRepositoryImpl;
 import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApplyRepository;
@@ -13,6 +14,7 @@ import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.web.dto.admin.AdminGatherApplyDto;
 import hs.lessonReserve.web.dto.admin.AdminGatherDto;
+import hs.lessonReserve.web.dto.admin.AdminSearchCondDto;
 import hs.lessonReserve.web.dto.gather.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -41,6 +43,7 @@ public class GatherService {
     private String uploadFolder;
 
     private final GatherRepository gatherRepository;
+    private final GatherRepositoryImpl gatherRepositoryImpl;
     private final GatherApplyRepository gatherApplyRepository;
     private final AlarmRepository alarmRepository;
     private final  GatherUserRepository gatherUserRepository;
@@ -274,4 +277,8 @@ public class GatherService {
     }
 
 
+    public Page<AdminGatherDto> adminGatherDtos(Pageable pageable, AdminSearchCondDto adminSearchCondDto) {
+        Page<AdminGatherDto> adminGatherDtos = gatherRepositoryImpl.adminGatherDtos(pageable, adminSearchCondDto);
+        return adminGatherDtos;
+    }
 }

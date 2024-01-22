@@ -1,5 +1,6 @@
 package hs.lessonReserve.web.api;
 
+import hs.lessonReserve.domain.user.User;
 import hs.lessonReserve.service.*;
 import hs.lessonReserve.web.dto.admin.*;
 import hs.lessonReserve.web.dto.ex.CMRespDto;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 public class AdminApiController {
@@ -26,6 +25,7 @@ public class AdminApiController {
     private final GatherService gatherService;
     private final GatherApplyService gatherApplyService;
     private final GatherUserService gatherUserService;
+    private final UserService userService;
 
     @GetMapping("/api/admin/lesson/list")
     public ResponseEntity adminLessonListDtos(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, AdminLessonSearchCondDto adminLessonSearchCondDto) {
@@ -46,15 +46,21 @@ public class AdminApiController {
     }
 
     @GetMapping("/api/admin/apply/list")
-    public ResponseEntity adminApplyDtos(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, AdminApplySearchCondDto adminApplySearchCondDto) {
-        Page<AdminApplyDto> adminApplyDtos = applyService.adminApplyDtos(pageable, adminApplySearchCondDto);
-        return new ResponseEntity(new CMRespDto<>(1, "Admin 레슨신청·결제 조회 완료", adminApplyDtos), HttpStatus.OK);
+    public ResponseEntity adminApplyDtos(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, AdminSearchCondDto adminSearchCondDto) {
+        Page<AdminApplyDto> adminApplyDtos = applyService.adminApplyDtos(pageable, adminSearchCondDto);
+        return new ResponseEntity(new CMRespDto<>(1, "Admin 레슨신청·결제 리스트 조회 완료", adminApplyDtos), HttpStatus.OK);
     }
 
     @GetMapping("/api/admin/gatherApply/list/gatherId/{gatherId}")
     public ResponseEntity adminGatherApplyDtos(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable Long gatherId) {
         Page<AdminGatherApplyDto> adminGatherApplyDtos = gatherApplyService.adminGatherApplyDtosByGatherId(gatherId, pageable);
         return new ResponseEntity(new CMRespDto<>(1, "Admin 모임신청 리스트 조회 완료", adminGatherApplyDtos), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/admin/gather/list")
+    public ResponseEntity adminGatherDtos(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, AdminSearchCondDto adminSearchCondDto) {
+        Page<AdminGatherDto> adminGatherDtos = gatherService.adminGatherDtos(pageable, adminSearchCondDto);
+        return new ResponseEntity(new CMRespDto<>(1, "Admin 모임 리스트 조회 완료", adminGatherDtos), HttpStatus.OK);
     }
 
     @GetMapping("/api/admin/gatherUser/list/gatherId/{gatherId}")
@@ -81,5 +87,10 @@ public class AdminApiController {
         return new ResponseEntity(new CMRespDto<>(1, "Admin 레슨리뷰 조회 완료", adminLessonReviewDtos), HttpStatus.OK);
     }
 
+    @GetMapping("/api/admin/user/list")
+    public ResponseEntity adminUserDtos(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, AdminSearchCondDto adminSearchCondDto) {
+        Page<AdminUserDto> adminUserDtos = userService.adminUserDtos(pageable, adminSearchCondDto);
+        return new ResponseEntity(new CMRespDto<>(1, "Admin 유저 리스트 조회 완료", adminUserDtos), HttpStatus.OK);
+    }
 
 }

@@ -19,7 +19,7 @@ public class AdminApplyDto {
     private String lessonName;
     private Long lessonId;
 
-    private Integer price;
+    private String price;
     private String impUid;
     private String merchantUid;
 
@@ -48,7 +48,7 @@ public class AdminApplyDto {
 
         this.lessonName = apply.getLesson().getName();
         this.lessonId = apply.getLesson().getId();
-        this.price = apply.getPayment() == null ? null : apply.getPayment().getPrice();
+        this.price = apply.getPayment() == null ? null : CustomFormatter.makePrice(apply.getPayment().getPrice());
         this.impUid = apply.getPayment() == null ? null : apply.getPayment().getImpUid();
         this.merchantUid = apply.getPayment() == null ? null : apply.getPayment().getMerchantUid();
         this.paymentMethod = apply.getPayment() == null ? null : apply.getPayment().getPaymentMethod();

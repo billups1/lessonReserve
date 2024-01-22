@@ -23,16 +23,16 @@
     position: relative;
 }
 
-#imageUpperRight img {
+.imageUpperRight img {
     width : 130px;
     position: absolute;
-    top: 5px;
+    top: 30px;
     right: 5px;
 }
 
 
 
 /* 표 커서표시 없애기 클래스 */
-.tbodyCursorNone > tr {
+.tbodyCursorNone > tr > th {
     cursor: none;
 }

@@ -7,12 +7,10 @@ import hs.lessonReserve.domain.certificate.Certificate;
 import hs.lessonReserve.domain.certificate.CertificateRepository;
 import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.lesson.LessonRepository;
-import hs.lessonReserve.domain.user.Student;
-import hs.lessonReserve.domain.user.Teacher;
-import hs.lessonReserve.domain.user.User;
-import hs.lessonReserve.domain.user.UserRepository;
+import hs.lessonReserve.domain.user.*;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.util.RedisUtil;
+import hs.lessonReserve.web.dto.admin.AdminSearchCondDto;
 import hs.lessonReserve.web.dto.admin.AdminUserDto;
 import hs.lessonReserve.web.dto.auth.StudentModifyDto;
 import hs.lessonReserve.web.dto.auth.UserJoinDto;
@@ -20,6 +18,8 @@ import hs.lessonReserve.web.dto.teacher.TeacherIntroduceDto;
 import hs.lessonReserve.web.dto.teacher.TeacherModifyDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +38,7 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserRepositoryImpl userRepositoryImpl;
     private final LessonRepository lessonRepository;
     private final CertificateRepository certificateRepository;
     private final LessonReviewRepository lessonReviewRepository;
@@ -280,5 +281,10 @@ public class UserService {
         });
         AdminUserDto adminUserDto = new AdminUserDto(user);
         return adminUserDto;
+    }
+
+    public Page<AdminUserDto> adminUserDtos(Pageable pageable, AdminSearchCondDto adminSearchCondDto) {
+        Page<AdminUserDto> adminUserDtos = userRepositoryImpl.adminUserDto(pageable, adminSearchCondDto);
+        return adminUserDtos;
     }
 }

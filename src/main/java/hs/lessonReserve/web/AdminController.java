@@ -82,7 +82,7 @@ public class AdminController {
     @GetMapping("admin/user/{userId}")
     public String adminUserForm(@PathVariable long userId, Model model) {
         AdminUserDto adminUserDto = userService.adminUserDto(userId);
-
+        model.addAttribute("userDto", adminUserDto);
         return "admin/adminUser";
     }
 

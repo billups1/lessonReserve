@@ -33,7 +33,6 @@ public class GatherUser {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private User user;
     private String position; // LEADER, VICE-LEADER, MEMBER
-    private LocalDateTime withdrawalDate;
 
     private LocalDateTime createTime;
 

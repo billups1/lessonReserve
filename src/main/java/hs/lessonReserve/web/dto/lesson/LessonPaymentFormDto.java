@@ -30,7 +30,7 @@ public class LessonPaymentFormDto {
         this.lessonRoadAddress = lesson.getRoadAddress();
         this.lessonStartDate = CustomFormatter.make_yyyyMMdd(lesson.getLessonStartDate());
         this.lessonEndDate = CustomFormatter.make_yyyyMMdd(lesson.getLessonEndDate());
-        this.lessonPrice = CustomFormatter.makePrice(lesson.getPrice()) + "원(부가세 포함)";
+        this.lessonPrice = CustomFormatter.makePrice(lesson.getPrice()) + "(부가세 포함)";
         this.userEmail = user.getEmail();
         this.userName = user.getName();
         this.userTel = user.getPhone();

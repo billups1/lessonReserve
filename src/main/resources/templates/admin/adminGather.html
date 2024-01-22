@@ -32,7 +32,7 @@
           <div id="userContainer" class="imageUpperRight">
             <h3 class="center">모임 정보</h3>
             <form action="/gather/lesson" method="post" enctype="application/json">
-              <img src="/image/${gatherDto.profileImageUrl}">
+              <img th:src="@{/image/}+${gatherDto.representativeImageUrl}">
               <div>
                 <label for="id" class="form-label">모임 번호</label>
                 <input type="text" id="id" name="id" placeholder="" readonly class="form-control-plaintext"
@@ -40,28 +40,28 @@
               </div>
               <div>
                 <label for="name" class="form-label">모임명</label>
-                <textarea id="name" name="name" placeholder="" class="form-control"
-                  style="height:200px;" th:value="${gatherDto.email}"></textarea>
+                <input id="name" name="name" placeholder="" class="form-control"
+                  th:value="${gatherDto.name}">
               </div>
               <div>
-                <label for="mName" class="form-label">모임설명</label>
-                <input type="name" id="mName" name="maximumStudentsNumber"
-                  placeholder="" class="form-control" th:value="${gatherDto.name}">
+                <label for="content" class="form-label">모임설명</label>
+                <input type="text" id="content" name="content"
+                  placeholder="" class="form-control" th:value="${gatherDto.content}">
               </div>
               <div>
-                <label for="role" class="form-label">참여인원</label>
-                <input type="text" id="role" name="role" placeholder="" class="form-control"
-                  th:value="${gatherDto.role}">
+                <label for="maximumParticipantNumber" class="form-label">참여인원</label>
+                <input type="text" id="maximumParticipantNumber" name="maximumParticipantNumber" placeholder="" class="form-control"
+                       th:value="${gatherDto.maximumParticipantNumber}">
               </div>
               <div>
-                <label for="mPhone" class="form-label">생성일</label>
-                <input type="number" id="mPhone" name="phone" class="form-control" th:value="${gatherDto.phone}">
+                <label for="createTime" class="form-label">생성일</label>
+                <input type="datetime-local" id="createTime" name="createTime" readonly class="form-control-plaintext" th:value="${gatherDto.createTime}">
               </div>
 
               <br>
               <div style="text-align: center;">
                 <button class="btn btn-primary">수정하기</button>
-                <button type="button" class="btn btn-danger" style="margin-right: 20px;" id="gatherDelete">모임삭제</button>
+                <button type="button" class="btn btn-danger" id="gatherDelete">모임삭제</button>
               </div>
             </form>
           </div>

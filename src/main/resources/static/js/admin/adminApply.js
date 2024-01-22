@@ -18,7 +18,7 @@ function getApplyList(page) {
         $('#applyTableData').empty();
         res.data.content.forEach((dto) => {
             applyTableData = `
-                <tr onclick="location.href = '/admin/apply/${dto.id}'">
+                <tr onclick="location.href = '/admin/apply/${dto.applyId}'">
                   <td>${dto.applyId}</td>
                   <td>${dto.studentName}</td>
                   <td>${dto.lessonName}</td>

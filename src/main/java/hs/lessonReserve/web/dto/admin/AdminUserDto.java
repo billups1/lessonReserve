@@ -1,5 +1,6 @@
 package hs.lessonReserve.web.dto.admin;
 
+import com.querydsl.core.annotations.QueryProjection;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
 import hs.lessonReserve.domain.user.User;
@@ -27,6 +28,7 @@ public class AdminUserDto {
     private String providerId; // SNS 회원가입 ID
     private String createTime;
 
+    @QueryProjection
     public AdminUserDto(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
@@ -36,8 +38,8 @@ public class AdminUserDto {
         this.phone = user.getPhone();
         this.address = user.getAddress();
         this.postcode = user.getPostcode();
-        this.provider = user.getPostcode();
-        this.providerId = user.getProviderId();
+        this.provider = user.getProvider() == null ? "-" : user.getProvider();
+        this.providerId = user.getProviderId() == null ? "-" : user.getProviderId();
         this.createTime = CustomFormatter.make_yyyyMMdd(user.getCreateTime());
     }
 }

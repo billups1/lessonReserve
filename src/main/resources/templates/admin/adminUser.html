@@ -32,7 +32,7 @@
           <div id="userContainer" class="imageUpperRight">
             <h3 class="center">유저 정보</h3>
             <form action="/admin/user" method="post" enctype="application/json">
-              <img src="/image/${userDto.profileImageUrl}">
+              <img th:src="@{/image/}+${userDto.profileImageUrl}">
               <div>
                 <label for="id" class="form-label">번호</label>
                 <input type="text" id="id" name="id" placeholder="" readonly class="form-control-plaintext"
@@ -40,12 +40,12 @@
               </div>
               <div>
                 <label for="mEmail" class="form-label">이메일</label>
-                <textarea id="mEmail" name="email" placeholder="" class="form-control"
-                  style="height:200px;" th:value="${userDto.email}"></textarea>
+                <input id="mEmail" name="email" placeholder="" class="form-control"
+                  th:value="${userDto.email}">
               </div>
               <div>
                 <label for="mName" class="form-label">이름</label>
-                <input type="name" id="mName" name="maximumStudentsNumber"
+                <input type="text" id="mName" name="maximumStudentsNumber"
                   placeholder="" class="form-control" th:value="${userDto.name}">
               </div>
               <div>
@@ -55,21 +55,21 @@
               </div>
               <div>
                 <label for="mPhone" class="form-label">전화번호</label>
-                <input type="number" id="mPhone" name="phone" class="form-control" th:value="${userDto.phone}">
+                <input type="text" id="mPhone" name="phone" class="form-control" th:value="${userDto.phone}">
               </div>
               <div>
                 <label for="provider" class="form-label">SNS 회원가입 사</label>
-                <input type="date" id="provider" name="provider" class="form-control"
+                <input type="text" id="provider" name="provider" class="form-control"
                   th:value="${userDto.provider}">
               </div>
               <div>
                 <label for="providerId" class="form-label">SNS 회원가입 ID</label>
-                <input type="date" id="providerId" name="providerId" class="form-control"
+                <input type="text" id="providerId" name="providerId" class="form-control"
                   th:value="${userDto.providerId}">
               </div>
               <div>
                 <label for="createTime" class="form-label">회원가입일</label>
-                <input type="date" id="createTime" name="createTime" class="form-control"
+                <input type="text" id="createTime" name="createTime" readonly class="form-control-plaintext"
                        th:value="${userDto.createTime}">
               </div>
 
@@ -85,7 +85,7 @@
         <div id="container-2">
 
             <!--          학생 레슨-->
-            <th:block th:if="${#strings.equals(userDto.role, 'XXX')}">
+            <th:block th:if="${#strings.equals(userDto.role, 'ROLE_STUDENT')}">
               <div id="lessonContainer">
               <h3 class="center">레슨신청·결제 내역</h3>
               <table class="listTable sublistTable">
@@ -137,7 +137,7 @@
             </th:block>
 
 <!--            강사 레슨 -->
-            <th:block th:if="${#strings.equals(userDto.role, 'XXX')}">
+            <th:block th:if="${#strings.equals(userDto.role, 'ROLE_TEACHER')}">
               <div id="lessonContainer">
               <h3 class="center">레슨생성 내역</h3>
               <table class="listTable sublistTable">
@@ -179,7 +179,7 @@
               </tbody>
             </table>
 
-            <div id="gatherListPagination" class="paginationCustom">
+            <div id="pagination" class="paginationCustom">
 
             </div>
           </div>
