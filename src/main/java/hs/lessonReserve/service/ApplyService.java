@@ -10,6 +10,8 @@ import hs.lessonReserve.domain.lesson.LessonRepository;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.web.dto.admin.AdminApplyDto;
 import hs.lessonReserve.web.dto.admin.AdminApplySearchCondDto;
+import hs.lessonReserve.web.dto.admin.AdminLessonDto;
+import hs.lessonReserve.web.dto.admin.AdminUserDto;
 import hs.lessonReserve.web.dto.lesson.StudentMyPageLessonListDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -112,5 +114,29 @@ public class ApplyService {
     public Page<AdminApplyDto> adminApplyDtos(Pageable pageable, AdminApplySearchCondDto adminApplySearchCondDto) {
         Page<AdminApplyDto> adminApplyDtos = applyRepositoryImpl.adminApplyDtos(pageable, adminApplySearchCondDto);
         return adminApplyDtos;
+    }
+
+    public AdminApplyDto adminApplyDto(long applyId) {
+        Apply apply = applyRepository.findById(applyId).orElseThrow(() -> {
+            throw new CustomException("없는 레슨신청입니다.");
+        });
+        AdminApplyDto adminApplyDto = new AdminApplyDto(apply);
+        return adminApplyDto;
+    }
+
+    public AdminUserDto adminUserDtoStudentByApplyId(long applyId) {
+        Apply apply = applyRepository.findById(applyId).orElseThrow(() -> {
+            throw new CustomException("없는 레슨신청입니다.");
+        });
+        AdminUserDto adminUserDto = new AdminUserDto(apply.getStudent());
+        return adminUserDto;
+    }
+
+    public AdminLessonDto adminLessonDtoByApplyId(long applyId) {
+        Apply apply = applyRepository.findById(applyId).orElseThrow(() -> {
+            throw new CustomException("없는 레슨신청입니다.");
+        });
+        AdminLessonDto adminLessonDto = new AdminLessonDto(apply.getLesson());
+        return adminLessonDto;
     }
 }

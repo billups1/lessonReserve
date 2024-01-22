@@ -11,14 +11,19 @@ import hs.lessonReserve.domain.gather.gatherApply.GatherApplyRepository;
 import hs.lessonReserve.domain.gather.gatherUser.GatherUserRepository;
 import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.web.dto.admin.AdminGatherApplyDto;
+import hs.lessonReserve.web.dto.admin.AdminGatherDto;
 import hs.lessonReserve.web.dto.gather.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -259,4 +264,14 @@ public class GatherService {
         });
         return gather.getName();
     }
+
+    public AdminGatherDto adminGatherDto(long gatherId) {
+        Gather gather = gatherRepository.findById(gatherId).orElseThrow(() -> {
+            throw new CustomException("없는 모임입니다.");
+        });
+        AdminGatherDto adminGatherDto = new AdminGatherDto(gather);
+        return adminGatherDto;
+    }
+
+
 }

@@ -47,7 +47,16 @@ public class LessonReviewService {
     }
 
     public Page<AdminLessonReviewDto> adminLessonReviewDtosByLessonId(long lessonId, Pageable pageable) {
-        Page<LessonReview> lessonReviewPage = lessonReviewRepository.findAllByLessonId(lessonId, pageable);
+        Page<LessonReview> lessonReviewPage = lessonReviewRepository.findAllByLessonIdOrderByIdDesc(lessonId, pageable);
+        Page<AdminLessonReviewDto> adminLessonReviewDtos = lessonReviewPage.map(lessonReview -> {
+            return new AdminLessonReviewDto(lessonReview);
+        });
+
+        return adminLessonReviewDtos;
+    }
+
+    public Page<AdminLessonReviewDto> adminLessonReviewDtosBystudentId(Long studentId, Pageable pageable) {
+        Page<LessonReview> lessonReviewPage = lessonReviewRepository.findAllByStudentIdOrderByIdDesc(studentId, pageable);
         Page<AdminLessonReviewDto> adminLessonReviewDtos = lessonReviewPage.map(lessonReview -> {
             return new AdminLessonReviewDto(lessonReview);
         });

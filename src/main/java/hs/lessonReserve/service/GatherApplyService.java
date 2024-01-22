@@ -7,7 +7,10 @@ import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import hs.lessonReserve.domain.gather.gatherApply.GatherApplyRepository;
 import hs.lessonReserve.domain.gather.gatherUser.GatherUserRepository;
 import hs.lessonReserve.handler.ex.CustomApiException;
+import hs.lessonReserve.web.dto.admin.AdminGatherApplyDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,4 +63,12 @@ public class GatherApplyService {
 
     }
 
+    public Page<AdminGatherApplyDto> adminGatherApplyDtosByGatherId(Long gatherId, Pageable pageable) {
+        Page<GatherApply> gatherApplies = gatherApplyRepository.findAllByGatherIdOrderByIdDesc(gatherId, pageable);
+        Page<AdminGatherApplyDto> adminGatherApplyDtos = gatherApplies.map(gatherApply -> {
+            return new AdminGatherApplyDto(gatherApply);
+        });
+
+        return adminGatherApplyDtos;
+    }
 }

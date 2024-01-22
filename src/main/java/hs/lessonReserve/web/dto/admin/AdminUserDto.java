@@ -23,8 +23,8 @@ public class AdminUserDto {
     private String phone;
     private String address;
     private String postcode;
-    private String provider;
-    private String providerId;
+    private String provider; // SNS 회원가입 사
+    private String providerId; // SNS 회원가입 ID
     private String createTime;
 
     public AdminUserDto(User user) {

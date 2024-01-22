@@ -273,4 +273,12 @@ public class UserService {
         AdminUserDto adminUserDto = new AdminUserDto(lesson.getTeacher());
         return adminUserDto;
     }
+
+    public AdminUserDto adminUserDto(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> {
+            throw new CustomException("없는 유저입니다.");
+        });
+        AdminUserDto adminUserDto = new AdminUserDto(user);
+        return adminUserDto;
+    }
 }

@@ -3,7 +3,6 @@
 }
 
 
-
 /* 메뉴창 */
 #adminMenu {
     flex-basis: 150px;
@@ -47,6 +46,8 @@
     padding-bottom: 40px;
 }
 
+
+/* 테이블표 기본 */
 .listTable {
     margin: auto;
     text-align: center;
@@ -74,7 +75,9 @@
 
 }
 
-/* 페이지네이션 */
+
+
+/* 큰목록 페이지네이션 */
 .paginationCustom {
     margin-bottom: 20px !important;
 }
@@ -93,4 +96,11 @@
 
 .searchDiv > button {
     height: 100%;
+}
+
+
+/* 서브리스트 테이블 */
+.sublistTable {
+    width: 100%;
+    font-size: 13px;
 }

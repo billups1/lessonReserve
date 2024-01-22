@@ -314,11 +314,29 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public AdminLessonDto adminLessonDto(long lessonId) {
+    public AdminLessonDto adminLessonDtosByLessonId(long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> {
             throw new CustomException("없는 레슨입니다.");
         });
         AdminLessonDto adminLessonDto = new AdminLessonDto(lesson);
         return adminLessonDto;
     }
+
+
+    public Page<AdminLessonListDto> adminLessonDtosByTeacherId(Long teacherId, Pageable pageable) {
+        Page<Lesson> lessons = lessonRepository.findAllByTeacherIdOrderByIdDesc(teacherId, pageable);
+        Page<AdminLessonListDto> adminLessonListDtos = lessons.map(lesson -> {
+            return new AdminLessonListDto(lesson);
+        });
+        return adminLessonListDtos;
+    }
+
+    public Page<AdminLessonListDto> adminLessonDtosByStudentId(Long studentId, Pageable pageable) {
+        Page<Lesson> lessons = lessonRepository.findAllByStudentIdOrderByIdDesc(studentId, pageable);
+        Page<AdminLessonListDto> adminLessonListDtos = lessons.map(lesson -> {
+            return new AdminLessonListDto(lesson);
+        });
+        return adminLessonListDtos;
+    }
+
 }

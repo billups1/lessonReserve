@@ -1,4 +1,5 @@
 
+/* 세부목록 칸 설정 */
 #adminContent {
     display: flex;
     flex-direction: row;
@@ -16,22 +17,22 @@
     border-bottom: #ddd solid 1px;
 }
 
-#teacherContainer > div:nth-child(2) {
+
+/* 사진 우측상단 표시 */
+.imageUpperRight {
     position: relative;
 }
 
-#teacherContainer > div:nth-child(2) img {
+#imageUpperRight img {
     width : 130px;
     position: absolute;
     top: 5px;
     right: 5px;
 }
 
-.sublistTable {
-    width: 100%;
-    font-size: 13px;
-}
 
-#lessonReviewContainer > th {
+
+/* 표 커서표시 없애기 클래스 */
+.tbodyCursorNone > tr {
     cursor: none;
 }

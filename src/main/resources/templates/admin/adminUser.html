@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  <div layout:fragment="contents">
+
+    <div id="admin">
+      <div id="adminMenu">
+        <div>
+          관리자 페이지
+        </div>
+        <div>
+          <div onclick="location.href='/admin/lesson/list'">레슨 목록</div>
+          <div onclick="location.href='/admin/apply/list'">레슨신청·결제 목록</div>
+          <div onclick="location.href='/admin/gather/list'">모임 목록</div>
+          <div onclick="location.href='/admin/user/list'">유저 목록</div>
+        </div>
+      </div>
+
+
+      <div id="adminContent">
+
+        <div id="container-1">
+
+          <div id="userContainer" class="imageUpperRight">
+            <h3 class="center">유저 정보</h3>
+            <form action="/admin/user" method="post" enctype="application/json">
+              <img src="/image/${userDto.profileImageUrl}">
+              <div>
+                <label for="id" class="form-label">번호</label>
+                <input type="text" id="id" name="id" placeholder="" readonly class="form-control-plaintext"
+                       th:value="${userDto.id}">
+              </div>
+              <div>
+                <label for="mEmail" class="form-label">이메일</label>
+                <textarea id="mEmail" name="email" placeholder="" class="form-control"
+                  style="height:200px;" th:value="${userDto.email}"></textarea>
+              </div>
+              <div>
+                <label for="mName" class="form-label">이름</label>
+                <input type="name" id="mName" name="maximumStudentsNumber"
+                  placeholder="" class="form-control" th:value="${userDto.name}">
+              </div>
+              <div>
+                <label for="role" class="form-label">Role</label>
+                <input type="text" id="role" name="role" placeholder="" class="form-control"
+                  th:value="${userDto.role}">
+              </div>
+              <div>
+                <label for="mPhone" class="form-label">전화번호</label>
+                <input type="number" id="mPhone" name="phone" class="form-control" th:value="${userDto.phone}">
+              </div>
+              <div>
+                <label for="provider" class="form-label">SNS 회원가입 사</label>
+                <input type="date" id="provider" name="provider" class="form-control"
+                  th:value="${userDto.provider}">
+              </div>
+              <div>
+                <label for="providerId" class="form-label">SNS 회원가입 ID</label>
+                <input type="date" id="providerId" name="providerId" class="form-control"
+                  th:value="${userDto.providerId}">
+              </div>
+              <div>
+                <label for="createTime" class="form-label">회원가입일</label>
+                <input type="date" id="createTime" name="createTime" class="form-control"
+                       th:value="${userDto.createTime}">
+              </div>
+
+              <br>
+              <div style="text-align: center;">
+                <button class="btn btn-primary">수정하기</button>
+                <button type="button" class="btn btn-danger" style="margin-right: 20px;" id="userDelete">유저탈퇴</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="container-2">
+
+            <!--          학생 레슨-->
+            <th:block th:if="${#strings.equals(userDto.role, 'XXX')}">
+              <div id="lessonContainer">
+              <h3 class="center">레슨신청·결제 내역</h3>
+              <table class="listTable sublistTable">
+                <thead>
+                <tr>
+                  <th>신청번호</th>
+                  <th>레슨명</th>
+                  <th>레슨 시작일 /<br>레슨 종료일</th>
+                  <th>가격</th>
+                  <th>결제일</th>
+                  <th>취소시점</th>
+                </tr>
+                </thead>
+                <tbody id="applyTableData">
+
+                </tbody>
+              </table>
+
+              <div id="lessonStudentListPagination" class="paginationCustom">
+
+              </div>
+              </div>
+
+              <!--          레슨리뷰 리스트-->
+              <div id="lessonReviewContainer">
+                <h3 class="center">레슨리뷰 내역</h3>
+                <div id="lessonReviewAverageContainer"></div>
+                <table class="listTable sublistTable">
+                  <thead>
+                  <tr>
+                    <th>레슨리뷰<br>번호</th>
+                    <th>레슨명</th>
+                    <th>점수</th>
+                    <th>평가내용</th>
+                    <th>평가시점</th>
+                    <th>레슨리뷰<br>삭제</th>
+                  </tr>
+                  </thead>
+                  <tbody id="lessonReviewTableData" class="tbodyCursorNone">
+
+                  </tbody>
+                </table>
+
+                <div id="lessonReviewListPagination" class="paginationCustom">
+
+                </div>
+              </div>
+
+            </th:block>
+
+<!--            강사 레슨 -->
+            <th:block th:if="${#strings.equals(userDto.role, 'XXX')}">
+              <div id="lessonContainer">
+              <h3 class="center">레슨생성 내역</h3>
+              <table class="listTable sublistTable">
+                <thead>
+                <tr>
+                  <th>레슨번호</th>
+                  <th>레슨명</th>
+                  <th>레슨 시작일 /<br>레슨 종료일</th>
+                  <th>가격</th>
+                  <th>생성일</th>
+                </tr>
+                </thead>
+                <tbody id="lessonTableData">
+
+                </tbody>
+              </table>
+
+              <div id="lessonTeacherListPagination" class="paginationCustom">
+
+              </div>
+              </div>
+            </th:block>
+
+
+<!--          모임 리스트 -->
+          <div id="gatherContainer">
+            <h3 class="center">모임 내역</h3>
+            <table class="listTable sublistTable">
+              <thead>
+              <tr>
+                <th>모임 번호</th>
+                <th>모임명</th>
+                <th>주소</th>
+                <th>모임내역할</th>
+              </tr>
+              </thead>
+              <tbody id="gatherTableData" class="sublistTable sublistTable">
+
+              </tbody>
+            </table>
+
+            <div id="gatherListPagination" class="paginationCustom">
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <link href="/css/admin/admin.css" rel="stylesheet">
+    <link href="/css/admin/adminDetails.css" rel="stylesheet">
+
+    <script src="/js/admin/admin.js"></script>
+    <script src="/js/admin/adminUser.js"></script>
+
+  </div>
+
+</body>
+
+</html>

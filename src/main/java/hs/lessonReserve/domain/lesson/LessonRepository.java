@@ -1,5 +1,6 @@
 package hs.lessonReserve.domain.lesson;
 
+import hs.lessonReserve.domain.gather.Gather;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +26,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long>, LessonRep
 
     Page<Lesson> findAllByOrderByIdDesc(Pageable pageable);
 
+    Page<Lesson> findAllByTeacherIdOrderByIdDesc(Long teacherId, Pageable pageable);
+
+    Page<Lesson> findAllByStudentIdOrderByIdDesc(Long studentId, Pageable pageable);
 }
