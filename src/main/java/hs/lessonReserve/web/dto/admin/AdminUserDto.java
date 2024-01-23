@@ -34,7 +34,7 @@ public class AdminUserDto {
         this.email = user.getEmail();
         this.name = user.getName();
         this.role = user.getRole();
-        this.profileImageUrl = user.getProfileImageUrl();
+        this.profileImageUrl = user.getProfileImageUrl() == null ? "defaultImg.png" : user.getProfileImageUrl();
         this.phone = user.getPhone();
         this.address = user.getAddress();
         this.postcode = user.getPostcode();

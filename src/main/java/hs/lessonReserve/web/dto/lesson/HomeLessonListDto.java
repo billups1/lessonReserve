@@ -32,6 +32,7 @@ public class HomeLessonListDto {
     private String name;
     private String lessonTime;
     private String price;
+    private String address;
 
     private String lessonStartDate;
     private String lessonEndDate;
@@ -46,7 +47,10 @@ public class HomeLessonListDto {
         teacherId = lesson.getTeacher().getId();
         teacherName = lesson.getTeacher().getName();
         teacherProfileImageUrl = lesson.getTeacher().getProfileImageUrl();
-
+        if (lesson.getRoadAddress() != null) {
+            String[] roadAddressSplit = lesson.getRoadAddress().split(" ");
+            address = roadAddressSplit[0] + " " + roadAddressSplit[1];
+        }
         name = lesson.getName();
         lessonTime = lesson.getLessonTime();
         price = CustomFormatter.makePrice(lesson.getPrice());
@@ -68,6 +72,28 @@ public class HomeLessonListDto {
                 }
             }
         }
+    }
+
+    public HomeLessonListDto(Lesson lesson) {
+        id = lesson.getId();
+
+        teacherId = lesson.getTeacher().getId();
+        teacherName = lesson.getTeacher().getName();
+        teacherProfileImageUrl = lesson.getTeacher().getProfileImageUrl();
+        if (lesson.getRoadAddress() != null) {
+            String[] roadAddressSplit = lesson.getRoadAddress().split(" ");
+            address = roadAddressSplit[0] + " " + roadAddressSplit[1];
+        }
+        name = lesson.getName();
+        lessonTime = lesson.getLessonTime();
+        price = CustomFormatter.makePrice(lesson.getPrice());
+        lessonStartDate = lesson.getLessonStartDate().toString().substring(0, 10);
+        lessonEndDate = lesson.getLessonEndDate().toString().substring(0, 10);
+        applyEndDate = lesson.getLessonStartDate().minusDays(3).toString().substring(0,10);
+        applyStatus = lesson.getApplies().stream()
+                .filter(a -> ApplyStatus.APPLY.equals(a.getApplyStatus()))
+                .filter(a -> a.getStudent() != null)
+                .collect(Collectors.toList()).size() + " / " + lesson.getMaximumStudentsNumber();
     }
 
 }

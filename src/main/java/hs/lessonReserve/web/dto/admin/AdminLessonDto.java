@@ -26,6 +26,7 @@ public class AdminLessonDto {
 
 
     public AdminLessonDto(Lesson lesson) {
+        this.lessonId = lesson.getId();
         this.lessonName = lesson.getName();
         this.lessonContent = lesson.getContent();
         this.maximumStudentsNumber = lesson.getMaximumStudentsNumber();

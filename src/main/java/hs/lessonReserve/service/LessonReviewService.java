@@ -67,7 +67,7 @@ public class LessonReviewService {
     }
 
     public Page<AdminLessonReviewDto> adminLessonReviewDtosByTeacherId(Long teacherId, Pageable pageable) {
-        Page<LessonReview> lessonReviewPage = lessonReviewRepository.findAllByTeacherIdOrderByIdDesc(teacherId, pageable);
+        Page<LessonReview> lessonReviewPage = lessonReviewRepository.mFindAllByTeacherIdOrderByIdDesc(teacherId, pageable);
         Page<AdminLessonReviewDto> adminLessonReviewDtos = lessonReviewPage.map(lessonReview -> {
             return new AdminLessonReviewDto(lessonReview);
         });

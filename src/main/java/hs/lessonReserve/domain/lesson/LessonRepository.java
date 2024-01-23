@@ -25,6 +25,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long>, LessonRep
     void mDeleteLesson(long lessonId, long teacherId);
 
     Page<Lesson> findAllByOrderByIdDesc(Pageable pageable);
+    List<Lesson> findAllByOrderByIdDesc();
 
     Page<Lesson> findAllByTeacherIdOrderByIdDesc(Long teacherId, Pageable pageable);
 

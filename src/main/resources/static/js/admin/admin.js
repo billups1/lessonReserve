@@ -77,7 +77,7 @@ function pagination(data, entityType) {
     paginationHtml += `</ul>
                 </nav>`;
 
-    if (entityType == 'lesson' || entityType == 'user') {
+    if (entityType == 'user') {
         $('#pagination').empty();
         $('#pagination').append(paginationHtml);
     } else if (entityType == 'payment') {

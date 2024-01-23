@@ -26,11 +26,11 @@ public class GatherUser {
 
     @ManyToOne
     @JoinColumn(name = "gatherId")
-    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Gather gather;
     @ManyToOne
     @JoinColumn(name = "userId")
-    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     private String position; // LEADER, VICE-LEADER, MEMBER
 

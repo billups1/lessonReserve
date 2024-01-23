@@ -27,7 +27,7 @@ function getLessonList(page) {
                   <td>${dto.teacherName}</td>
                   <td>${dto.lessonCreateTime}</td>
                   <td>${dto.lessonStartDate}~<br>${dto.lessonEndDate}</td>
-                  <td>${dto.price}원</td>
+                  <td>${dto.price}</td>
                   <td>${dto.lessonStudentCount}</td>
                   <td>${dto.lessonProgressStatus}</td>
                 </tr>

@@ -20,6 +20,7 @@ import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.web.dto.admin.AdminLessonDto;
 import hs.lessonReserve.web.dto.admin.AdminLessonListDto;
 import hs.lessonReserve.web.dto.admin.AdminLessonSearchCondDto;
+import hs.lessonReserve.web.dto.gather.GatherListDto;
 import hs.lessonReserve.web.dto.lesson.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,6 +57,16 @@ public class LessonService {
     private String apiKey;
     @Value("${payment.iamport.secretKey}")
     private String secretKey;
+
+    @Transactional(readOnly = true)
+    public List<HomeLessonListDto> homeLessonList() {
+
+        List<Lesson> lessons = lessonRepository.findAllByOrderByIdDesc();
+        List<HomeLessonListDto> homeLessonListDtos = lessons.stream().map(lesson -> {
+            return new HomeLessonListDto(lesson);
+        }).collect(Collectors.toList());
+        return homeLessonListDtos.stream().sorted(Comparator.comparing(HomeLessonListDto::getId).reversed()).limit(5).collect(Collectors.toList());
+    }
 
     @Transactional
     public void makeLesson(LessonCreateDto lessonCreateDto, PrincipalDetails principalDetails) {
@@ -91,7 +103,7 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public Page<HomeLessonListDto> homeLessonList(PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto, Pageable pageable) {
+    public Page<HomeLessonListDto> mainLessonList(PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto, Pageable pageable) {
         List<Lesson> lessons = lessonRepositoryImpl.mHomeLessonList(lessonSearchCondDto);
 
         List<HomeLessonListDto> homeLessonListDtoArrayList = lessons.stream().map(l -> new HomeLessonListDto(l, principalDetails)).collect(Collectors.toList());
@@ -99,6 +111,7 @@ public class LessonService {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), homeLessonListDtoArrayList.size());
+        System.out.println("start end " + start + " / " + end);
         Page<HomeLessonListDto> homeLessonListDtos = new PageImpl<>(homeLessonListDtoArrayList.subList(start, end), pageRequest, homeLessonListDtoArrayList.size());
         return homeLessonListDtos;
     }
@@ -174,6 +187,7 @@ public class LessonService {
                 .merchantUid(merchantUid)
                 .lessonPolicyAgree(lessonPolicyAgree)
                 .pgPolicyAgree(pgPolicyAgree)
+                .price(serverPrice)
                 .build();
 
         paymentRepository.save(payment);
@@ -338,5 +352,6 @@ public class LessonService {
         });
         return adminLessonListDtos;
     }
+
 
 }

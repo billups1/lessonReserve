@@ -57,7 +57,7 @@ public class AdminApplyDto {
         this.pgPolicyAgree = apply.getPayment() == null ? null : apply.getPayment().isPgPolicyAgree();
         this.applyStatus = apply.getApplyStatus() == null ? "-" : apply.getApplyStatus().toString();
         this.paymentStatus = apply.getPayment() == null ? null : apply.getPayment().getStatus();
-        this.cancelTime = apply.getPayment() == null ? "-" : CustomFormatter.make_yyyyMMddHHmmss(apply.getPayment().getCancelTime());
+        this.cancelTime = apply.getPayment() == null || apply.getPayment().getCancelTime() == null ? "-" : CustomFormatter.make_yyyyMMddHHmmss(apply.getPayment().getCancelTime());
         this.paymentCreateTime = apply.getPayment() == null ? "-" : CustomFormatter.make_yyyyMMddHHmmss(apply.getPayment().getCreateTime());
     }
 }

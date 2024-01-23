@@ -170,12 +170,12 @@ function getLessonList(page) {
         $('#lessonTableData').empty();
         res.data.content.forEach((dto) => {
             tableData = `
-                <tr id="apply-${dto.applyId}" onclick="location.href = '/admin/lesson/${dto.lessonId}'">
-                  <td>${dto.lessonId}</td>
+                <tr id="apply-${dto.applyId}" onclick="location.href = '/admin/lesson/${dto.id}'">
+                  <td>${dto.id}</td>
                   <td>${dto.lessonName}</td>
                   <td>${dto.lessonStartDate}~<br>${dto.lessonEndDate}</td>
                   <td>${dto.price}</td>
-                  <td>${dto.createTime}</td>
+                  <td>${dto.lessonCreateTime}</td>
                 </tr>
             `
             $('#lessonTableData').append(tableData);
@@ -187,7 +187,7 @@ function getLessonList(page) {
 }
 
 // 레슨리뷰 리스트(By teacherId) 불러오기
-function getLessonReviewListByStudentId(page) {
+function getLessonReviewListByTeacherId(page) {
     let teacherId = window.location.pathname.substring(window.location.pathname.lastIndexOf("/")+1);
     $.ajax({
         url: `/api/admin/lessonReview/list/teacherId/${teacherId}?page=${page}`,
@@ -230,7 +230,7 @@ function getGatherList(page) {
                   <td>${dto.id}</td>
                   <td>${dto.name}</td>
                   <td>${dto.address}</td>
-                  <td>${dto.xxxxxxxx}</td> // 모임내 역할
+                  <td>${dto.userRole}</td> // 모임내 역할
                 </tr>
             `
             $('#gatherTableData').append(tableData);

@@ -35,17 +35,13 @@ public class LessonApiController {
 
     @GetMapping("/api/lesson/home")
     public ResponseEntity homeLessonList(@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal PrincipalDetails principalDetails, LessonSearchCondDto lessonSearchCondDto) {
-        System.out.println("lessonSearchCondDto = " + lessonSearchCondDto);
-        Page<HomeLessonListDto> lessons = lessonService.homeLessonList(principalDetails, lessonSearchCondDto, pageable);
+        Page<HomeLessonListDto> lessons = lessonService.mainLessonList(principalDetails, lessonSearchCondDto, pageable);
         return new ResponseEntity<>(new CMRespDto<>(1,"홈 레슨리스트 불러오기 완료", lessons), HttpStatus.OK);
     }
 
     @PostMapping("/api/lesson/apply/payment")
-    public ResponseEntity lessonPayment(@AuthenticationPrincipal PrincipalDetails principalDetails, String imp_uid, String merchant_uid, int totalPrice, long lessonId, String pay_method, String pg_provider,
-                                        boolean lessonPolicyAgree, boolean pgPolicyAgree) {
-        System.out.println("imp_uid = " + imp_uid);
-        System.out.println("merchant_uid = " + merchant_uid);
-        System.out.println("결제 완료");
+    public ResponseEntity lessonPayment(@AuthenticationPrincipal PrincipalDetails principalDetails, String imp_uid, String merchant_uid,
+                                        int totalPrice, long lessonId, String pay_method, String pg_provider, boolean lessonPolicyAgree, boolean pgPolicyAgree) {
 
         long paymentId = lessonService.paymentValidateAndSave(principalDetails, imp_uid, merchant_uid, totalPrice, lessonId, pay_method, pg_provider, lessonPolicyAgree, pgPolicyAgree);
 

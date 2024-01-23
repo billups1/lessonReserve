@@ -19,8 +19,10 @@ public class AdminGatherApplyDto {
 
     public AdminGatherApplyDto(GatherApply gatherApply) {
         this.id = gatherApply.getId();
-        this.userName = gatherApply.getUser().getName();
-        this.userId = gatherApply.getUser().getId();
+        if (gatherApply.getUser()!=null) {
+            this.userName = gatherApply.getUser().getName();
+            this.userId = gatherApply.getUser().getId();
+        }
         this.content = gatherApply.getContent();
         this.acceptStatus = gatherApply.getAcceptStatus();
         this.createTime = CustomFormatter.make_yyyyMMdd(gatherApply.getCreateTime());

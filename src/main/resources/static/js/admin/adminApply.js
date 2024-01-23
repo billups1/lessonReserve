@@ -24,9 +24,8 @@ function getApplyList(page) {
                   <td>${dto.lessonName}</td>
                   <td>${dto.teacherName}</td>
                   <td>${dto.paymentCreateTime}</td>
-                  <td>${dto.price}원</td>
+                  <td>${dto.price}</td>
                   <td>${dto.applyStatus}</td>
-                  <td>${dto.paymentStatus}</td>
                 </tr>
             `
             $('#applyTableData').append(applyTableData);

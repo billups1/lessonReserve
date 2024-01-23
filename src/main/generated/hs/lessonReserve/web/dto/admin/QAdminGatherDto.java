@@ -17,5 +17,9 @@ public class QAdminGatherDto extends ConstructorExpression<AdminGatherDto> {
         super(AdminGatherDto.class, new Class<?>[]{hs.lessonReserve.domain.gather.Gather.class}, gather);
     }
 
+    public QAdminGatherDto(com.querydsl.core.types.Expression<? extends hs.lessonReserve.domain.gather.Gather> gather, com.querydsl.core.types.Expression<Long> userId) {
+        super(AdminGatherDto.class, new Class<?>[]{hs.lessonReserve.domain.gather.Gather.class, long.class}, gather, userId);
+    }
+
 }
 

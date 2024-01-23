@@ -24,8 +24,9 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(
                 auth -> auth
-                        .requestMatchers("/teacher/lesson/**", "/teacher/mypage/**", "/api/teacher/lesson/**").hasAnyRole("TEACHER")
-                        .requestMatchers("/gather/create/**").hasAnyRole("TEACHER", "STUDENT")
+                        .requestMatchers("admin/**", "api/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/teacher/lesson/**", "/teacher/mypage/**", "/api/teacher/lesson/**").hasAnyRole("TEACHER", "ADMIN")
+                        .requestMatchers("/gather/create/**").hasAnyRole("TEACHER", "STUDENT", "ADMIN")
                         .anyRequest().permitAll()
         );
 

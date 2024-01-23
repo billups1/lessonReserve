@@ -11,10 +11,10 @@
 <body>
     <div layout:fragment="contents">
         <h3 class="center">모임 채팅방</h3><br>
-        <div style="height: 660px; width: 660px; margin: auto;">
+        <div style="height: 660px; width: 660px; margin: auto; display: flex; flex-direction: row; margin-bottom: 20px;">
 
-            <!--  회원목록창    -->
-            <div style="border: 2pt solid gray; width: 25%; height: 100%; display: inline-block;">
+            <div style="border: 2pt solid gray; width: 25%; height: 100%;">
+                <!--  회원목록창    -->
                 <div style="height: 5%; width: 100%; font-size: large; text-align: center;">
                     회원목록
                 </div>
@@ -27,9 +27,9 @@
                 <div id="gatherChattingContainer"
                     style="width: 100%; height: 80%; background: skyblue; overflow-y: auto;">
                 </div>
-                <div id="gatherChattingInput" style="width: 100%; height: 15%;">
-                    <input id="messageInput" style="width: 79%; height: 100%"><button style="width: 19%; height: 100%"
-                        id="gatherChattingSend">보내기</button>
+                <div id="gatherChattingInput" style="width: 100%; height: 15%; display: flex; flex-direction: row;">
+                    <input id="messageInput" style="flex-basis:80%; height: 100%">
+                    <button style="flex-basis:20%; height: 100%" id="gatherChattingSend">보내기</button>
                 </div>
             </div>
         </div>

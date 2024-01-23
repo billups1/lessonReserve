@@ -1,5 +1,6 @@
 package hs.lessonReserve.domain.gather;
 
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -50,7 +51,7 @@ public class GatherRepositoryImpl implements GatherRepositoryCustom {
 
     public Page<AdminGatherDto> adminGatherDtosByUserId(Pageable pageable, long userId) {
         List<AdminGatherDto> adminGatherDtos = queryFactory.select(
-                        new QAdminGatherDto(gather)
+                        new QAdminGatherDto(gather, QGatherUser.gatherUser.user.id)
                 ).from(gather)
                 .join(gather.gatherUsers, QGatherUser.gatherUser)
                 .on(QGatherUser.gatherUser.user.id.eq(userId))
@@ -60,12 +61,16 @@ public class GatherRepositoryImpl implements GatherRepositoryCustom {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        Long totalCount = queryFactory.select(gather.count())
+        Long totalPage = queryFactory.select(gather.count())
                 .from(gather)
+                .join(gather.gatherUsers, QGatherUser.gatherUser)
+                .on(QGatherUser.gatherUser.user.id.eq(userId))
 //                .where(searchCond(adminSearchCondDto))
                 .fetchOne();
 
-        return new PageImpl<>(adminGatherDtos, pageable, totalCount);
+        System.out.println("totalPage" + totalPage);
+
+        return new PageImpl<>(adminGatherDtos, pageable, totalPage);
     }
 
     private BooleanExpression searchCond(AdminSearchCondDto adminSearchCondDto) {
