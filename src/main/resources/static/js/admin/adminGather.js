@@ -80,7 +80,6 @@ function itemChange(value) {
 }
 
 
-
 // GatherUser 리스트 불러오기
 function getGatherUserList(page) {
 let gatherId = window.location.pathname.substring(window.location.pathname.lastIndexOf("/")+1);
@@ -92,7 +91,7 @@ let gatherId = window.location.pathname.substring(window.location.pathname.lastI
         $('#gatherUserTableData').empty();
         res.data.content.forEach((dto) => {
             gatherUserTableData = `
-                <tr>
+                <tr id="gatherUser-${dto.userId}">
                   <td onclick="location.href = '/admin/user/${dto.userId}'">${dto.id}</td>
                   <td onclick="location.href = '/admin/user/${dto.userId}'">${dto.userName}</td>
                   <td onclick="location.href = '/admin/user/${dto.userId}'">${dto.position}</td>
@@ -139,10 +138,11 @@ $('#gatherDelete').click(function() {
     if(confirm("모임과 관련된 내용이 영구적으로 삭제됩니다. 정말 모임을 삭제하시겠습니까?")){
 		$.ajax({
             type: 'delete',
-            url:`/api/gather/${gatherId}`,  // 만들어야됨!
+            url:`/api/gather/delete/${gatherId}`,
             dataType:"json"
         }).done(res=>{
             console.log("모임 삭제 성공",res);
+            location.replace('/admin/gather/list');
         }).fail(error=>{
             console.log("모임 삭제 실패",error);
         });
@@ -151,7 +151,6 @@ $('#gatherDelete').click(function() {
 
 // 모임에서 회원 탈퇴시키기
 function gatherUserWithdraw(gatherUserId, userName) {
-console.log(userName);
     if(confirm(`정말 ` + userName + `회원을 모임에서 탈퇴시키겠습니까?`)){
 		$.ajax({
             type: 'delete',
@@ -159,6 +158,7 @@ console.log(userName);
             dataType:"json"
         }).done(res=>{
             console.log("gatherUser 삭제 성공",res);
+            $(`#gatherUser-${gatherUserId}`).remove();
         }).fail(error=>{
             console.log("gatherUser 삭제 실패",error);
         });

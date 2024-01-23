@@ -133,7 +133,10 @@ $.ajax({
               </a>
               <ul class="dropdown-menu" style="background-color: #2fa4e7;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">전체 레슨</a>
+                    <a class="nav-link active" aria-current="page" href="/">홈</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/lesson">전체 레슨</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="/student/mypage">내 레슨(수강생용)</a>
@@ -182,7 +185,10 @@ $.ajax({
     } else {
         $('#navBar').append(`
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">레슨</a>
+                <a class="nav-link active" aria-current="page" href="/">홈</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/lesson">레슨</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="/gather">모임</a>

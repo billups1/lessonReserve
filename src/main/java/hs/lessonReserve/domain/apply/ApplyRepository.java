@@ -20,4 +20,5 @@ public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyReposi
     @Query(value = "select * from Apply as a inner join Lesson as l on a.lessonId = l.id where l.lessonEndDate <= now() and a.applyStatus = 'APPLY'", nativeQuery = true)
     List<Apply> mApplyCompletedCheckList(); // 현재 기준 레슨 종료일이 경과하고, applyStatus가 APPLY인 APPLY들을, 수강완료(COMPLETED) 처리하기 위함
 
+    Page<Apply> findAllByStudentIdOrderByIdDesc(long studentId, Pageable pageable);
 }

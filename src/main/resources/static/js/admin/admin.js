@@ -18,7 +18,7 @@ function pagination(data, entityType) {
             paginationHtml += `<a class="page-link" onclick="getPaymentList(${nowPageFirstNumber - 11})">Previous</a>`
         } else if (entityType == 'lessonReview') {
             paginationHtml += `<a class="page-link" onclick="getLessonReviewList(${nowPageFirstNumber - 11})">Previous</a>`
-        } else if (entityType == 'applyList') {
+        } else if (entityType == 'apply') {
             paginationHtml += `<a class="page-link" onclick="getApplyList(${nowPageFirstNumber - 11})">Previous</a>`
         } else if (entityType == 'gather') {
             paginationHtml += `<a class="page-link" onclick="getGatherList(${nowPageFirstNumber - 11})">Previous</a>`
@@ -45,7 +45,7 @@ function pagination(data, entityType) {
                 paginationHtml += `<li class="page-item"><a class="page-link" href="#" onclick="getPaymentList(${i - 1})">${i}</a></li>`
             } else if (entityType == 'lessonReview') {
                 paginationHtml += `<li class="page-item"><a class="page-link" href="#" onclick="getLessonReviewList(${i - 1})">${i}</a></li>`
-            } else if (entityType == 'applyList') {
+            } else if (entityType == 'apply') {
                 paginationHtml += `<li class="page-item"><a class="page-link" href="#" onclick="getApplyList(${i - 1})">${i}</a></li>`
             } else if (entityType == 'gather') {
                 paginationHtml += `<li class="page-item"><a class="page-link" href="#" onclick="getGatherList(${i - 1})">${i}</a></li>`
@@ -64,7 +64,7 @@ function pagination(data, entityType) {
             paginationHtml += `<a class="page-link" href="#" onclick="getPaymentList(${nowPageLastNumber})">Next</a>`
         } else if (entityType == 'lessonReview') {
             paginationHtml += `<a class="page-link" href="#" onclick="getLessonReviewList(${nowPageLastNumber})">Next</a>`
-        } else if (entityType == 'applyList') {
+        } else if (entityType == 'apply') {
             paginationHtml += `<a class="page-link" href="#" onclick="getApplyList(${nowPageLastNumber})">Next</a>`
         } else if (entityType == 'gather') {
             paginationHtml += `<a class="page-link" href="#" onclick="getGatherList(${nowPageLastNumber})">Next</a>`
@@ -77,7 +77,7 @@ function pagination(data, entityType) {
     paginationHtml += `</ul>
                 </nav>`;
 
-    if (entityType == 'lesson' || entityType == 'applyList' || entityType == 'user') {
+    if (entityType == 'lesson' || entityType == 'user') {
         $('#pagination').empty();
         $('#pagination').append(paginationHtml);
     } else if (entityType == 'payment') {
@@ -89,6 +89,12 @@ function pagination(data, entityType) {
     } else if (entityType == 'gather') {
         $('#gatherListPagination').empty();
         $('#gatherListPagination').append(paginationHtml);
+    } else if (entityType == 'apply') {
+        $('#applyPagination').empty();
+        $('#applyPagination').append(paginationHtml);
+    } else if (entityType == 'lesson') {
+        $('#lessonPagination').empty();
+        $('#lessonPagination').append(paginationHtml);
     }
 
 

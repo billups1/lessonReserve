@@ -32,7 +32,7 @@ function getApplyList(page) {
             $('#applyTableData').append(applyTableData);
         });
 
-        pagination(res.data, 'applyList');
+        pagination(res.data, 'apply');
 
     }).fail(error => {
         console.log("Admin 레슨신청·결제 리스트 조회 실패", error);

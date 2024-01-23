@@ -46,7 +46,6 @@ function getGatherCard(gather) {
 }
 
 function gatherDelete(gatherId) {
-    console.log(gatherId)
     if (window.confirm("정말 모임을 삭제하겠습니까?")) {
         $.ajax({
             method: 'delete',

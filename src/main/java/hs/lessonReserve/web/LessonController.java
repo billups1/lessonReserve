@@ -24,6 +24,11 @@ public class LessonController {
     private final ApplyService applyService;
     private final PaymentService paymentService;
 
+    @GetMapping("/lesson")
+    public String homeForm(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return "lesson/lessonMain";
+    }
+
     @GetMapping("/teacher/lesson/create")
     public String makeLessonFrom() {
 

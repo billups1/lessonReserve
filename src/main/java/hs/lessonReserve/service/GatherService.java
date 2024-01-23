@@ -244,18 +244,18 @@ public class GatherService {
 
         List<GatherUser> gatherUsers = gatherUserRepository.findByGatherId(gatherId);
 
-        // 리더 찾기
-        GatherUser gatherUser = gatherUsers.stream().filter(gu -> gu.getUser().getId() == principalDetails.getUser().getId()).findFirst().orElseThrow(() -> {
-            throw new CustomApiException("없는 유저입니다.");
-        });
-        // 리더 아니면 모임 삭제할 권한 없음 에러 띄우기
-        if (!gatherUser.getPosition().equals("LEADER")) {
-            throw new CustomApiException("모임을 삭제할 권한이 없습니다.");
-        }
-
         Gather gather = gatherRepository.findById(gatherId).orElseThrow(() -> {
             throw new CustomApiException("없는 모임입니다.");
         });
+
+        // principalDetails의 gatherUser찾기
+        GatherUser gatherUser = gatherUsers.stream().filter(gu -> gu.getUser().getId() == principalDetails.getUser().getId()).findFirst().orElseThrow(() -> {
+            throw new CustomApiException("없는 유저입니다.");
+        });
+        // 리더 또는 ADMIN 아니면 모임 삭제할 권한 없음 에러 띄우기
+        if (gatherUser.getPosition().equals("LEADER") || !principalDetails.getUser().getRole().equals("ROLE_ADMIN")) {
+            throw new CustomApiException("모임을 삭제할 권한이 없습니다.");
+        }
 
         gatherRepository.delete(gather);
 
@@ -279,6 +279,11 @@ public class GatherService {
 
     public Page<AdminGatherDto> adminGatherDtos(Pageable pageable, AdminSearchCondDto adminSearchCondDto) {
         Page<AdminGatherDto> adminGatherDtos = gatherRepositoryImpl.adminGatherDtos(pageable, adminSearchCondDto);
+        return adminGatherDtos;
+    }
+
+    public Page<AdminGatherDto> adminGatherDtosByUserId(Pageable pageable, long userId) {
+        Page<AdminGatherDto> adminGatherDtos = gatherRepositoryImpl.adminGatherDtosByUserId(pageable, userId);
         return adminGatherDtos;
     }
 }

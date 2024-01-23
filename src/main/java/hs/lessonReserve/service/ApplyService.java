@@ -142,4 +142,13 @@ public class ApplyService {
         AdminLessonDto adminLessonDto = new AdminLessonDto(apply.getLesson());
         return adminLessonDto;
     }
+
+    public Page<AdminApplyDto> adminApplyDtosByStudentId(long studentId, Pageable pageable) {
+
+        Page<Apply> applies = applyRepository.findAllByStudentIdOrderByIdDesc(studentId, pageable);
+        Page<AdminApplyDto> adminApplyDtos = applies.map(apply -> {
+            return new AdminApplyDto(apply);
+        });
+        return adminApplyDtos;
+    }
 }

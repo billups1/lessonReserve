@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hs.lessonReserve.domain.gather.gatherApply.QGatherApply;
+import hs.lessonReserve.domain.gather.gatherUser.QGatherUser;
 import hs.lessonReserve.web.dto.admin.AdminGatherDto;
 import hs.lessonReserve.web.dto.admin.AdminSearchCondDto;
 import hs.lessonReserve.web.dto.admin.QAdminGatherDto;
@@ -42,6 +43,26 @@ public class GatherRepositoryImpl implements GatherRepositoryCustom {
         Long totalCount = queryFactory.select(gather.count())
                 .from(gather)
                 .where(searchCond(adminSearchCondDto))
+                .fetchOne();
+
+        return new PageImpl<>(adminGatherDtos, pageable, totalCount);
+    }
+
+    public Page<AdminGatherDto> adminGatherDtosByUserId(Pageable pageable, long userId) {
+        List<AdminGatherDto> adminGatherDtos = queryFactory.select(
+                        new QAdminGatherDto(gather)
+                ).from(gather)
+                .join(gather.gatherUsers, QGatherUser.gatherUser)
+                .on(QGatherUser.gatherUser.user.id.eq(userId))
+//                .where(searchCond(adminSearchCondDto))
+                .orderBy(gather.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long totalCount = queryFactory.select(gather.count())
+                .from(gather)
+//                .where(searchCond(adminSearchCondDto))
                 .fetchOne();
 
         return new PageImpl<>(adminGatherDtos, pageable, totalCount);

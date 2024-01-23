@@ -39,6 +39,12 @@ public class AdminApiController {
         return new ResponseEntity(new CMRespDto<>(1, "Admin Apply 리스트 조회 완료", adminApplyDtos), HttpStatus.OK);
     }
 
+    @GetMapping("/api/admin/apply/list/studentId/{studentId}")
+    public ResponseEntity adminApplyListDtosByStudentId(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable long studentId) {
+        Page<AdminApplyDto> adminApplyDtos = applyService.adminApplyDtosByStudentId(studentId, pageable);
+        return new ResponseEntity(new CMRespDto<>(1, "Admin Apply 리스트 조회 완료", adminApplyDtos), HttpStatus.OK);
+    }
+
     @GetMapping("/api/admin/lessonReview/list/lessonId/{lessonId}")
     public ResponseEntity adminLessonReviewListDtosByLessonId(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable long lessonId) {
         Page<AdminLessonReviewDto> lessonReviewDtos = lessonReviewService.adminLessonReviewDtosByLessonId(lessonId, pageable);
@@ -63,6 +69,12 @@ public class AdminApiController {
         return new ResponseEntity(new CMRespDto<>(1, "Admin 모임 리스트 조회 완료", adminGatherDtos), HttpStatus.OK);
     }
 
+    @GetMapping("/api/admin/gather/list/userId/{userId}")
+    public ResponseEntity adminGatherDtosByUserId(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable long userId) {
+        Page<AdminGatherDto> adminGatherDtos = gatherService.adminGatherDtosByUserId(pageable, userId);
+        return new ResponseEntity(new CMRespDto<>(1, "Admin 모임 리스트 조회 완료", adminGatherDtos), HttpStatus.OK);
+    }
+
     @GetMapping("/api/admin/gatherUser/list/gatherId/{gatherId}")
     public ResponseEntity adminGatherUserDtos(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable Long gatherId) {
         Page<AdminGatherUserDto> adminGatherUserDtos = gatherUserService.adminGatherUserDtosByGatherId(gatherId, pageable);
@@ -84,6 +96,12 @@ public class AdminApiController {
     @GetMapping("/api/admin/lessonReview/list/studentId/{studentId}")
     public ResponseEntity adminGatherDtosByStudentId(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable Long studentId) {
         Page<AdminLessonReviewDto> adminLessonReviewDtos = lessonReviewService.adminLessonReviewDtosBystudentId(studentId, pageable);
+        return new ResponseEntity(new CMRespDto<>(1, "Admin 레슨리뷰 조회 완료", adminLessonReviewDtos), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/admin/lessonReview/list/teacherId/{teacherId}")
+    public ResponseEntity adminGatherDtosByTeacherId(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable Long teacherId) {
+        Page<AdminLessonReviewDto> adminLessonReviewDtos = lessonReviewService.adminLessonReviewDtosByTeacherId(teacherId, pageable);
         return new ResponseEntity(new CMRespDto<>(1, "Admin 레슨리뷰 조회 완료", adminLessonReviewDtos), HttpStatus.OK);
     }
 

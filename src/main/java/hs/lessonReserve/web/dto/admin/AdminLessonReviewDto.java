@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class AdminLessonReviewDto {
     private long id;
     private Long lessonId;
+    private String lessonName;
     private Long studentId;
     private String studentName;
     private float score;
@@ -25,6 +26,7 @@ public class AdminLessonReviewDto {
     public AdminLessonReviewDto(LessonReview lessonReview) {
         this.id = lessonReview.getId();
         this.lessonId = lessonReview.getLesson().getId();
+        this.lessonName = lessonReview.getLesson().getName();
         this.studentId = lessonReview.getStudent().getId();
         this.score = lessonReview.getScore();
         this.content = lessonReview.getContent();
