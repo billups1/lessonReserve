@@ -6,12 +6,14 @@ import hs.lessonReserve.web.dto.chat.ChatListDto;
 import hs.lessonReserve.web.dto.chat.ChatSendDto;
 import hs.lessonReserve.web.dto.ex.CMRespDto;
 import hs.lessonReserve.web.dto.gather.GatherMemberDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +33,7 @@ public class ChatApiController {
     }
 
     @MessageMapping("/api/chat/sendMessage")
-    public void sendMessage(@Payload ChatSendDto chatSendDto, SimpMessageHeaderAccessor headerAccessor) {
+    public void sendMessage(@Payload @Valid ChatSendDto chatSendDto, BindingResult bindingResult, SimpMessageHeaderAccessor headerAccessor) {
         chatService.sendMessage(chatSendDto, headerAccessor);
     }
 

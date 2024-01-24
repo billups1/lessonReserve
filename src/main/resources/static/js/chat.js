@@ -90,12 +90,29 @@ function onError() {
     console.log("오류가 발생했습니다.")
 }
 
+
+$('#gatherChattingInput').on('input', function() {
+    let val = $('#gatherChattingInput').val();
+    if(val == "" || val == null ) {
+        document.getElementById('gatherChattingInput').disabled = true;
+    } else {
+        document.getElementById('gatherChattingInput').disabled = false;
+    }
+})
+
 $('#gatherChattingSend').click(sendMessage);
-$('#gatherChattingSend').on('keyup', function (key) {
-    if (key.keyCode == 13) {
+document.getElementById('gatherChattingInput').addEventListener("keyUp", function(e) {
+    console.log(e);
+    // 이벤트 객체 (발생한 이벤트 정보를 담고있는 객체)
+    if(e.key == "Enter") {
         sendMessage();
     }
-});
+})
+//$('#gatherChattingSend').on('keyup', function (key) {
+//    if (key.keyCode == 13) {
+//        sendMessage();
+//    }
+//});
 
 function sendMessage(event) {
     console.log("userId", userId);
@@ -150,4 +167,6 @@ function onMessageReceived(payload) {
     $('#gatherChattingContainer').scrollTop($('#gatherChattingContainer')[0].scrollHeight);
 
 }
+
+
 
