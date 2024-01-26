@@ -18,7 +18,6 @@ public class ChatSendDto {
     private long gatherId; // 방 번호
     private long userId; // 채팅을 보낸 사람
     private String userName;
-    @NotBlank // 메시지 blank 유효성 검사
     private String message; // 메시지
     private String createTime; // 생성 시간
 

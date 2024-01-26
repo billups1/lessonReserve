@@ -12,7 +12,7 @@ public class ChatListDto {
     private String profileImageUrl;
     private String message;
     private String position;
-    private long userId;
+    private Long userId;
     private String createTime;
 
     public ChatListDto(Object[] objects) {
@@ -20,7 +20,7 @@ public class ChatListDto {
         this.profileImageUrl = (String) objects[1];
         this.message = (String) objects[2];
         this.position = (String) objects[3];
-        this.userId = (long) objects[4];
+        this.userId = (Long) objects[4];
         this.createTime = (String) objects[5];
     }
 }

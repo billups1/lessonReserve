@@ -33,7 +33,7 @@ public class ChatApiController {
     }
 
     @MessageMapping("/api/chat/sendMessage")
-    public void sendMessage(@Payload @Valid ChatSendDto chatSendDto, BindingResult bindingResult, SimpMessageHeaderAccessor headerAccessor) {
+    public void sendMessage(@Payload ChatSendDto chatSendDto, SimpMessageHeaderAccessor headerAccessor) {
         chatService.sendMessage(chatSendDto, headerAccessor);
     }
 

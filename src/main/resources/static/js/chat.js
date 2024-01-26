@@ -90,29 +90,25 @@ function onError() {
     console.log("오류가 발생했습니다.")
 }
 
-
+// 인풋창 입력 시 버튼 disabled 해제
 $('#gatherChattingInput').on('input', function() {
-    let val = $('#gatherChattingInput').val();
-    if(val == "" || val == null ) {
-        document.getElementById('gatherChattingInput').disabled = true;
+    let val = $('#messageInput').val();
+    if(val.trim() == "" || val == null ) {
+        document.getElementById('gatherChattingSend').disabled = true;
     } else {
-        document.getElementById('gatherChattingInput').disabled = false;
+        document.getElementById('gatherChattingSend').disabled = false;
     }
 })
 
-$('#gatherChattingSend').click(sendMessage);
-document.getElementById('gatherChattingInput').addEventListener("keyUp", function(e) {
+$('#gatherChattingSend').click(
+    sendMessage
+);
+document.getElementById('messageInput').addEventListener("keyup", function(e) {
     console.log(e);
-    // 이벤트 객체 (발생한 이벤트 정보를 담고있는 객체)
     if(e.key == "Enter") {
         sendMessage();
     }
 })
-//$('#gatherChattingSend').on('keyup', function (key) {
-//    if (key.keyCode == 13) {
-//        sendMessage();
-//    }
-//});
 
 function sendMessage(event) {
     console.log("userId", userId);
@@ -129,7 +125,7 @@ function sendMessage(event) {
 
         stompClient.send('/pub/api/chat/sendMessage', {}, JSON.stringify(chatMessage));
     }
-    event.preventDefault();
+    document.getElementById('gatherChattingSend').disabled = true;
     $('#messageInput').val('');
 }
 
