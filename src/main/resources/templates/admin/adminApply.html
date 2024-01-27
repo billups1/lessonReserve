@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div layout:fragment="contents">
+
+    <div id="admin">
+        <div id="adminMenu">
+            <div>
+                관리자 페이지
+            </div>
+            <div>
+                <div onclick="location.href='/admin/lesson/list'">레슨 목록</div>
+                <div onclick="location.href='/admin/apply/list'">레슨신청·결제 목록</div>
+                <div onclick="location.href='/admin/gather/list'">모임 목록</div>
+                <div onclick="location.href='/admin/user/list'">유저 목록</div>
+            </div>
+        </div>
+
+
+        <div id="adminContent">
+
+            <div id="container-1">
+
+                <div id="applyContainer">
+                    <h3 class="center">레슨신청·결제 정보</h3>
+                    <form action="/admin/lesson" method="post" enctype="application/json">
+                        <div>
+                            <label for="applyId" class="form-label">신청 번호</label>
+                            <input type="text" id="applyId" name="applyId" placeholder="" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.applyId}">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="paymentId" class="form-label">결제 번호</label>
+                            <input id="paymentId" name="paymentId" placeholder="" readonly class="form-control-plaintext"
+                                      th:value="${applyDto.paymentId}">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="price" class="form-label">결제 금액</label>
+                            <input type="price" id="price" name="maximumStudentsNumber"
+                                   placeholder="" readonly class="form-control-plaintext"  th:value="${applyDto.price}">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="paymentCreateTime" class="form-label">결제 일시</label>
+                            <input type="text" id="paymentCreateTime" name="paymentCreateTime" placeholder="" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.paymentCreateTime}">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="merchantUid" class="form-label">당사 결제코드</label>
+                            <input type="number" id="merchantUid" name="merchantUid" readonly class="form-control-plaintext"  th:value="${applyDto.merchantUid}">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="impUid" class="form-label">아임포트 결제코드</label>
+                            <input type="text" id="impUid" name="impUid" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.impUid}">
+                        </div>
+                        <br>
+                        <div>
+                            <label for="paymentMethod" class="form-label">결제방법</label>
+                            <input type="text" id="paymentMethod" name="paymentMethod" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.paymentMethod}">
+                        </div>
+                        <div>
+                            <label for="paymentGateway" class="form-label">결제사</label>
+                            <input type="text" id="paymentGateway" name="paymentGateway" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.paymentGateway}">
+                        </div>
+                        <div>
+                            <label for="lessonPolicyAgree" class="form-label">이용약관 동의여부</label>
+                            <input type="text" id="lessonPolicyAgree" name="lessonPolicyAgree" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.lessonPolicyAgree}">
+                        </div>
+                        <div>
+                            <label for="pgPolicyAgree" class="form-label">결제대행사약관 동의여부</label>
+                            <input type="text" id="pgPolicyAgree" name="pgPolicyAgree" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.pgPolicyAgree}">
+                        </div>
+                        <div>
+                            <label for="applyStatus" class="form-label">레슨신청 상태</label>
+                            <input type="text" id="applyStatus" name="applyStatus" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.applyStatus}">
+                        </div>
+                        <div>
+                            <label for="paymentStatus" class="form-label">결제 상태</label>
+                            <input type="text" id="paymentStatus" name="paymentStatus" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.paymentStatus}">
+                        </div>
+                        <div>
+                            <label for="cancelTime" class="form-label">취소 시간</label>
+                            <input type="text" id="cancelTime" name="cancelTime" readonly class="form-control-plaintext"
+                                   th:value="${applyDto.cancelTime}">
+                        </div>
+
+                        <br>
+                        <div style="text-align: center;">
+                            <button class="btn btn-primary">수정하기</button>
+                            <th:block th:if="${!#strings.equals(applyDto.paymentStatus, 'CANCEL')}">
+                                <button class="btn btn-danger" style="margin-right: 20px;" id="lessonDelete">결제취소하기</button>
+                            </th:block>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="container-2">
+                <div id="studentContainer">
+                    <h3 class="center">수강생 정보</h3>
+                    <th:block th:if="${userDto == null}">
+                        <div style="text-align: center;">유저 정보가 없습니다.</div>
+                    </th:block>
+                    <th:block th:if="${userDto != null}">
+                        <div class="imageUpperRight">
+                            <img th:src="|/image/${userDto.profileImageUrl}|">
+                            <label for="email" class="form-label">이름</label>
+                            <input type="text" readonly class="form-control-plaintext" id="name" th:value="${userDto.name}">
+                            <label for="email" class="form-label">이메일</label>
+                            <input type="text" readonly class="form-control-plaintext" id="email" th:value="${userDto.email}">
+                            <label for="email" class="form-label">전화번호</label>
+                            <input type="text" readonly class="form-control-plaintext" id="phone" th:value="${userDto.phone}">
+                            <div style="text-align: center;">
+                                <button class="btn btn-primary" th:onclick="|location.href='@{/admin/user/{userId}(userId=${userDto.id})}'|">자세히보기</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+
+                <div id="lessonContainer">
+                    <h3 class="center">레슨 정보</h3>
+                    <div>
+                        <label for="lessonName" class="form-label">레슨명</label>
+                        <input type="text" readonly class="form-control-plaintext" id="lessonName" th:value="${lessonDto.lessonName}">
+                        <label for="lessonContent" class="form-label">레슨 설명</label>
+                        <input type="text" readonly class="form-control-plaintext" id="lessonContent" th:value="${lessonDto.lessonContent}">
+                        <label for="lessonStartDate" class="form-label">레슨 시작일</label>
+                        <input type="text" readonly class="form-control-plaintext" id="lessonStartDate" th:value="${lessonDto.lessonStartDate}">
+                        <label for="lessonEndDate" class="form-label">레슨 종료일</label>
+                        <input type="text" readonly class="form-control-plaintext" id="lessonEndDate" th:value="${lessonDto.lessonEndDate}">
+                        <label for="createTime" class="form-label">레슨 생성일</label>
+                        <input type="text" readonly class="form-control-plaintext" id="createTime" th:value="${lessonDto.createTime}">
+                        <div style="text-align: center;">
+                            <button class="btn btn-primary" th:onclick="|location.href='@{/admin/lesson/{lessonId}(lessonId=${lessonDto.lessonId})}'|">자세히보기</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <link href="/css/admin/admin.css" rel="stylesheet">
+    <link href="/css/admin/adminDetails.css" rel="stylesheet">
+
+    <script src="/js/admin/admin.js"></script>
+    <script src="/js/admin/adminApply.js"></script>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+
+  <div layout:fragment="contents" class="center">
+    <div id="admin">
+      <div id="adminMenu">
+        <div>
+          관리자 페이지
+        </div>
+        <div>
+          <div onclick="location.href='/admin/lesson/list'">레슨 목록</div>
+          <div onclick="location.href='/admin/apply/list'">레슨신청·결제 목록</div>
+          <div onclick="location.href='/admin/gather/list'">모임 목록</div>
+          <div onclick="location.href='/admin/user/list'">유저 목록</div>
+        </div>
+      </div>
+
+
+      <div id="adminContent">
+        <h2>레슨 목록</h2>
+        <div id="boardList">
+          <table class="listTable">
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>레슨명</th>
+                <th>강사명</th>
+                <th>레슨<br>생성일</th>
+                <th>레슨 시작일 /<br>레슨 종료일</th>
+                <th>가격</th>
+                <th>수강생수</th>
+                <th>상태</th>
+              </tr>
+            </thead>
+            <tbody id="lessonTableData">
+
+            </tbody>
+          </table>
+
+          <div id="lessonPagination" class="paginationCustom">
+
+          </div>
+
+          <div id="searchLesson" class="searchDiv">
+            <a>검색</a>
+            <select name="searchCond1" id="searchCond1" th:onchange="itemChange(this.value)">
+              <option value="none">=== 선택 ===</option>
+              <option value="lessonName">강의명</option>
+              <option value="teacher">강사</option>
+              <option value="price">가격</option>
+              <option value="lessonStartDate">레슨시작일</option>
+              <option value="lessonEndDate">레슨종료일</option>
+            </select>
+
+            <select name="searchCond2" id="searchCond2" style="display: none;">
+            </select>
+
+            <input type="text" name="searchText" id="searchText" style="display: inline;" />
+            <input type="date" name="searchDate" id="searchDate" style="display: none;" />
+
+            <button class="btn btn-primary" th:onclick="getLessonList()">검색</button>
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+    <link href="/css/admin/admin.css" rel="stylesheet">
+    <script src="/js/admin/admin.js"></script>
+    <script src="/js/admin/adminLesson.js"></script>
+  </div>
+
+</body>
+
+</html>

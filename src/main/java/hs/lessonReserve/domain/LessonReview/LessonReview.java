@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -23,10 +25,12 @@ public class LessonReview {
 
     @ManyToOne
     @JoinColumn(name = "lessonId")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Lesson lesson;
 
     @ManyToOne
     @JoinColumn(name = "studentId")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Student student;
 
     private float score;

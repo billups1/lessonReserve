@@ -22,6 +22,9 @@ public class QTeacher extends EntityPathBase<Teacher> {
 
     public final QUser _super = new QUser(this);
 
+    //inherited
+    public final StringPath address = _super.address;
+
     public final ListPath<hs.lessonReserve.domain.certificate.Certificate, hs.lessonReserve.domain.certificate.QCertificate> certificates = this.<hs.lessonReserve.domain.certificate.Certificate, hs.lessonReserve.domain.certificate.QCertificate>createList("certificates", hs.lessonReserve.domain.certificate.Certificate.class, hs.lessonReserve.domain.certificate.QCertificate.class, PathInits.DIRECT2);
 
     //inherited
@@ -29,6 +32,12 @@ public class QTeacher extends EntityPathBase<Teacher> {
 
     //inherited
     public final StringPath email = _super.email;
+
+    //inherited
+    public final ListPath<hs.lessonReserve.domain.gather.gatherApply.GatherApply, hs.lessonReserve.domain.gather.gatherApply.QGatherApply> gatherApplies = _super.gatherApplies;
+
+    //inherited
+    public final ListPath<hs.lessonReserve.domain.gather.gatherUser.GatherUser, hs.lessonReserve.domain.gather.gatherUser.QGatherUser> gatherUsers = _super.gatherUsers;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -40,6 +49,12 @@ public class QTeacher extends EntityPathBase<Teacher> {
 
     //inherited
     public final StringPath password = _super.password;
+
+    //inherited
+    public final StringPath phone = _super.phone;
+
+    //inherited
+    public final StringPath postcode = _super.postcode;
 
     //inherited
     public final StringPath profileImageUrl = _super.profileImageUrl;

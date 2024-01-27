@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="contents" class="center">
+  <h2>레슨 결제 취소</h2>
+  
+  레슨 서비스를 이용해 주셔서 감사합니다.<br>
+  레슨 결제 취소가 완료되었습니다.<br><br>
+
+  <button type="button" class="btn btn-primary" onclick="location.href = '/'">홈으로 가기</button>
+  &nbsp;
+<button type="button" class="btn btn-primary" onclick="location.href = '/student/mypage'">마이페이지 가기</button>
+
+  <link href="/css/main.css" rel="stylesheet">
+  <script src=".js"></script>
+</div>
+
+</body>
+
+</html>

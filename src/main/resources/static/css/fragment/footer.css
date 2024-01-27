@@ -1,0 +1,11 @@
+#footer {
+    background-color: rgb(214, 214, 214);
+    text-align: center;
+    padding: 20px;
+}
+
+#footer a {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}

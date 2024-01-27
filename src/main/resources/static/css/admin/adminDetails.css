@@ -1,0 +1,38 @@
+
+/* 세부목록 칸 설정 */
+#adminContent {
+    display: flex;
+    flex-direction: row;
+}
+
+#adminContent > div {
+    flex-basis: 49%;
+    padding: 5px;
+    border: #ddd solid 1px;
+}
+
+#container-2 > div {
+    padding: 5px;
+    margin-bottom: 20px;
+    border-bottom: #ddd solid 1px;
+}
+
+
+/* 사진 우측상단 표시 */
+.imageUpperRight {
+    position: relative;
+}
+
+.imageUpperRight img {
+    width : 130px;
+    position: absolute;
+    top: 30px;
+    right: 5px;
+}
+
+
+
+/* 표 커서표시 없애기 클래스 */
+.tbodyCursorNone > tr > th {
+    cursor: none;
+}

@@ -1,27 +1,27 @@
-    function cancelApply(applyId) {
-    console.log(applyId)
+function cancelApply(applyId) {
+  console.log(applyId)
 
-    $.ajax({
-        type:"put",
-        url:`/api/student/lesson/${applyId}`,
-        dataType:"json"
-    }).done(res=>{
-        console.log("수강취소 성공", res);
-        alert("수강취소가 완료 되었습니다.");
-        location.reload();
-    }).fail(error=>{
-        console.log("수강취소 실패", error);
-    });
+  $.ajax({
+    type: "put",
+    url: `/api/student/lesson/${applyId}`,
+    dataType: "json"
+  }).done(res => {
+    console.log("수강취소 성공", res);
+    alert("수강취소가 완료 되었습니다.");
+    location.reload();
+  }).fail(error => {
+    console.log("수강취소 실패", error);
+  });
 
-    }
+}
 
-    function writeLessonReview(dto) {
-        console.log(dto);
+function writeLessonReview(dto) {
+  console.log(dto);
 
-    }
+}
 
-    function openLessonReviewModal(lesson, teacher) {
-        let modal = `<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+function openLessonReviewModal(lesson, teacher) {
+  let modal = `<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                        <div class="modal-dialog">
                          <div class="modal-content">
                            <div class="modal-header">
@@ -46,6 +46,6 @@
                          </div>
                        </div>
                      </div>`
-    }
+}
 
 

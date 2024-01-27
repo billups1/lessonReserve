@@ -12,13 +12,14 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 @Component
 public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         System.out.println("login fail handler ★: " + exception.toString());
         String errorMassage;
         if (exception instanceof BadCredentialsException) {

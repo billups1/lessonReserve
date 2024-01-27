@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="contents">
+
+  <div class="center">
+  <h2>결제 완료</h2>
+  LessonReserve 레슨 서비스를 이용해 주셔서 감사합니다.<br>
+  레슨 결제가 완료되었습니다.<br><br>
+
+  고객님의 결제 번호는 [[${paymentNumber}]] 입니다.<br><br>
+
+    <button type="button" class="btn btn-primary" onclick="location.href = '/'">홈으로 가기</button>
+    &nbsp;
+  <button type="button" class="btn btn-primary" onclick="location.href = '/student/mypage'">마이페이지 가기</button>
+
+  </div>
+
+  <link href="/css/main.css" rel="stylesheet">
+  <script src=".js"></script>
+</div>
+
+</body>
+
+</html>

@@ -30,6 +30,8 @@ public class QApply extends EntityPathBase<Apply> {
 
     public final hs.lessonReserve.domain.lesson.QLesson lesson;
 
+    public final hs.lessonReserve.domain.payment.QPayment payment;
+
     public final hs.lessonReserve.domain.user.QUser student;
 
     public QApply(String variable) {
@@ -51,6 +53,7 @@ public class QApply extends EntityPathBase<Apply> {
     public QApply(Class<? extends Apply> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.lesson = inits.isInitialized("lesson") ? new hs.lessonReserve.domain.lesson.QLesson(forProperty("lesson"), inits.get("lesson")) : null;
+        this.payment = inits.isInitialized("payment") ? new hs.lessonReserve.domain.payment.QPayment(forProperty("payment"), inits.get("payment")) : null;
         this.student = inits.isInitialized("student") ? new hs.lessonReserve.domain.user.QUser(forProperty("student")) : null;
     }
 

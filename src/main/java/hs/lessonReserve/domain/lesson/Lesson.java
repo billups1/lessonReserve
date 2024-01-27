@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,7 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "teacherId")
     @JsonIgnoreProperties({"lessons", "certificates"})
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Teacher teacher;
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="contents">
+    <div class="col-7" style="margin:auto;">
+        <h2 class="center">레슨 등록하기</h2>
+        <form action="/teacher/lesson/create" method="post" enctype="application/json">
+            <div>
+                <label for="lessonName" class="form-label">레슨명</label>
+                <input type="text" id="lessonName" name="lessonName" placeholder="레슨명을 입력하세요." class="form-control">
+            </div>
+            <br>
+            <div>
+                <label for="lessonContent" class="form-label">레슨 설명</label>
+                <textarea id="lessonContent" name="lessonContent" placeholder="레슨에 대한 설명을 입력하세요."
+                          class="form-control" style="height:200px;"></textarea>
+            </div>
+            <br>
+            <div>
+                <label for="maximumStudentsNumber" class="form-label">최대 수강인원</label>
+                <input type="number" id="maximumStudentsNumber" name="maximumStudentsNumber"
+                       placeholder="최대 수강인원을 입력하세요."
+                       class="form-control">
+            </div>
+            <br>
+            <div>
+                <label for="lessonTime" class="form-label">레슨 시간</label>
+                <input type="text" id="lessonTime" name="lessonTime" placeholder="레슨 시간을 입력하세요." class="form-control">
+            </div>
+            <br>
+            <div>
+                <label for="price" class="form-label">가격</label>
+                <input type="number" id="price" name="price" class="form-control">원
+            </div>
+            <br>
+            <div>
+                <label for="lessonStartDate" class="form-label">레슨 시작일</label>
+                <input type="date" id="lessonStartDate" name="lessonStartDate" class="form-control">
+            </div>
+            <br>
+            <div>
+                <label for="lessonEndDate" class="form-label">레슨 종료일</label>
+                <input type="date" id="lessonEndDate" name="lessonEndDate" class="form-control">
+            </div>
+            <br>
+            <div>
+                <label for="sample4_postcode" class="form-label">레슨 장소(주소)</label>
+                <input type="text" id="sample4_postcode" name="postcode" placeholder="우편번호" class="form-control">
+                <button type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="btn btn-primary">우편번호 찾기</button>
+                <input type="text" id="sample4_roadAddress" name="roadAddress" placeholder="도로명주소" class="form-control">
+                <input type="text" id="sample4_jibunAddress" name="jibunAddress" placeholder="지번주소"
+                       class="form-control"><br>
+                <span id="guide" style="color:#999;display:none"></span>
+                <input type="text" id="sample4_detailAddress" name="detailAddress" placeholder="상세주소"
+                       class="form-control">
+                <input type="text" id="sample4_extraAddress" name="extraAddress" placeholder="참고항목" class="form-control">
+                <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+            </div>
+            <br>
+            <div style="text-align: center;">
+                <button class="btn btn-primary">레슨 만들기</button>
+            </div>
+
+        </form>
+        <script src="/js/lesson/makeLesson.js"></script>
+    </div>
+</div>
+
+</body>
+</html>

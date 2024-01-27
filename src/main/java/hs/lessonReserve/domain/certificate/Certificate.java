@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @NoArgsConstructor
@@ -21,6 +23,7 @@ public class Certificate {
 
     @JoinColumn(name = "userId")
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Teacher teacher;
 
     private String certificatePaperImageUrl;

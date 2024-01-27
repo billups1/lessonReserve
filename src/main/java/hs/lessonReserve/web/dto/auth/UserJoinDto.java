@@ -19,6 +19,7 @@ public class UserJoinDto {
     @NotBlank
     @Size(min = 3, max = 20)
     private String password;
+    private String passwordRecheck;
     @Size(min = 1, max = 15)
     @NotBlank
     private String name;

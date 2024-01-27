@@ -1,5 +1,7 @@
 package hs.lessonReserve.domain.user;
 
+import hs.lessonReserve.domain.gather.gatherUser.GatherUser;
+import hs.lessonReserve.domain.gather.gatherApply.GatherApply;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -21,7 +24,7 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
@@ -29,6 +32,13 @@ public abstract class User {
     private String name;
     private String role;
     private String profileImageUrl;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<GatherUser> gatherUsers;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<GatherApply> gatherApplies;
+    private String phone;
+    private String address;
+    private String postcode;
 
     private String provider;
     private String providerId;
@@ -41,4 +51,7 @@ public abstract class User {
         this.createTime = LocalDateTime.now();
     }
 
+    public User(long id) {
+        this.id = id;
+    }
 }

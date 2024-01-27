@@ -35,36 +35,34 @@
                     <td>[[${lessonReview.content}]]</td>
                 </tr>
             </table>
+        </th:block>
 
+        <th:block th:if="${dto.averageScore lt 0}">
+            <h3>아직 평가가 없습니다.</h3>
+            <br>
+            <br>
+        </th:block>
+
+        <br>
+        <br>
+        <h3>진행강의</h3>
+        <table class="table">
+            <tr>
+                <th>번호</th>
+                <th>강의명</th>
+                <th>시간</th>
+                <th>레슨 시작일</th>
+                <th>레슨 종료일</th>
             </tr>
 
-            <br>
-            <br>
-            <h3>진행강의</h3>
-            <table class="table">
-                <tr>
-                    <th>번호</th>
-                    <th>강의명</th>
-                    <th>시간</th>
-                    <th>레슨 시작일</th>
-                    <th>레슨 종료일</th>
-                </tr>
-
-                <tr th:each="lesson : ${dto.teacher.lessons}">
-                    <td><a th:text="${lesson.id}">번호</a></td>
-                    <td th:text="${lesson.name}">강의명</td>
-                    <td th:text="${lesson.lessonTime}">시간</td>
-                    <td th:text="${#temporals.format(lesson.lessonStartDate, 'yyyy-MM-dd')}">레슨 시작일</td>
-                    <td th:text="${#temporals.format(lesson.lessonEndDate, 'yyyy-MM-dd')}">레슨 종료일</td>
-                </tr>
-            </table>
-
-        </th:block>
-        <th:block th:if="${dto.averageScore lt 0}">
-            <h3>아직 진행한 강의가 없습니다.</h3>
-            <br>
-            <br>
-        </th:block>
+            <tr th:each="lesson : ${dto.teacher.lessons}">
+                <td><a th:text="${lesson.id}">번호</a></td>
+                <td th:text="${lesson.name}">강의명</td>
+                <td th:text="${lesson.lessonTime}">시간</td>
+                <td th:text="${#temporals.format(lesson.lessonStartDate, 'yyyy-MM-dd')}">레슨 시작일</td>
+                <td th:text="${#temporals.format(lesson.lessonEndDate, 'yyyy-MM-dd')}">레슨 종료일</td>
+            </tr>
+        </table>
 
     </div>
     <script src="/js/teacherMyPage.js"></script>

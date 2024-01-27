@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="contents">
+    <h3 class="center">모임 만들기</h3><br>
+
+    <form action="/gather/create" method="post"  enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="gatherName" class="form-label">모임명</label>
+            <input type="text" class="form-control" id="gatherName" name="name" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">모임설명</label>
+            <input type="text" class="form-control" id="content" name="content">
+            <div id="contentHelp" class="form-text">모임에 대하여 간단히 설명을 작성해 주세요.</div>
+        </div>
+        <div class="mb-3">
+            <label for="maximumParticipantNumber" class="form-label">참여인원</label>
+            <input type="number" class="form-control" id="maximumParticipantNumber" name="maximumParticipantNumber">
+        </div>
+
+        <label for="sidoSelect" class="form-label">모임장소</label>
+        <select class="form-select" aria-label="Default select example" id="sidoSelect" name="sidoSelect">
+            <option selected>시도</option>
+            <option>서울특별시</option>
+            <option>부산광역시</option>
+            <option>대구광역시</option>
+            <option>인천광역시</option>
+            <option>광주광역시</option>
+            <option>대전광역시</option>
+            <option>울산광역시</option>
+            <option>세종특별자치시</option>
+            <option>경기도</option>
+            <option>강원도</option>
+            <option>충청북도</option>
+            <option>충청남도</option>
+            <option>전라북도</option>
+            <option>전라남도</option>
+            <option>경상북도</option>
+            <option>경상남도</option>
+            <option>제주특별자치도</option>
+        </select>
+
+        <select class="form-select" aria-label="Default select example" id="SigunGuSelect" name="SigunGuSelect">
+            <option selected>선택안함</option>
+        </select>
+
+        <select class="form-select" aria-label="Default select example" id="eupMeonDongSelect" name="eupMeonDongSelect">
+            <option selected>선택안함</option>
+        </select>
+
+        <br>
+        <label for="representativeImage" class="form-label">대표 이미지</label>
+
+        <div class="row center" id="representativeImage" >
+            <div class="col-lg-4">
+                <img src="/sampleImage/lrppp_basketball.png" class="rounded mx-auto d-block sampleImage">
+                <div class="form-check c sampleImage">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="basketball" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        농구
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <img src="/sampleImage/lrppp_cycling.png" class="rounded mx-auto d-block sampleImage">
+                <div class="form-check sampleImage">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="cycling">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        싸이클링
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <img src="/sampleImage/lrppp_running.jpg" class="rounded mx-auto d-block sampleImage">
+                <div class="form-check sampleImage">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="running">
+                    <label class="form-check-label" for="flexRadioDefault3">
+                        러닝
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <img src="/sampleImage/lrppp_swim.png" class="rounded mx-auto d-block sampleImage">
+                <div class="form-check sampleImage">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" value="swim">
+                    <label class="form-check-label" for="flexRadioDefault4">
+                        수영
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <img src="/sampleImage/lrppp_tennis.png" class="rounded mx-auto d-block sampleImage">
+                <div class="form-check sampleImage">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5" value="tennis">
+                    <label class="form-check-label" for="flexRadioDefault5">
+                        테니스
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <img src="/sampleImage/lrppp_volleyball.png" class="rounded mx-auto d-block sampleImage">
+                <div class="form-check sampleImage">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6" value="volleyball">
+                    <label class="form-check-label" for="flexRadioDefault6">
+                        배구
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault7" value="customUpload">
+                <label class="form-check-label" for="flexRadioDefault7">
+                    직접 업로드
+                </label>
+                <input type="file" name="representativeImageFile" placeholder="모임 대표 이미지"/>
+            </div>
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+    <script src="/js/gather/gather.js"></script>
+    <link href="/css/main.css" rel="stylesheet">
+</div>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+#admin {
+    display: flex;
+}
+
+
+/* 메뉴창 */
+#adminMenu {
+    flex-basis: 150px;
+
+    display: flex;
+    flex-direction: column;
+    border: 1px #bbb solid;
+}
+#adminMenu > div:nth-child(1) {
+    flex-basis: 100px;
+    text-align: center;
+    line-height: 100px;
+    background-color: #2fa4e7;
+    color: white;
+    font-size: 18px;
+    width: 100%;
+}
+#adminMenu > div:nth-child(2) {
+    flex-grow: 1;
+    width: 100%;
+}
+#adminMenu > div:nth-child(2) > div {
+    border: 1px #bbb solid;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    transition: 0.4s;
+}
+#adminMenu > div:nth-child(2) > div:hover {
+    background-color: #2fa4e7;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+/* 본문 */
+#adminContent {
+    flex-grow: 1;
+    padding-bottom: 40px;
+}
+
+
+/* 테이블표 기본 */
+.listTable {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 92%;
+}
+
+.listTable > thead > tr {
+    background-color: #333333;
+    color: white;
+}
+
+.listTable > tbody tr {
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.listTable > tbody tr:hover {
+    background-color: #bbb;
+}
+
+.listTable td {
+    padding: 5px;
+    border-bottom: #bbb solid 1px;
+
+}
+
+
+
+/* 큰목록 페이지네이션 */
+.paginationCustom {
+    margin-bottom: 20px !important;
+}
+
+.paginationCustom > nav > ul {
+    width: fit-content;
+    margin: auto;
+}
+
+/* 검색창 */
+
+.searchDiv > input, .searchDiv > select {
+    height: 100%;
+    padding: 5px;
+}
+
+.searchDiv > button {
+    height: 100%;
+}
+
+
+/* 서브리스트 테이블 */
+.sublistTable {
+    width: 100%;
+    font-size: 13px;
+}

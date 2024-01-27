@@ -6,8 +6,11 @@ import hs.lessonReserve.handler.ex.CustomApiException;
 import hs.lessonReserve.handler.ex.CustomException;
 import hs.lessonReserve.service.ApplyService;
 import hs.lessonReserve.service.LessonReviewService;
+import hs.lessonReserve.service.UserService;
+import hs.lessonReserve.web.dto.auth.StudentModifyDto;
 import hs.lessonReserve.web.dto.lessonReview.LessonReviewDto;
 import hs.lessonReserve.web.dto.lesson.StudentMyPageLessonListDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,6 +32,7 @@ public class StudentController {
 
     private final ApplyService applyService;
     private final LessonReviewService lessonReviewService;
+    private final UserService userService;
 
     @GetMapping("/student/mypage")
     public String studentMyPageForm(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -60,6 +64,21 @@ public class StudentController {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI("/student/mypage"));
 
+        return "redirect:/student/mypage";
+    }
+
+    @GetMapping("/student/modify")
+    public String studentModifyForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+
+        StudentModifyDto studentModifyDto = userService.studentModifyDto(principalDetails);
+        model.addAttribute("dto", studentModifyDto);
+        return "student/modifyStudent";
+    }
+
+    @PostMapping("/student/modify")
+    public String studentModify(@AuthenticationPrincipal PrincipalDetails principalDetails, @Valid StudentModifyDto studentModifyDto, BindingResult bindingResult) {
+
+        userService.studentModify(principalDetails, studentModifyDto);
         return "redirect:/student/mypage";
     }
 

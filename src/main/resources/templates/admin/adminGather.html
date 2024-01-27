@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  <div layout:fragment="contents">
+
+    <div id="admin">
+      <div id="adminMenu">
+        <div>
+          관리자 페이지
+        </div>
+        <div>
+          <div onclick="location.href='/admin/lesson/list'">레슨 목록</div>
+          <div onclick="location.href='/admin/apply/list'">레슨신청·결제 목록</div>
+          <div onclick="location.href='/admin/gather/list'">모임 목록</div>
+          <div onclick="location.href='/admin/user/list'">유저 목록</div>
+        </div>
+      </div>
+
+
+      <div id="adminContent">
+
+        <div id="container-1">
+
+          <div id="userContainer" class="imageUpperRight">
+            <h3 class="center">모임 정보</h3>
+            <form action="/gather/lesson" method="post" enctype="application/json">
+              <img th:src="@{/image/}+${gatherDto.representativeImageUrl}">
+              <div>
+                <label for="id" class="form-label">모임 번호</label>
+                <input type="text" id="id" name="id" placeholder="" readonly class="form-control-plaintext"
+                       th:value="${gatherDto.id}">
+              </div>
+              <div>
+                <label for="name" class="form-label">모임명</label>
+                <input id="name" name="name" placeholder="" class="form-control"
+                  th:value="${gatherDto.name}">
+              </div>
+              <div>
+                <label for="content" class="form-label">모임설명</label>
+                <input type="text" id="content" name="content"
+                  placeholder="" class="form-control" th:value="${gatherDto.content}">
+              </div>
+              <div>
+                <label for="maximumParticipantNumber" class="form-label">참여인원</label>
+                <input type="text" id="maximumParticipantNumber" name="maximumParticipantNumber" placeholder="" class="form-control"
+                       th:value="${gatherDto.maximumParticipantNumber}">
+              </div>
+              <div>
+                <label for="createTime" class="form-label">생성일</label>
+                <input type="datetime-local" id="createTime" name="createTime" readonly class="form-control-plaintext" th:value="${gatherDto.createTime}">
+              </div>
+
+              <br>
+              <div style="text-align: center;">
+                <button class="btn btn-primary">수정하기</button>
+                <button type="button" class="btn btn-danger" id="gatherDelete">모임삭제</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="container-2">
+<!--          모임회원 리스트-->
+          <div id="gatherUserContainer">
+            <h3 class="center">모임회원 리스트</h3>
+            <table class="listTable sublistTable">
+              <thead>
+              <tr>
+                <th>회원번호</th>
+                <th>회원명</th>
+                <th>직책</th>
+                <th>참여일</th>
+                <th>모임탈퇴</th>
+              </tr>
+              </thead>
+              <tbody id="gatherUserTableData">
+
+              </tbody>
+            </table>
+
+            <div id="gatherUserListPagination" class="paginationCustom">
+
+            </div>
+
+          </div>
+
+<!--          가입신청 리스트-->
+          <div id="gatherApplyContainer">
+            <h3 class="center">모임가입신청 내역</h3>
+            <table class="listTable sublistTable">
+              <thead>
+              <tr>
+                <th>모임신청<br>번호</th>
+                <th>신청자</th>
+                <th>신청시점</th>
+                <th>승인여부</th>
+              </tr>
+              </thead>
+              <tbody id="gatherApplyTableData" class="tbodyCursorNone">
+
+              </tbody>
+            </table>
+
+            <div id="gatherApplyListPagination" class="paginationCustom">
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <link href="/css/admin/admin.css" rel="stylesheet">
+    <link href="/css/admin/adminDetails.css" rel="stylesheet">
+
+    <script src="/js/admin/admin.js"></script>
+    <script src="/js/admin/adminGather.js"></script>
+
+  </div>
+
+</body>
+
+</html>

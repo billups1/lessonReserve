@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+}
+
+td, th {
+vertical-align : middle;
+}
+
+img {
+    border-radius: 20%;
+}
+
+.center {
+text-align:center;
+}
+.center div {
+margin: 0 auto;
+}
+
+.centerT {
+text-align:center;
+}
+
+.left {
+text-align:left;
+}
+
+.sampleImage{
+    max-width: 25%;
+    min-width: 25%;
+}
+
+.marginLow div {
+    margin: 1%;
+}
+
+.black-bg {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  padding: 30px;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.white-bg {
+  background: white;
+  border-radius: 5px;
+  padding: 30px;
+  max-width: 60%;
+}
+
+.show-modal {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hide {
+    display: none;
+}
+
+#search {
+    margin: auto;
+    box-sizing: border-box;
+}
+
+#searchLesson > input, #searchLesson > select {
+    height: 100%;
+    padding: 5px;
+}
+
+#searchLesson > button {
+    height: 100%;
+}

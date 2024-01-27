@@ -2,9 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="footerFragment">
-    <br><br>
-    <hr>
-    <div>
-        <a href="/logout">로그아웃</a>
+
+    <div id="footer">
+        <div>
+            lessonReserve &copy; All Right Reserved.
+        </div>
+
+        <div>
+            <a href="#">개인정보처리방침</a><a>|</a>
+            <a href="/lesson/lessonPolicy">이용약관</a><a>|</a>
+            <a href="#">이메일처리방침</a><a>|</a>
+            <a href="#">고객센터</a>
+        </div>
+
     </div>
+    <script src="/js/fragment/footer.js"></script>
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/fragment/footer.css" rel="stylesheet">
 </div>

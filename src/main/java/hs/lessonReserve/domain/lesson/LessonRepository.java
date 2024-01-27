@@ -1,5 +1,6 @@
 package hs.lessonReserve.domain.lesson;
 
+import hs.lessonReserve.domain.gather.Gather;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +24,11 @@ public interface LessonRepository extends JpaRepository<Lesson, Long>, LessonRep
     @Query(value = "delete from Lesson where id = :lessonId and teacherId = :teacherId", nativeQuery = true)
     void mDeleteLesson(long lessonId, long teacherId);
 
+    Page<Lesson> findAllByOrderByIdDesc(Pageable pageable);
+    List<Lesson> findAllByOrderByIdDesc();
+
+    Page<Lesson> findAllByTeacherIdOrderByIdDesc(Long teacherId, Pageable pageable);
+
+    @Query(value = "select l.* from lesson l inner join apply a on a.studentId = :studentId and l.id = a.lessonId", nativeQuery = true)
+    Page<Lesson> findAllByStudentIdOrderByIdDesc(Long studentId, Pageable pageable);
 }

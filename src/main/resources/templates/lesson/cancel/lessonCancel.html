@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="contents" class="center">
+  <h2>레슨 결제 취소</h2>
+  <div>
+    <table class="table">
+      <thead>
+          <tr>
+              <th>강사</th>
+              <th>레슨 정보</th>
+              <th>환불내역</th>
+          </tr>
+      </thead>
+
+      <tbody>
+          <tr>
+              <td rowspan="3"><img th:src="@{/image/} + ${dto.teacherProfileImageUrl}" width="250"
+                      style="text-align: center;"><br>
+                  <p style="font-size: 20px" class="center"><b>[[${dto.teacherName}]]</b> 강사님</p>
+              </td>
+              <td rowspan="3" width="35%">
+                  <label>레슨명</label> <br>
+                  <input type="text" class="form-control-plaintext" th:value="${dto.lessonName}"
+                      id="lessonName" readonly><br>
+                  <label>레슨장소</label> <br>
+                  <input type="text" class="form-control-plaintext" th:value="${dto.lessonRoadAddress}"
+                      readonly><br>
+                  <label>레슨 시작일</label> <br>
+                  <input type="text" class="form-control-plaintext" th:value="${dto.lessonStartDate}"
+                      readonly><br>
+                  <label>레슨 종료일</label> <br>
+                  <input type="text" class="form-control-plaintext" th:value="${dto.lessonEndDate}"
+                      readonly><br>
+              <td>
+                  <input type="checkbox" id="refundPolicyChkBox" name="refundPolicyChkBox"><label
+                      for="refundPolicyChkBox" value="checked"> 레슨 이용 약관에 동의해 주세요.</label> <a href="/lesson/lessonPolicy"
+                      onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">약관보기</a> <br>
+                  <input type="checkbox" id="pgPolicyChkBox" name="pgPolicyChkBox" value="checked"><label
+                      for="pgPolicyChkBox"></label>결제 대행사
+                  약관에 동의해 주세요.
+                  </label> <a href="/lesson/pgCompanyPolicy" target="_blank" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">약관보기</a>
+              <div id="policyAgreeComment"></div>
+              </td>
+          </tr>
+          <tr>
+              <td><a>환불금액</a> <input type="text" th:value="${dto.lessonPrice}" id="lessonPrice"
+                      style="float: right;" class="form-control-plaintext" readonly><br></td>
+          </tr>          
+          <tr>
+              <td><button class="btn btn-danger" id="cancelBtn"
+                      style="width: 100%; min-height: 50px;">취소하기</button></td>
+          </tr>
+      <input id="paymentId" th:value="${dto.paymentId}" hidden>
+      </tbody>
+  </table>
+
+  </div>
+
+  <link href="/css/main.css" rel="stylesheet">
+  <script src="/js/lesson/payment.js"></script>
+</div>
+
+</body>
+
+</html>

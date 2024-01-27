@@ -1,0 +1,15 @@
+package hs.lessonReserve.domain.gather.gatherUser;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+
+import java.util.List;
+
+public interface GatherUserRepository extends JpaRepository<GatherUser, Long> {
+
+    List<GatherUser> findByGatherId(long gatherId);
+
+    Page<GatherUser> findAllByGatherIdOrderByIdDesc(Long gatherId, Pageable pageable);
+}
