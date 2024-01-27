@@ -5,7 +5,7 @@ on:
       - prod # prod 브런치에 푸시 되었을 때 아래의 jobs 실행
 
 jobs:
-  build: # 마음대로 적어도 됨
+  build: # 명칭은 마음대로 적어도 됨
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
