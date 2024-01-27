@@ -2,10 +2,10 @@ name: lessonReserve
 on:
   push:
     branches:
-      - prod
+      - prod # prod 브런치에 푸시 되었을 때 아래의 jobs 실행
 
 jobs:
-  build:
+  build: # 마음대로 적어도 됨
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -45,7 +45,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} #환경변수
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }} #환경변수
           application_name: lessonReserve # 엘리스틱 빈스톡 애플리케이션 이름!
-          environment_name: lessonReserve-env # 엘리스틱 빈스톡 환경 이름!
+          environment_name: LessonReserve-env # 엘리스틱 빈스톡 환경 이름!
           version_label: lessonReserve-${{steps.current-time.outputs.formattedTime}} # 버전 시간
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
