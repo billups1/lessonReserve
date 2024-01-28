@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
 
-//    @Query(value = "select * from Alarm where toUserId = :toUserId", nativeQuery = true)
     List<Alarm> findByToUserIdOrderByIdDesc(long toUserId);
 
 }
