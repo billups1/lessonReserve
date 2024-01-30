@@ -22,7 +22,6 @@ public class GatherController {
 
     @GetMapping("/gather")
     public String gatherHome() {
-
         return "gather/gather";
     }
 

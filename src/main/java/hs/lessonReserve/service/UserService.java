@@ -56,7 +56,7 @@ public class UserService {
         if (!savedVerificationCode.equals(userJoinDto.getVerificationCode())) {
             throw new CustomException("이메일 인증을 완료해 주세요.");
         }
-        if (userJoinDto.getPassword() != userJoinDto.getPasswordRecheck()) {
+        if (!userJoinDto.getPassword().equals(userJoinDto.getPasswordRecheck())) {
             throw new CustomException("비밀번호 란과 비밀번호 확인 란의 값을 동일하게 작성해 주세요.");
         }
 
@@ -116,6 +116,9 @@ public class UserService {
         String savedVerificationCode = redisUtil.getData(userJoinDto.getEmail());
         if (!savedVerificationCode.equals(userJoinDto.getVerificationCode())) {
             throw new CustomException("이메일 인증을 완료해 주세요.");
+        }
+        if (!userJoinDto.getPassword().equals(userJoinDto.getPasswordRecheck())) {
+            throw new CustomException("비밀번호 란과 비밀번호 확인 란의 값을 동일하게 작성해 주세요.");
         }
 
         String profileImageFilename = null;
