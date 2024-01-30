@@ -15,6 +15,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @AllArgsConstructor
 @Builder
 @Data
+@Table(name = "certificate")
 public class Certificate {
 
     @Id

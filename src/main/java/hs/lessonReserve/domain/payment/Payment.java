@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
+@Table(name = "payment")
 public class Payment {
 
     @Id

@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
+@Table(name = "gather")
 public class Gather {
 
     @Id

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
+@Table(name = "lessonReview")
 public class LessonReview {
 
     @Id
