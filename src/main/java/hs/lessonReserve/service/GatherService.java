@@ -62,7 +62,7 @@ public class GatherService {
             sb.append("from gather g ");
             sb.append("left join gatherApply ga ");
             sb.append("on g.id = ga.gatherId and ga.userId = ? ");
-            sb.append("left join gatheruser gu ");
+            sb.append("left join gatherUser gu ");
             sb.append("on g.id = gu.gatherId and gu.userId = ? ");
             sb.append("where (ga.acceptStatus is null or (ga.acceptStatus != 'ACCEPT' and ga.acceptStatus != 'REJECT')) and (gu.position is null or gu.position != 'LEADER')");
             query = em.createNativeQuery(sb.toString())
@@ -184,7 +184,7 @@ public class GatherService {
         StringBuffer sb = new StringBuffer();
         sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, gu.position = 'LEADER' ");
         sb.append("from gather g ");
-        sb.append("inner join gatheruser gu ");
+        sb.append("inner join gatherUser gu ");
         sb.append("on g.id = gu.gatherId and gu.userId = ? ");
 
         Query query = em.createNativeQuery(sb.toString())
