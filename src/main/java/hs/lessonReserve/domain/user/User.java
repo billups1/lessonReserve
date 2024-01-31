@@ -18,7 +18,6 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
 @SuperBuilder
-@Table(name = "user")
 public abstract class User {
 
     @Id

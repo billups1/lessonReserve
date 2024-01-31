@@ -20,7 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "lesson")
 public class Lesson {
 
     @Id

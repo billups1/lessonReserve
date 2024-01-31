@@ -41,10 +41,10 @@ public class ApplyService {
         sb.append("select a.id, l.name, u.name, u.profileImageUrl, l.lessonTime, l.price, ");
         sb.append("DATE_FORMAT(l.lessonStartDate, '%Y-%m-%d'), DATE_FORMAT(l.lessonEndDate, '%Y-%m-%d'), DATE_FORMAT(DATE_ADD(l.lessonEndDate, INTERVAL -3 DAY), '%Y-%m-%d'), DATE_FORMAT(a.createTime, '%Y-%m-%d'), ");
         sb.append("a.applyStatus, l.id, a.paymentId ");
-        sb.append("from apply a ");
-        sb.append("inner join lesson l ");
+        sb.append("from Apply a ");
+        sb.append("inner join Lesson l ");
         sb.append("on a.lessonId = l.id ");
-        sb.append("inner join user u ");
+        sb.append("inner join User u ");
         sb.append("on l.teacherId = u.id ");
         sb.append("where a.studentId = ?");
 

@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "chat")
 public class Chat {
 
     @Id

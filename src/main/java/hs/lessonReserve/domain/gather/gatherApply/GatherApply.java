@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "gatherApply")
 public class GatherApply {
 
     @Id

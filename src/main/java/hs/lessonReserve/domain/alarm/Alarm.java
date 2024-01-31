@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
 @SuperBuilder
-@Table(name = "alarm")
 public class Alarm {
 
     @Id

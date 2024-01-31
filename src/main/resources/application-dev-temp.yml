@@ -76,8 +76,20 @@ file:
 
 payment:
   iamport:
-    apiKey: asd
-    secretKey: ads
+    apiKey: ${iamport.apiKey}
+    secretKey: ${iamport.apiSecret}
+
+cloud:
+  aws:
+    s3:
+      bucket: bucket-lessonreserve
+    credentials:
+      access-key: ${access.key}
+      secret-key: ${secret.key}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 
 
 

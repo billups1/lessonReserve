@@ -59,6 +59,9 @@ dependencies {
 	implementation 'org.webjars:sockjs-client:1.5.1'
 	implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.4'
 
+	// AWS S3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 }
 
 //QueryDSL
