@@ -9,6 +9,7 @@ import hs.lessonReserve.domain.lesson.Lesson;
 import hs.lessonReserve.domain.lesson.LessonRepository;
 import hs.lessonReserve.domain.user.*;
 import hs.lessonReserve.handler.ex.CustomException;
+import hs.lessonReserve.util.CustomAwsS3Util;
 import hs.lessonReserve.util.RedisUtil;
 import hs.lessonReserve.web.dto.admin.AdminSearchCondDto;
 import hs.lessonReserve.web.dto.admin.AdminUserDto;
@@ -45,6 +46,7 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RedisUtil redisUtil;
     private final EmailService emailService;
+    private final CustomAwsS3Util customAwsS3Util;
 
     @Value("${file.path}")
     private String uploadFolder;
@@ -60,24 +62,14 @@ public class UserService {
             throw new CustomException("비밀번호 란과 비밀번호 확인 란의 값을 동일하게 작성해 주세요.");
         }
 
-        System.out.println("사진: " + userJoinDto.getProfileImageFile().getOriginalFilename());
-        String profileImageFilename = null;
-        if (userJoinDto.getProfileImageFile() != null) {
-            UUID uuid = UUID.randomUUID();
-            profileImageFilename = uuid + userJoinDto.getProfileImageFile().getOriginalFilename();
-            Path path = Paths.get(uploadFolder + profileImageFilename);
-            try {
-                Files.write(path, userJoinDto.getProfileImageFile().getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        String profileImageFilename = saveImageFileLocal(userJoinDto.getProfileImageFile());
+        String profileImageUrl = saveImageFileAwsS3(userJoinDto.getProfileImageFile());
 
         Teacher teacher = Teacher.builder()
                 .email(userJoinDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(userJoinDto.getPassword()))
                 .name(userJoinDto.getName())
-                .profileImageUrl(profileImageFilename)
+                .profileImageUrl(profileImageUrl)
                 .build();
 
         List<MultipartFile> certificateImageFiles = userJoinDto.getCertificateImageFiles();
@@ -85,16 +77,9 @@ public class UserService {
         if (certificateImageFiles != null) {
             List<Certificate> certificates = new ArrayList<>();
             for (MultipartFile certificateImageFile : certificateImageFiles) {
-                UUID uuid = UUID.randomUUID();
-                String certificateImageFileName = uuid + certificateImageFile.getOriginalFilename();
-                System.out.println(uploadFolder);
 
-                Path path = Paths.get(uploadFolder + certificateImageFileName);
-                try {
-                    Files.write(path, certificateImageFile.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                String certificateImageFileName = saveImageFileLocal(certificateImageFile);
+
                 Certificate certificate = Certificate.builder()
                         .teacher(teacher)
                         .certificatePaperImageUrl(certificateImageFileName)
@@ -121,28 +106,40 @@ public class UserService {
             throw new CustomException("비밀번호 란과 비밀번호 확인 란의 값을 동일하게 작성해 주세요.");
         }
 
-        String profileImageFilename = null;
-        if (userJoinDto.getProfileImageFile() != null) {
-            UUID uuid = UUID.randomUUID();
-            profileImageFilename = uuid + userJoinDto.getProfileImageFile().getOriginalFilename();
-            Path path = Paths.get(uploadFolder + profileImageFilename);
-            try {
-                Files.write(path, userJoinDto.getProfileImageFile().getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        // 사진 저장
+        String profileImageFilename = saveImageFileLocal(userJoinDto.getProfileImageFile());
+        String profileImageUrl = saveImageFileAwsS3(userJoinDto.getProfileImageFile());
 
         Student student = Student.builder()
                 .email(userJoinDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(userJoinDto.getPassword()))
                 .name(userJoinDto.getName())
-                .profileImageUrl(profileImageFilename)
+                .profileImageUrl(profileImageUrl)
                 .build();
 
         student.setRole("ROLE_STUDENT");
 
         userRepository.save(student);
+    }
+
+    private String saveImageFileLocal(MultipartFile imageFile) {
+        String imageFilename = null;
+        if (imageFile != null) {
+            UUID uuid = UUID.randomUUID();
+            imageFilename = uuid + imageFile.getOriginalFilename();
+            Path path = Paths.get(uploadFolder + imageFilename);
+            try {
+                Files.write(path, imageFile.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return imageFilename;
+    }
+
+    private String saveImageFileAwsS3(MultipartFile imageFile) {
+        String imageFileUrl = customAwsS3Util.s3UploadFile(imageFile);
+        return imageFileUrl;
     }
 
     public TeacherIntroduceDto teacherIntroduceDto(long teacherId) {

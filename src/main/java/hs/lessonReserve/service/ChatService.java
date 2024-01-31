@@ -56,10 +56,10 @@ public class ChatService {
 
         StringBuffer sb = new StringBuffer();
         sb.append("select u.name, u.profileImageUrl, c.message, gu.position, u.id, DATE_FORMAT(c.createTime, '%Y-%m-%d %H:%i') ");
-        sb.append("from chat c ");
-        sb.append("left join gatherUser gu ");
+        sb.append("from Chat c ");
+        sb.append("left join GatherUser gu ");
         sb.append("on c.userId = gu.userId and c.gatherId = gu.gatherId ");
-        sb.append("left join user u ");
+        sb.append("left join User u ");
         sb.append("on c.userId = u.id ");
         sb.append("where c.gatherId = ?");
 

@@ -12,11 +12,11 @@ import java.util.List;
 public interface GatherApplyRepository extends JpaRepository<GatherApply, Long> {
 
     @Modifying
-    @Query(value = "update gatherApply set acceptStatus = 'ACCEPT' where id = :gatherApplyId", nativeQuery = true)
+    @Query(value = "update GatherApply set acceptStatus = 'ACCEPT' where id = :gatherApplyId", nativeQuery = true)
     void mGatherApplyAccept(long gatherApplyId);
 
     @Modifying
-    @Query(value = "update gatherApply set acceptStatus = 'REJECT' where id = :gatherApplyId", nativeQuery = true)
+    @Query(value = "update GatherApply set acceptStatus = 'REJECT' where id = :gatherApplyId", nativeQuery = true)
     void mGatherApplyReject(long gatherApplyId);
 
     Page<GatherApply> findAllByGatherIdOrderByIdDesc(Long gatherId, Pageable pageable);

@@ -29,6 +29,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long>, LessonRep
 
     Page<Lesson> findAllByTeacherIdOrderByIdDesc(Long teacherId, Pageable pageable);
 
-    @Query(value = "select l.* from lesson l inner join apply a on a.studentId = :studentId and l.id = a.lessonId", nativeQuery = true)
+    @Query(value = "select l.* from Lesson l inner join Apply a on a.studentId = :studentId and l.id = a.lessonId", nativeQuery = true)
     Page<Lesson> findAllByStudentIdOrderByIdDesc(Long studentId, Pageable pageable);
 }

@@ -59,10 +59,10 @@ public class GatherService {
         Query query;
         if (principalDetails != null) {
             sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, ga.acceptStatus ");
-            sb.append("from gather g ");
-            sb.append("left join gatherApply ga ");
+            sb.append("from Gather g ");
+            sb.append("left join GatherApply ga ");
             sb.append("on g.id = ga.gatherId and ga.userId = ? ");
-            sb.append("left join gatheruser gu ");
+            sb.append("left join GatherUser gu ");
             sb.append("on g.id = gu.gatherId and gu.userId = ? ");
             sb.append("where (ga.acceptStatus is null or (ga.acceptStatus != 'ACCEPT' and ga.acceptStatus != 'REJECT')) and (gu.position is null or gu.position != 'LEADER')");
             query = em.createNativeQuery(sb.toString())
@@ -70,7 +70,7 @@ public class GatherService {
                     .setParameter(2, principalDetails.getUser().getId());
         } else {
             sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, null ");
-            sb.append("from gather g ");
+            sb.append("from Gather g ");
             query = em.createNativeQuery(sb.toString());
         }
 
@@ -183,8 +183,8 @@ public class GatherService {
     public List<GatherMypageListDto> gatherMypage(PrincipalDetails principalDetails) {
         StringBuffer sb = new StringBuffer();
         sb.append("select g.id, g.name, g.content, g.representativeImageUrl, g.address, gu.position = 'LEADER' ");
-        sb.append("from gather g ");
-        sb.append("inner join gatheruser gu ");
+        sb.append("from Gather g ");
+        sb.append("inner join GatherUser gu ");
         sb.append("on g.id = gu.gatherId and gu.userId = ? ");
 
         Query query = em.createNativeQuery(sb.toString())
@@ -224,8 +224,8 @@ public class GatherService {
 
         StringBuffer sb = new StringBuffer();
         sb.append("select u.id, u.name, gu.position ");
-        sb.append("from user u ");
-        sb.append("inner join gatheruser gu ");
+        sb.append("from User u ");
+        sb.append("inner join GatherUser gu ");
         sb.append("on u.id = gu.userId and gu.gatherId = ?");
 
         Query query = em.createNativeQuery(sb.toString())
