@@ -38,8 +38,10 @@
         <div>
             <a th:href="@{/teacher/{teacherId}(teacherId=${lesson.teacherId})}"><h4 th:text="${lesson.teacherName}"
                                                                                      id="teacherName"></h4></a>
+<!--            <a th:href="@{/teacher/{teacherId}(teacherId=${lesson.teacherId})}"><img-->
+<!--                    th:src="|/image/${lesson.teacherProfileImageUrl}|" width=30%/></a>-->
             <a th:href="@{/teacher/{teacherId}(teacherId=${lesson.teacherId})}"><img
-                    th:src="|/image/${lesson.teacherProfileImageUrl}|" width=30%/></a>
+                    th:src="|${lesson.teacherProfileImageUrl}|" width=30%/></a>
             <br>
             <a>사진 클릭 시 강사 소개페이지로 연결됩니다.</a>
         </div>
